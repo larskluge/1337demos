@@ -1,0 +1,36 @@
+<h1>Listing maps.</h1>
+
+<p>
+	<form action="<%= url_for :action => 'search', :layout => 'true' %>" method="post">
+		<input name="mapsearch" size="30" type="text" value="<%= @mapsearch %>" />
+		<%= submit_tag 'Search' %>
+		<input type="button" value="Clear" onclick="window.location.href='<%= url_for :action => 'clearsearch' %>'" />
+	</form>
+</p>
+
+<div class="map_list">
+	<% if @maps.length == 0 %>
+		<p class="error">
+			No maps found.
+		</p>
+	<% end %>
+	<% for map in @maps %>
+		<div class="map_image_thumb">
+			<a href="<%= url_for :action => 'show', :id => map %>">
+				<img src="/images/maps/thumbs/200x150/<%= map.id %>.jpeg" width="200" height="150" alt="<%= map.name %>" />
+				<div class="map_image_thumb_label"><%= map.name %>
+					<!--<br />
+					<span class="no1">#1</span> <%= #render_nickname(map.demos.sort { |x,y| x.time <=> y.time }.first.player.main_nickname.nickname)
+					%>-->
+				</div>
+			</a>
+		</div>
+	<% end %>
+</div>
+
+<div style="clear: both"></div>
+
+<div style="text-align: center">
+	<%= will_paginate @maps, :inner_window => 2, :outer_window => 0 %>
+</div>
+

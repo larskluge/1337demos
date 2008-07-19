@@ -1,0 +1,107 @@
+<h1>Demo details.</h1>
+
+<div class="demo_video">
+<% if @demo.video_exists? %>
+	<%= render :partial => @video_player %>
+<% else %>
+	Waiting for rendering server.
+<% end %>
+</div>
+
+<div class="demo_info">
+	<table>
+		<% case @demo.gamemode; when 'race' %>
+			<tr>
+				<td>Position</td>
+				<td>#<%= @demo.position %> of <%= @demo.map.demos.collect{|demo| (!demo.position.nil? && demo.position > 0) ? demo : nil}.compact.length %></td>
+			</tr>
+			<tr>
+				<td>Time</td>
+				<td><%= render_race_time @demo.time %></td>
+			</tr>
+		<% when 'freestyle'  %>
+			<tr>
+				<td>Title</td>
+				<td><%= render_time_title @demo %></td>
+			</tr>
+		<% end %>
+		<tr>
+			<td>ID</td>
+			<td><%= @demo.id %></td>
+		</tr>
+		<tr>
+			<td>Map</td>
+			<td><%= render_linked_map @demo.map %></td>
+		</tr>
+		<tr>
+			<td>Gamemode</td>
+			<td><%= @demo.gamemode %></td>
+		</tr>
+		<tr>
+			<td>Players</td>
+			<td>
+				<%= render_linked_players(@demo.players) if @demo.players %>
+			</td>
+		</tr>
+		<tr>
+			<td>Uploaded</td>
+			<td><%= render_datetime @demo.created_at %></td>
+		</tr>
+		<tr>
+			<td colspan="2"><%= link_to "Download wd#{@demo.version} demo file", @demo.demofile.public_filename %></td>
+		</tr>
+	</table>
+</div>
+
+<div style="clear: both"></div>
+
+<% if !@demo.data_correct %>
+	<p class="error">
+		<%= 'Uploader did not verified the information!' if @demo.data_correct.nil? %>
+		<%= 'Some information may be wrong!' if @demo.data_correct == false %>
+	</p>
+<% end %>
+
+
+
+<div class="embed">
+	<p>
+		Embed this movie in your homepage:
+	</p>
+
+	<input id="embed_code" type="text" readonly="readonly" onclick="$('embed_code').focus(); $('embed_code').select()"
+		value="<%= h(render :partial => 'embed_code').gsub(/\n|\t/, '') %>" />
+</div>
+
+
+
+<div class="demo_comments">
+	<div id="demo_comments_form">
+		<div id="demo_comments_form_head">
+			<p><a href="javascript:;">Write a comment on this demo.</a></p>
+		</div>
+		<div id="demo_comments_form_body">
+			<p style="margin: 0; padding: 10px 0 0 0">
+				You may use warsow/quake color codes for your name
+				(e.g. ^1nick^7name = <%= render_nickname('^1nick^7name') %>;
+				color codes: <%= render_nickname '^11^22^33^44^55^66^77^88^99^00' %>).
+			</p>
+			<% form_tag :action => 'create_comment', :id => @demo, :layout => 'true' do %>
+
+				<%= render :partial => '/comments/form' %>
+				<%= submit_tag "Submit" %>
+			<% end %>
+		</div>
+	</div>
+
+	<% for comment in @demo.comments; if comment.valid? %>
+		<p>
+			<%= h comment.message %>
+			<br />
+			<%= render_date comment.created_at %>
+			by
+			<%= render_nickname comment.name %>
+		</p>
+	<% end; end %>
+</div>
+

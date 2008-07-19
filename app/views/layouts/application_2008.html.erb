@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+	<title>
+		<%=
+			if @title
+				"#{@title} - 1337demos.com"
+			else
+				([controller.controller_name] << (" // " + controller.action_name if controller.action_name != 'index') << " - 1337demos.com").compact.join
+			end
+		%>
+	</title>
+
+	<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+
+	<%= stylesheet_link_tag 'layout_2008-07/layout.css' %>
+	<%= stylesheet_link_tag 'layout_2008-07/colorcodes.css' %>
+	<%= stylesheet_link_tag 'layout_2008-07/content.css' %>
+
+	<%= javascript_include_tag 'layout_2008-07/jquery-1.2.6' %>
+	<%= javascript_include_tag 'layout_2008-07/jquery-ui-effects-core-1.5.2.min' %>
+	<%= javascript_include_tag 'layout_2008-07/swfobject' %>
+	<%= javascript_include_tag 'layout_2008-07/json' %>
+	<%= javascript_include_tag 'layout_2008-07/cookie' %>
+	<%= javascript_include_tag 'layout_2008-07/flash' %>
+	<%= javascript_include_tag 'layout_2008-07/application' %>
+
+	<% if @rss %>
+		<link rel="alternate" type="application/rss+xml" title="<%= @rss[:title] %>" href="<%= @rss[:url] %>" />
+	<% end %>
+</head>
+<body>
+
+<div class="main">
+
+	<div class="header">
+		<div class="outer_left"></div>
+		<div class="outer_middle">
+			<div class="inner_left">
+				<div class="inner_right">
+					<div class="inner">
+						<%= render_mainmenu(@mainmenu) %>
+						<!--
+						<ul class="nav">
+							<% for item in [
+								{:name => 'Home', :controller => 'welcome', :action => 'index'},
+								{:name => 'Demos', :controller => 'demos', :action => 'index'},
+								{:name => 'Videos', :controller => 'demos', :action => 'index'},
+								#{:name => 'Comments', :controller => 'comments', :action => 'index'},
+								#{:name => 'Maps', :controller => 'maps', :action => 'index'},
+								{:name => 'Players', :controller => 'players', :action => 'index'},
+								#{:name => 'Settings', :controller => 'settings', :action => 'index'},
+								{:name => 'Extras', :controller => 'settings', :action => 'index'},
+								{:name => 'Upload', :controller => 'demofiles', :action => 'new'}#,
+								#{:name => 'About', :controller => 'welcome', :action => 'about'}
+								]
+
+								options = item.clone
+								options.delete :name
+								attr = (item[:controller] == controller.controller_name && item[:action] == controller.action_name) ? {:class => 'active'} : nil
+								%>
+
+								<li><%= link_to item[:name], options, attr  %></li>
+							<% end %>
+						</ul>
+						-->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="content">
+		<div class="outer">
+			<div class="outer_left"></div>
+			<div class="shaddow_left">
+				<div class="border"></div>
+			</div>
+			<div class="shaddow_right">
+				<div class="border"></div>
+			</div>
+			<div class="outer_right"></div>
+			<div class="outer_middle">
+				<div class="inner">
+					<p style="color: green"><%= flash[:notice] %></p>
+
+					<%= yield  %>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="left">
+			&copy; <%= Date.today.year %> <%= link_to '1337demos.com', :only_path => false %>
+		</div>
+		<div class="right partner">
+			partner:
+			<a rel="external" href="http://www.warsow-race.net/">
+				<img src="/images/banner/partner/banner_racenet_80x15.gif" width="80" height="15" alt="warsow-race.net" />
+			</a>
+			<a rel="external" href="http://www.warsow-arena.de/forum/">
+				<img src="/images/banner/partner/banner_warsowarena_80x15.gif" width="80" height="15" alt="warsow-arena.de" />
+			</a>
+		</div>
+	</div>
+
+</div>
+
+</body>
+</html>
+

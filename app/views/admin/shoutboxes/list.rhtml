@@ -1,0 +1,27 @@
+<h1>Listing shoutboxes</h1>
+
+<table>
+	<tr>
+		<th>Created at</th>
+		<th>Name</th>
+		<th>Message</th>
+	</tr>
+
+<% for shoutbox in @shoutboxes %>
+  <tr>
+		<td><%= render_datetime shoutbox.created_at %></td>
+		<td><%= render_nickname shoutbox.name %></td>
+		<td><%= h shoutbox.message %></td>
+    <td><%= link_to 'Show', :action => 'show', :id => shoutbox %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => shoutbox %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => shoutbox }, :confirm => 'Are you sure?', :method => :post %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @shoutbox_pages.current.previous } if @shoutbox_pages.current.previous %>
+<%= link_to 'Next page', { :page => @shoutbox_pages.current.next } if @shoutbox_pages.current.next %>
+
+<br />
+
+<%= link_to 'New shoutbox', :action => 'new' %>

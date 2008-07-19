@@ -1,0 +1,43 @@
+<h1>Listing demos</h1>
+
+<table>
+  <tr>
+		<th>id</th>
+		<th>created</th>
+		<th>updated</th>
+		<th>gamemode</th>
+		<th>time/title</th>
+		<th>map</th>
+		<th>players</th>
+  </tr>
+
+<% for demo in @demos %>
+	<tr>
+		<td><%= demo.id %></td>
+		<td><%= render_datetime demo.created_at %></td>
+		<td><%= render_datetime demo.updated_at %></td>
+		<td><%= h demo.gamemode %></td>
+		<td>
+			<%= render_time_title demo %>
+		</td>
+		<td><%= render_linked_map demo.map %></td>
+		<td><%= demo.players.map{|player| render_linked_player(player)}.join(', ') %></td>
+		<td><div class="statusbox <%= demo.status %>" title="rendering status: <%= demo.status %>"></div></td>
+    <td><%= link_to 'Show', :controller => '/demos', :action => 'show', :id => demo %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => demo %></td>
+		<td id="rerender<%=demo.id%>">
+			<%= link_to_remote 'Rerender',
+				:url => { :controller => '/webservices', :action => :update_demo, :id => demo, :appsec => '1CGBre7Rk36vjBfT8cVEhhXIjEGVaPpI', 'demo[status]' => 'uploaded' },
+				:success => '$("rerender%d").update("Requested.");' % demo.id
+			%>
+		</td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => demo }, :confirm => 'Are you sure?', :method => :post %></td>
+	</tr>
+<% end %>
+</table>
+
+<p>
+	<%= link_to 'Previous page', { :page => @demo_pages.current.previous } if @demo_pages.current.previous %>
+	<%= link_to 'Next page', { :page => @demo_pages.current.next } if @demo_pages.current.next %>
+</p>
+

@@ -1,0 +1,12 @@
+<h1>Listing players.</h1>
+
+<div class="player_list">
+	<%
+		for player in @players
+			label = 'demo'
+			label = label.pluralize if player.demos.length > 1
+	%>
+		<%= '<nobr>%s <sup>%d %s</sup></nobr>' % [ render_linked_player(player), player.demos.length, label ] %>
+	<% end %>
+</div>
+

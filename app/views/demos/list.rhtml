@@ -1,0 +1,37 @@
+<h1>
+	Latest demos.
+	<%= link_to '<img src="/images/rss.png" width="16" height="16" alt="rss demo feed" />',
+		{:action => 'rss',
+		:format => 'xml'},
+		:style => "border-bottom:0"
+	%>
+</h1>
+
+<table>
+	<tr>
+		<th>Uploaded</th>
+		<th>Mode</th>
+		<th>Time/Title</th>
+		<th>Map</th>
+		<th>Players</th>
+	</tr>
+
+<% for demo in @demos %>
+	<tr>
+		<td><%= render_datetime demo.created_at %></td>
+		<td><%= h demo.gamemode %></td>
+		<td>
+			<%= render_time_title demo %>
+		</td>
+		<td><%= render_linked_map demo.map %></td>
+		<td><%= demo.players.map{|player| render_linked_player(player)}.join(', ') %></td>
+		<td><div class="statusbox <%= demo.status %>" title="rendering status: <%= demo.status %>"></div></td>
+		<td><%= link_to 'Play', :action => 'show', :id => demo %></td>
+	</tr>
+<% end %>
+</table>
+
+<div style="text-align: center; padding-top: 1em">
+	<%= will_paginate @demos, :inner_window => 2, :outer_window => 0 %>
+</div>
+

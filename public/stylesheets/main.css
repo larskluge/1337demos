@@ -1,0 +1,191 @@
+body
+{
+	color: #999;
+	background-color: #102863;
+	font-family: verdana;
+	font-size: 10px;
+}
+
+img
+{
+	vertical-align: top;
+	border: 0;
+}
+
+h1
+{
+	clear: both;
+}
+
+td, th
+{
+	padding: 0.15em 0.5em;
+}
+
+a, a:link, a:active, a:visited, a:focus, a:hover
+{
+	color: white;
+	text-decoration: none;
+}
+
+a:focus, a:hover
+{
+	border-bottom: 1px dashed orange;
+	background: transparent;
+}
+
+.error
+{
+	color: red;
+	font-weight: bold;
+}
+
+
+/* Warsow playername colors */
+
+.c0, .c1, .c2, .c3, .c4, .c5, .c6, .c7, .c8, .c9
+{
+	font-weight: bold;
+}
+
+.c0
+{
+	color: black;
+}
+
+.c1
+{
+	color: red;
+}
+
+.c2
+{
+	color: #0F0; /* green */
+}
+
+.c3
+{
+	color: yellow;
+}
+
+.c4
+{
+	color: #00F; /* blue */
+}
+
+.c5
+{
+	color: cyan;
+}
+
+.c6
+{
+	color: magenta;
+}
+
+.c7
+{
+	color: white;
+}
+
+.c8
+{
+	color: orange;
+}
+
+.c9
+{
+	color: gray;
+}
+
+
+/* Nav */
+
+ul#nav
+{
+	list-style-type: none;
+	margin: 0pt;
+	padding: 0pt;
+	vertical-align: top;
+	width: 100%;
+	overflow: hidden;
+	display: block;
+}
+
+ul#nav li {
+	margin: 1px 0pt;
+	padding: 1pt;
+	position: relative;
+	float: left;
+}
+
+ul#nav li a,
+ul#nav li a:link,
+ul#nav li a:active,
+ul#nav li a:visited
+{
+	background-color:#EEEEEE;
+	border:medium none;
+	color:#333333;
+	display:block;
+	font-weight:bold;
+	margin:0pt;
+	padding:4px 10px 3px;
+	text-decoration:none;
+}
+
+ul#nav li a:hover,
+ul#nav li a:focus
+{
+	background-color: darkred; /* #7099C2; */
+	color: white;
+}
+
+
+
+
+
+/* Maps */
+
+.map_list
+{
+	clear: both;
+	overflow: hidden;
+}
+
+.map_image
+{
+	background-color: #eee;
+	border: 1px solid #999;
+	padding: 5px;
+	margin: 20px 0;
+	width: 400px;
+}
+
+.map_image_label
+{
+	padding-top: 5px;
+	font-weight: bold;
+	color: black;
+	text-align: center;
+	font-size: 14px;
+}
+
+.map_image_thumb
+{
+	background-color: #eee;
+	border: 1px solid #999;
+	padding: 3px;
+	margin: 20px;
+	width: 200px;
+	float: left;
+}
+
+.map_image_thumb_label
+{
+	padding-top: 3px;
+	font-weight: bold;
+	color: black;
+	text-align: center;
+}
+

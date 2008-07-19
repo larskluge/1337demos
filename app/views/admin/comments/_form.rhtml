@@ -1,0 +1,19 @@
+<%= error_messages_for 'comment' %>
+
+<!--[form:comment]-->
+<p><label for="comment_name">Name</label><br/>
+<%= text_field 'comment', 'name'  %></p>
+
+<p><label for="comment_message">Message</label><br/>
+<%= text_area 'comment', 'message'  %></p>
+
+<p><label for="comment_commentable_type">Commentable type</label><br/>
+<%= text_field 'comment', 'commentable_type'  %></p>
+
+<p><label for="comment_created_at">Created at</label><br/>
+<%= datetime_select 'comment', 'created_at'  %></p>
+
+<p><label for="comment_updated_at">Updated at</label><br/>
+<%= datetime_select 'comment', 'updated_at'  %></p>
+<!--[eoform:comment]-->
+

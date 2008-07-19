@@ -1,0 +1,10 @@
+<%= error_messages_for 'shoutbox' %>
+
+<!--[form:shoutbox]-->
+<p class="shout_name"><label for="shoutbox_name">Name</label><br/>
+<%= text_field 'shoutbox', 'name', :size => 40 %></p>
+
+<p><label for="shoutbox_message">Message</label><br/>
+<%= text_area 'shoutbox', 'message', :cols => 40, :rows => 3  %></p>
+<!--[eoform:shoutbox]-->
+

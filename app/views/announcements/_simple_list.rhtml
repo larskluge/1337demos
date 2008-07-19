@@ -1,0 +1,9 @@
+
+<% for announcement in @announcements do %>
+		<div class="date">
+			<%= render_datetime announcement.created_at %>
+		</div>
+		<div class="message">
+			<%= render :inline => announcement.message %>
+		</div>
+<% end %>

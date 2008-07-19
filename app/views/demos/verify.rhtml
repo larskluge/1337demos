@@ -1,0 +1,46 @@
+<h1>Verify information.</h1>
+
+<% form_tag :action => 'update', :id => @demo, :layout => 'true' do %>
+
+	<%= error_messages_for 'demo' %>
+
+	<table>
+		<tr>
+			<td>Filename</td>
+			<td><%= @demo.demofile.filename %></td>
+		</tr>
+		<tr>
+			<td>Version</td>
+			<td>wd<%= @demo.version %></td>
+		</tr>
+		<tr>
+			<td>Map</td>
+			<td><%= @demo.map.name %></td>
+		</tr>
+		<tr>
+			<td>Gamemode</td>
+			<td><%= @demo.gamemode %></td>
+		</tr>
+
+<%= render :partial => @demo.gamemode %>
+
+		<tr>
+			<td>All information correct? <sup>*</sup></td>
+			<td>
+				<%= radio_button 'demo', 'data_correct', true %> yes
+				<%= radio_button 'demo', 'data_correct', false %> no
+			</td>
+		</tr>
+	</table>
+
+	<p>
+		<%= submit_tag 'Submit' %>
+	</p>
+
+	<p>
+		<sup>*</sup>
+		Informations are also correct if a nickname changed since recording this demo. Nicknames can be merged later.
+	</p>
+
+<% end %>
+

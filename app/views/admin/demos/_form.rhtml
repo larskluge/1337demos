@@ -1,0 +1,15 @@
+<%= error_messages_for 'demo' %>
+
+<!--[form:demo]-->
+
+<p>ID<br /><%= @demo.id %></p>
+
+<% if @demo.gamemode == 'freestyle' %>
+
+<p><label for="demo_title">Title</label><br/>
+<%= text_field 'demo', 'title'  %></p>
+
+<% end %>
+
+<!--[eoform:demo]-->
+

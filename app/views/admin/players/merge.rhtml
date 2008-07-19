@@ -1,0 +1,77 @@
+<style type="text/css">
+
+#all_players, #aliases
+{
+	overflow: visible;
+	padding: 0 20px;
+}
+
+#all_players div
+{
+	float: left;
+	margin: 0.5em;
+	cursor: move;
+}
+
+#aliases
+{
+	overflow: hidden;
+	border: 1px dashed #999;
+	padding: 0.5em;
+}
+
+#aliases div
+{
+	float: left;
+	margin: 0.5em;
+}
+
+</style>
+
+
+<p>
+	<b>Nickname:</b>
+	<%= render_nickname @player.main_nickname.nickname %>
+	(<%= h @player.main_nickname.nickname %>)
+</p>
+
+
+
+<p>
+	<b>Aliases:</b>
+</p>
+<div id="aliases">
+	<%= render :partial => 'merge_players' %>
+</div>
+
+<div style="clear: both"></div>
+
+
+
+<p>
+	<strong>Available players to merge with:</strong>
+</p>
+<div id="all_players">
+	<% for player in @players %>
+		<div id="player_<%= player.id %>">
+			<%= render_nickname player.main_nickname.nickname %>
+		</div>
+		<%= draggable_element "player_#{player.id}", :revert => false %>
+	<% end %>
+</div>
+
+<div style="clear: both"></div>
+
+<p>
+	<%= link_to 'Back', :action => 'list' %>
+</p>
+
+
+
+
+
+<%= drop_receiving_element('aliases',
+														:update => 'aliases',
+														:url => { :action => 'merge_players', :source_player => @player.id }) %>
+
+

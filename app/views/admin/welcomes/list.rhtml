@@ -1,0 +1,38 @@
+<% if @demos.length == 0 %>
+	<p>Everything looks fine. =)</p>
+<% else %>
+
+	<h1>Demos having trouble</h1>
+
+	<table>
+		<tr>
+			<th>id</th>
+			<th>created</th>
+			<th>gamemode</th>
+		</tr>
+
+	<% for demo in @demos %>
+		<tr>
+			<td><%= demo.id %></td>
+			<td><%= render_datetime demo.created_at %></td>
+			<td><%= h demo.gamemode %></td>
+			<td style="color: red"><%= (demo.data_correct.nil?) ? 'NOT VERIFIED' : 'DATA INCORRECT' %></td>
+			<td><%= link_to 'Verify', :controller => '/demos', :action => 'verify', :id => demo %></td>
+			<td><%= link_to 'Edit', :action => 'edit', :id => demo %></td>
+			<td id="rerender<%=demo.id%>">
+				<%= link_to_remote 'Rerender',
+					:url => { :controller => '/webservices', :action => :update_demo, :id => demo, :appsec => '1CGBre7Rk36vjBfT8cVEhhXIjEGVaPpI', 'demo[status]' => 'uploaded' },
+					:success => '$("rerender%d").update("Requested.");' % demo.id
+				%>
+			</td>
+			<td><%= link_to 'Destroy', { :action => 'destroy', :id => demo }, :confirm => 'Are you sure?', :method => :post %></td>
+		</tr>
+	<% end %>
+	</table>
+
+	<p>
+		<%= link_to 'Previous page', { :page => @demo_pages.current.previous } if @demo_pages.current.previous %>
+		<%= link_to 'Next page', { :page => @demo_pages.current.next } if @demo_pages.current.next %>
+	</p>
+
+<% end %>

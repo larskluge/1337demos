@@ -1,0 +1,23 @@
+<h1>Latest comments.</h1>
+
+<table>
+	<tr>
+		<th>Comment</th>
+		<th>By</th>
+		<th>On</th>
+	</tr>
+
+<% for comment in @comments %>
+	<tr>
+		<td><%= h comment.message %></td>
+		<td class="nowrap"><%= render_nickname comment.name %></td>
+		<td class="nowrap"><%= comment.demo.players.map{|player| render_linked_player(player)}.join(', ') %> on <%= render_linked_map comment.demo.map %></td>
+		<td class="nowrap"><%= link_to 'Play', :controller => 'demos', :action => 'show', :id => comment.demo %></td>
+	</tr>
+<% end %>
+</table>
+
+<div style="text-align: center; padding-top: 1em">
+	<%= will_paginate @comments %>
+</div>
+

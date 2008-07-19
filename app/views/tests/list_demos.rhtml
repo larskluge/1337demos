@@ -1,0 +1,46 @@
+<style text="text/css">
+
+.even td
+{
+	background-color: #eee;
+}
+
+.odd td
+{
+	background-color: #ddd;
+}
+
+</style>
+
+<table>
+	<tr>
+		<th>valid</th>
+		<th>Filename</th>
+		<th>version</th>
+		<th>mapname</th>
+		<th>time</th>
+		<th>playernames</th>
+		<th>scoreboards</th>
+		<th>gamemode</th>
+		<th>player</th>
+		<th>basegamedir</th>
+		<th>gamedir</th>
+	</tr>
+
+	<% i = 0; for dr in @drs %>
+	<tr class="<%= (i % 2 == 0) ? 'even' : 'odd'%>">
+		<td><%= dr.valid %></td>
+		<td><%= File.basename(dr.filename) %></td>
+		<td><%= dr.version %></td>
+		<td><%= dr.mapname %></td>
+		<td><%= dr.time %></td>
+		<td><%= dr.playernames.collect{|name| render_nickname(name)}.join(', ') %></td>
+		<td><%= dr.scoreboards.join('<br />') %></td>
+		<td><%= dr.gamemode %></td>
+		<td><%= dr.player %></td>
+		<td><%= dr.basegamedir %></td>
+		<td><%= dr.gamedir %></td>
+	</tr>
+	<% i += 1; end %>
+</table>
+

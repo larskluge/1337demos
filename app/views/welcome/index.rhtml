@@ -1,0 +1,47 @@
+<h1>Welcome dude.</h1>
+
+<table>
+	<tr>
+		<td style="vertical-align: top; padding: 0">
+			<p>
+				Welcome to the place of the best warsow demos - <a href="http://1337demos.com">1337demos.com</a>.
+				<br />
+				At this place you can share the demos you are proud of
+				and let everybody watch them online.
+				<br />
+				I hope you enjoy this place - let me know :-)
+			</p>
+			<p>
+				<%= render_nickname '^7soh^8#^9die^1.^9viper' %>
+			</p>
+
+			<p>
+				<h2>News:</h2>
+				<div id="news">
+					<%= render :partial => '/announcements/simple_list' %>
+				</div>
+			</p>
+
+			<p>
+				<h2>Roadmap:</h2>
+				<ol>
+					<li>Rating system for maps and game mode-dependent for demos</li>
+					<li>Overview of all maps on 1 page</li>
+					<li>Add support for more games/gamemodes</li>
+					<li>HOWTO record a demo and other HOWTOs, FAQ, about, contact, etc.</li>
+					<li>Player registration with special features! =)</li>
+					<li>Sound support</li>
+					<li>(sticky) Improve rendering</li>
+				</ol>
+			</p>
+		</td>
+
+		<td style="vertical-align: top; padding: 0 0 0 20px">
+			<%= render :partial => '/shoutboxes/compact' %>
+			<p>
+				<%= will_paginate @shoutboxes, :inner_window => 0, :outer_window => 0 %>
+			</p>
+		</td>
+	</tr>
+</table>
+

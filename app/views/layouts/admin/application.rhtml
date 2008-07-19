@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+			 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+	<title>
+		<%=
+			if @title
+				"#{@title} - 1337demos.com"
+			else
+				([controller.controller_name] << (" // " + controller.action_name if controller.action_name != 'index') << " - 1337demos.com").compact.join
+			end
+		%>
+	</title>
+	<%= stylesheet_link_tag 'scaffold' %>
+	<%= stylesheet_link_tag 'layout_2007-10/main' %>
+</head>
+<body>
+
+<div id="main">
+
+	<div id="header_outer">
+		<div style="position: absolute; color: white; font-size: 16px; font-weight: bold; margin: 33px 0 0 20px">ADMIN AREA</div>
+		<div id="header_inner">
+			<div id="header_logo">
+				<ul id="nav">
+					<% for item in [
+						{:name => 'Home', :controller => 'welcomes', :action => 'index'},
+						{:name => 'Announcements', :controller => 'announcements', :action => 'index'},
+						{:name => 'Shouts', :controller => 'shoutboxes', :action => 'index'},
+						{:name => 'Demos', :controller => 'demos', :action => 'index'},
+						{:name => 'Players', :controller => 'players', :action => 'index'},
+						{:name => 'Comments', :controller => 'comments', :action => 'index'}
+						]
+
+						options = item.clone
+						options.delete :name
+						attr = (item[:controller] == controller.controller_name) ? {:class => 'active'} : nil
+						%>
+
+						<li><%= link_to item[:name], options, attr  %></li>
+					<% end %>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<div id="content">
+		<p style="color: green"><%= flash[:notice] %></p>
+
+		<%= yield  %>
+	</div>
+
+	<p id="footer">
+		!! ALPHA VERSION !!
+	</p>
+
+</div>
+
+</body>
+</html>

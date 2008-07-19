@@ -1,0 +1,20 @@
+<div id="player">
+	<!--<a href="http://www.macromedia.com/go/getflashplayer" target="_blank">Get Flash Player 9.0.115 or later</a> to see this video.-->
+	<a target="_blank" href="http://www.adobe.com/go/getflashplayer">
+		<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
+	</a>
+</div>
+
+
+
+<script type="text/javascript">
+
+var flashvars = {};
+flashvars.file = "<%= @demo.video_file %>";
+flashvars.image = "<%= request.protocol + request.host_with_port + '/images/maps/thumbs/384x288/' + @demo.map_id.to_s %>.jpeg";
+var params = {};
+params.allowfullscreen = "true";
+var attributes = {};
+swfobject.embedSWF("/flashes/mediaplayer.swf", "player", "384", "308", "9.0.115", "/flashes/expressInstall.swf", flashvars, params, attributes);
+
+</script>

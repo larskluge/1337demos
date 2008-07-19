@@ -1,0 +1,8 @@
+<% for column in Shoutbox.content_columns %>
+<p>
+  <b><%= column.human_name %>:</b> <%=h @shoutbox.send(column.name) %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', :action => 'edit', :id => @shoutbox %> |
+<%= link_to 'Back', :action => 'list' %>
