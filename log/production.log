@@ -1,0 +1,11 @@
+
+
+Processing MapsController#index (for 78.54.19.230 at 2008-07-19 03:17:18) [GET]
+  Session ID: BAh7BzoMY3NyZl9pZCIlMzFlNDE1NmU0NDRkMmFjODE4N2YwZjdlNDNlMTY2
+YjYiCmZsYXNoSUM6J0FjdGlvbkNvbnRyb2xsZXI6OkZsYXNoOjpGbGFzaEhh
+c2h7AAY6CkB1c2VkewA=--ef647ca6ec2c1b5169a1ba5d6ba99211b4fac020
+  Parameters: {"action"=>"index", "controller"=>"maps"}
+Rendering template within layouts/application_2008
+Rendering maps/list
+Cookie set: flash=%7B%7D; path=/
+Completed in 0.06589 (15 reqs/sec) | Rendering: 0.03707 (56%) | DB: 0.00549 (8%) | 200 OK [http://new.1337demos.com/maps]
