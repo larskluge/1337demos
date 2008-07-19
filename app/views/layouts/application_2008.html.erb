@@ -43,30 +43,6 @@
 				<div class="inner_right">
 					<div class="inner">
 						<%= render_mainmenu(@mainmenu) %>
-						<!--
-						<ul class="nav">
-							<% for item in [
-								{:name => 'Home', :controller => 'welcome', :action => 'index'},
-								{:name => 'Demos', :controller => 'demos', :action => 'index'},
-								{:name => 'Videos', :controller => 'demos', :action => 'index'},
-								#{:name => 'Comments', :controller => 'comments', :action => 'index'},
-								#{:name => 'Maps', :controller => 'maps', :action => 'index'},
-								{:name => 'Players', :controller => 'players', :action => 'index'},
-								#{:name => 'Settings', :controller => 'settings', :action => 'index'},
-								{:name => 'Extras', :controller => 'settings', :action => 'index'},
-								{:name => 'Upload', :controller => 'demofiles', :action => 'new'}#,
-								#{:name => 'About', :controller => 'welcome', :action => 'about'}
-								]
-
-								options = item.clone
-								options.delete :name
-								attr = (item[:controller] == controller.controller_name && item[:action] == controller.action_name) ? {:class => 'active'} : nil
-								%>
-
-								<li><%= link_to item[:name], options, attr  %></li>
-							<% end %>
-						</ul>
-						-->
 					</div>
 				</div>
 			</div>
