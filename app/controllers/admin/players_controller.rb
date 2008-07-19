@@ -1,15 +1,7 @@
-class Admin::PlayersController < ApplicationController
-	requires_authentication :using => Proc.new{ |username, password| username == 'admin' && password == 'vip2067' },
-													:realm => 'Secret Magic Happy Cloud'
-
-	layout '/admin/application'
+class Admin::PlayersController < Admin::ApplicationController
 
 	# caching
 	cache_sweeper :player_sweeper, :only => [:create, :update, :destroy]
-
-	# GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-	verify :method => :post, :only => [ :destroy, :create, :update ],
-				 :redirect_to => { :action => :list }
 
 
 
@@ -19,7 +11,8 @@ class Admin::PlayersController < ApplicationController
 	end
 
 	def list
-		@player_pages, @players = paginate :players, :per_page => 50, :order => 'created_at DESC'
+		@players = Player.paginate(:page => params[:page],
+			:per_page => 50, :order => 'created_at DESC')
 	end
 
 	def show

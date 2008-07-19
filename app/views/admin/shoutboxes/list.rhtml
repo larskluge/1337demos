@@ -19,8 +19,9 @@
 <% end %>
 </table>
 
-<%= link_to 'Previous page', { :page => @shoutbox_pages.current.previous } if @shoutbox_pages.current.previous %>
-<%= link_to 'Next page', { :page => @shoutbox_pages.current.next } if @shoutbox_pages.current.next %>
+<div style="text-align: center; padding-top: 1em">
+	<%= will_paginate @shoutboxes, :inner_window => 2, :outer_window => 0 %>
+</div>
 
 <br />
 

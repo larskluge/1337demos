@@ -21,8 +21,7 @@
 <% end %>
 </table>
 
-<p>
-	<%= link_to 'Previous page', { :page => @announcement_pages.current.previous } if @announcement_pages.current.previous %>
-	<%= link_to 'Next page', { :page => @announcement_pages.current.next } if @announcement_pages.current.next %>
-</p>
+<div style="text-align: center; padding-top: 1em">
+	<%= will_paginate @announcements, :inner_window => 2, :outer_window => 0 %>
+</div>
 

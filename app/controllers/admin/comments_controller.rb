@@ -1,8 +1,4 @@
-class Admin::CommentsController < ApplicationController
-	requires_authentication :using => Proc.new{ |username, password| username == 'admin' && password == 'vip2067' },
-													:realm => 'Secret Magic Happy Cloud'
-
-	layout '/admin/application'
+class Admin::CommentsController < Admin::ApplicationController
 
 	# caching
 	cache_sweeper :comment_sweeper, :only => [:create, :update, :destroy]
@@ -19,7 +15,8 @@ class Admin::CommentsController < ApplicationController
 	end
 
 	def list
-		@comment_pages, @comments = paginate :comments, :per_page => 50, :order => 'updated_at DESC'
+		@comments = Comment.paginate(:page => params[:page],
+			:per_page => 50, :order => 'updated_at DESC')
 	end
 
 	def show
