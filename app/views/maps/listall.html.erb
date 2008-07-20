@@ -10,7 +10,7 @@
 		<tr>
 			<td><%= render_linked_map map %></td>
 			<td><%= map.demos.map { |demo| 1 if demo.gamemode == 'freestyle' || (demo.gamemode == 'race' && !demo.position.nil?) }.compact.length %></td>
-			<td><%= render_linked_player(get_first_player(map)) || '-' %></td>
+			<td><%= render_linked_player(map.get_first_player) || '-' %></td>
 		</tr>
 	<% end %>
 </table>
