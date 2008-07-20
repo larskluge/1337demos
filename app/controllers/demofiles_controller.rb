@@ -10,10 +10,6 @@ class DemofilesController < ApplicationController
 		render :action => 'new'
 	end
 
-	# GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-	verify :method => :post, :only => [ :create ],
-				 :redirect_to => { :action => :new }
-
 	def new
 		@title = 'upload'
 		@demofile = Demofile.new
@@ -38,7 +34,7 @@ class DemofilesController < ApplicationController
 			# map
 			map = Map.find_by_name(dr.mapname) || Map.new(:name => dr.mapname)
 
-			begin
+			#begin
 				Demofile.transaction do
 					Demo.transaction do
 						Map.transaction do
@@ -55,9 +51,9 @@ class DemofilesController < ApplicationController
 						end
 					end
 				end
-			rescue Exception => e
-				@demofile.errors.add_to_base 'AAAAAAAAAAAAARG ' + e.message
-			end
+			#rescue Exception => e
+			#	@demofile.errors.add_to_base 'AAAAAAAAAAAAARG ' + e.message
+			#end
 		end
 
 		render :action => 'new'
@@ -69,7 +65,7 @@ class DemofilesController < ApplicationController
 
 
 
-
+=begin
 	def create2
 		ud = params[:demofile][:uploaded_data]
 		file_sent = [String, StringIO].include?(ud.class) && ud.size == 0
@@ -146,4 +142,6 @@ class DemofilesController < ApplicationController
 			render :action => 'new'
 		end
 	end
+=end
+
 end

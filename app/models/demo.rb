@@ -4,7 +4,7 @@ class Demo < ActiveRecord::Base
 	#belongs_to :player
 	has_and_belongs_to_many :players
 	belongs_to :map
-	belongs_to :demofile
+	belongs_to :demofile, :dependent => :destroy
 	has_many :comments, :as => :commentable, :dependent => :destroy, :order => 'created_at ASC'
 
 	validates_presence_of :map_id

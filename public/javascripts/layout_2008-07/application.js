@@ -91,6 +91,12 @@ function demos()
 	$('#demo_comments_form_head a:first').click(function() {
 		$('#demo_comments_form_body').toggle('slow');
 	});
+
+	// embed_code: select complete source code on click
+	$('#embed_code').click(function() {
+		$(this).focus();
+		$(this).select();
+	});
 }
 
 

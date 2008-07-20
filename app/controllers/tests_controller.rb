@@ -5,6 +5,7 @@ class TestsController < ApplicationController
 	SYS_DEMOFILES = RAILS_ROOT + '/data/test_demos/warsow_0.4/'
 
 
+
 	def index
 
 	end

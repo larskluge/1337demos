@@ -1,14 +1,12 @@
 class SettingsController < ApplicationController
 	@@video_players = ['flash', 'quicktime']
 
+
+
 	def index
 		show
 		render :action => 'show'
 	end
-
-	# GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-	verify :method => :post, :only => [ :update ],
-				 :redirect_to => { :action => :show }
 
 	def show
 		@title = "settings"

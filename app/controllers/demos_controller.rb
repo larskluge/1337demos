@@ -8,10 +8,6 @@ class DemosController < ApplicationController
 	cache_sweeper :player_sweeper, :only => [:update]
 	cache_sweeper :comment_sweeper, :only => [:create_comment]
 
-	# GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-	verify :method => :post, :only => [ :update, :create_comment ],
-	       :redirect_to => { :action => :index }
-
 
 
 	def index

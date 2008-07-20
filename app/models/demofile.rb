@@ -8,7 +8,7 @@ class Demofile < ActiveRecord::Base
 	@read_demo = nil
 	@gametype = 'race'
 
-	acts_as_attachment :storage => :file_system, :max_size => 2.megabytes
+	has_attachment :storage => :file_system, :max_size => 2.megabytes
 	validates_as_attachment
 
 
@@ -48,9 +48,13 @@ class Demofile < ActiveRecord::Base
 	end
 
 
+	def attachment_data
+		self.temp_data
+	end
+
 	def generate_md5
 		return nil if size.nil?
-		self.md5 = Digest::MD5.hexdigest(attachment_data)
+		self.md5 = Digest::MD5.hexdigest(self.temp_data)
 	end
 
 
@@ -59,11 +63,13 @@ class Demofile < ActiveRecord::Base
 		return nil if size.nil?
 
 		# read demo information
-		out = Tempfile.new('tempfile')
-		out << attachment_data
-		out.close
-		dr = DemoReader.new out.path
-		File.delete out.path
+		#out = Tempfile.new('tempfile')
+		#out << self.temp_data
+		#out.close
+		#dr = DemoReader.new out.path
+		#File.delete out.path
+
+		dr = DemoReader.new self.temp_path
 
 		@read_demo = dr if dr.valid
 	end

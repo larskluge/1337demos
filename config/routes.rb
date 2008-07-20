@@ -33,13 +33,13 @@ ActionController::Routing::Routes.draw do |map|
 
 	# See how all your routes lay out with "rake routes"
 
-	# Install the default routes as the lowest priority.
-	map.connect ':controller/:action/:id'
-	map.connect ':controller/:action/:id.:format'
+	# admin area
+	map.namespace :admin do |admin|
+		admin.root :controller => 'welcomes'
+		#map.connect '/admin', :controller => '/admin/welcomes', :layout => 'true'
+		#map.connect '/admin/:controller/:action/:id'        , :layout => 'true'
+	end
 
-
-	map.connect '/admin', :controller => '/admin/welcomes', :layout => 'true'
-	map.connect '/admin/:controller/:action/:id'        , :layout => 'true'
 
 
 	# You can have the root of your site routed by hooking up ''
@@ -103,15 +103,17 @@ ActionController::Routing::Routes.draw do |map|
 #	#	:requirements => { :page => /\d+/ },
 #	#	:layout => 'false',
 #	#	:page => nil
-    #
-    #
-    #
-	## Install the default route as the lowest priority.
-	#map.connect ':controller/:action/:id.:format', :layout => 'true'
-	#map.connect ':controller/:action/:id'        , :layout => 'true'
-	#map.connect ':controller/:action.:format'    , :layout => 'true'
-    #
-	#map.connect '/admin', :controller => '/admin/welcomes', :layout => 'true'
-	#map.connect '/admin/:controller/:action/:id'        , :layout => 'true'
+
+
+
+	# Install the default routes as the lowest priority.
+	map.connect ':controller/:action.:format'   # , :layout => 'true'
+	map.connect ':controller/:action/:id'
+	map.connect ':controller/:action/:id.:format'
+
+	# Install the default routes with layout option
+	map.connect ':controller/:action.:format'     , :layout => 'true'
+	map.connect ':controller/:action/:id'         , :layout => 'true'
+	map.connect ':controller/:action/:id.:format' , :layout => 'true'
 
 end
