@@ -75,6 +75,13 @@ module ApplicationHelper
 		end
 	end
 
+	def get_first_player(map)
+		demos = map.demos.map { |d| d if d.gamemode == 'race' }.compact
+		return if demos.empty?
+
+		demos.sort { |x,y| x.time <=> x.time }.first.players.first
+	end
+
 
 
 

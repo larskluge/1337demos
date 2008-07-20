@@ -1,28 +1,17 @@
 <h1>Complete map list.</h1>
 
-<div class="map_list">
-	<% if @maps.length == 0 %>
-		<p class="error">
-			No maps found.
-		</p>
-	<% end %>
+<table>
+	<tr>
+		<th>map</th>
+		<th># demos</th>
+		<th>#1 if racemap</th>
+	</tr>
 	<% for map in @maps %>
-		<div class="map_image_thumb">
-			<a href="<%= url_for :action => 'show', :id => map %>">
-				<img src="/images/maps/thumbs/200x150/<%= map.id %>.jpeg" width="200" height="150" alt="<%= map.name %>" />
-				<div class="map_image_thumb_label"><%= map.name %>
-					<!--<br />
-					<span class="no1">#1</span> <%= #render_nickname(map.demos.sort { |x,y| x.time <=> y.time }.first.player.main_nickname.nickname)
-					%>-->
-				</div>
-			</a>
-		</div>
+		<tr>
+			<td><%= render_linked_map map %></td>
+			<td><%= map.demos.map { |demo| 1 if demo.gamemode == 'freestyle' || (demo.gamemode == 'race' && !demo.position.nil?) }.compact.length %></td>
+			<td><%= render_linked_player(get_first_player(map)) || '-' %></td>
+		</tr>
 	<% end %>
-</div>
-
-<div style="clear: both"></div>
-
-<div style="text-align: center">
-	<%= will_paginate @maps, :inner_window => 2, :outer_window => 0 %>
-</div>
+</table>
 

@@ -28,7 +28,7 @@ class MapsController < ApplicationController
 
 	def listall
 		@maps = Map.all(
-			:include => :demos,
+			:include => { :demos => :players },
 			:conditions => 'demos.data_correct',
 			:order => 'name')
 	end
