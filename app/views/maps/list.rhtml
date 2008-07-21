@@ -1,11 +1,11 @@
 <h1>Listing maps.</h1>
 
 <p>
-	<form action="<%= url_for :action => 'search', :layout => 'true' %>" method="post">
+	<% form_for :map, :url => { :action => 'search', :layout => 'true' } do |f| %>
 		<input name="mapsearch" size="30" type="text" value="<%= @mapsearch %>" />
 		<%= submit_tag 'Search' %>
 		<input type="button" value="Clear" onclick="window.location.href='<%= url_for :action => 'clearsearch' %>'" />
-	</form>
+	<% end %>
 </p>
 
 <div class="map_list">
