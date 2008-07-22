@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
 	def self.mainmenu
 		#Rails.cache.fetch('mainmenu') {
-			self.load_recursive(Category.first :conditions => '`published` = 1')
+			self.load_recursive(Category.first({:conditions => '`published` = 1'}))
 		#}
 	end
 
