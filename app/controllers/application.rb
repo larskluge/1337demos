@@ -15,8 +15,15 @@ class ApplicationController < ActionController::Base
 	session :session_key => '_1337demos_session_id', :session_expires_after => 1.year
 
 	layout 'application_2008'
-	attr_accessor :mainmenu
-	before_filter LoadMainMenu
+	#attr_accessor :mainmenu
+	#before_filter LoadMainMenu
+
+	def self.mainmenu
+		#Rails.cache.fetch('mainmenu') {
+			self.load_recursive(Category.first :conditions => '`published` = 1')
+		#}
+	end
+
 
 
 
@@ -44,6 +51,19 @@ class ApplicationController < ActionController::Base
 		options = {} unless options
 		options[:layout] = false if !params[:layout].nil? && params[:layout] == 'false'
 		true_render options, extra_options, &block
+	end
+
+
+
+	protected
+
+	def self.load_recursive(node)
+		return if node.nil? || node.children.empty?
+
+		node.children.each do |child|
+			load_recursive child
+		end
+		return node
 	end
 end
 

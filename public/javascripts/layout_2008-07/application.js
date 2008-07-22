@@ -89,7 +89,7 @@ function demos()
 	// animate comment form on demos details
 	$('#demo_comments_form_body').hide();
 	$('#demo_comments_form_head a:first').click(function() {
-		$('#demo_comments_form_body').toggle('slow');
+		$('#demo_comments_form_body').toggle('normal');
 	});
 
 	// embed_code: select complete source code on click
