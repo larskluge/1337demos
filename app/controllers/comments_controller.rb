@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
 
-	caches_action :index, :list
+	caches_action :index, :list, :cache_path => :cache_path.to_proc
 
 	def index
 		list

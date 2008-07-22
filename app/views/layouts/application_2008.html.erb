@@ -42,7 +42,7 @@
 			<div class="inner_left">
 				<div class="inner_right">
 					<div class="inner">
-						<% cache do %>
+					<% cache(cache_path_mainmenu) do %>
 							<%= render_mainmenu(ApplicationController::mainmenu) %>
 						<% end %>
 					</div>

@@ -18,10 +18,14 @@ class ApplicationController < ActionController::Base
 	#attr_accessor :mainmenu
 	#before_filter LoadMainMenu
 
+	helper_method :cache_path_mainmenu
+
 	def self.mainmenu
 		#Rails.cache.fetch('mainmenu') {
-			self.load_recursive(Category.first({:conditions => '`published` = 1'}))
+		#	self.load_recursive(Category.first({:conditions => '`published` = 1'}))
 		#}
+
+		Category.first({:conditions => '`published` = 1'})
 	end
 
 
@@ -32,6 +36,15 @@ class ApplicationController < ActionController::Base
 	include CacheableFlash
 
 
+
+	# extend caches_action to use a default cache path
+	#alias true_caches_action caches_action
+    #
+	#def caches_action(*actions)
+	#	options = actions.extract_options!
+	#	options[:cache_path] = :cache_path.to_proc
+	#	true_caches_action actions, options
+	#end
 
 	# extend cache 'expire_action' to make it work with and without layout rendering
 	alias true_expire_action expire_action
@@ -66,5 +79,15 @@ class ApplicationController < ActionController::Base
 		end
 		return node
 	end
+
+
+	def cache_path
+		"#{controller_name}/#{action_name}/#{params[:page] || 1}"
+	end
+
+	def cache_path_mainmenu
+		"#{controller_name}/#{action_name}/mainmenu"
+	end
+
 end
 

@@ -3,7 +3,7 @@ require 'RMagick'
 class MapsController < ApplicationController
 
 	# caching
-	caches_action :listall
+	caches_action :listall, :cache_path => :cache_path.to_proc
 
 	# GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
 	#verify :method => :post, :only => [ :mapsearch ],
