@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
 
 
 
+
 	# make flash messages cachable via cookie + js
 	include CacheableFlash
 
