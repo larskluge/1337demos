@@ -3,7 +3,7 @@ require 'tempfile'
 
 class DemofilesController < ApplicationController
 
-	caches_action :index, :new
+	caches_action :index, :new, :cache_path => :cache_path.to_proc
 
 	def index
 		new
