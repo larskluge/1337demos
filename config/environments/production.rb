@@ -22,3 +22,6 @@ config.action_view.cache_template_loading            = true
 # caching
 config.cache_store = :file_store, RAILS_ROOT + '/tmp/cache'
 
+# Disable request forgery protection
+config.action_controller.allow_forgery_protection = false
+
