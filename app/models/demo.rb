@@ -1,5 +1,4 @@
 class Demo < ActiveRecord::Base
-	@video_exists = nil
 
 	#belongs_to :player
 	has_and_belongs_to_many :players
@@ -55,9 +54,7 @@ class Demo < ActiveRecord::Base
 	end
 
 	def video_exists?
-		return @video_exists unless @video_exists.nil?
-
-		@video_exists = self.status == :rendered && File.exists?(self.video_filename)
+		self.status == :rendered && File.exists?(self.video_filename)
 	end
 
 	def video_filename
