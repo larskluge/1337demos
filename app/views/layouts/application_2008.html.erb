@@ -21,7 +21,7 @@
 	<%= stylesheet_link_tag 'layout_2008-07/content.css' %>
 
 	<%= javascript_include_tag 'layout_2008-07/jquery-1.2.6' %>
-	<%= javascript_include_tag 'layout_2008-07/jquery-ui-effects-core-1.5.2.min' %>
+	<%= javascript_include_tag 'layout_2008-07/jquery-ui-effects-1.5.2.min' %>
 	<%= javascript_include_tag 'layout_2008-07/swfobject' %>
 	<%= javascript_include_tag 'layout_2008-07/json' %>
 	<%= javascript_include_tag 'layout_2008-07/cookie' %>
@@ -63,7 +63,8 @@
 			<div class="outer_right"></div>
 			<div class="outer_middle">
 				<div class="inner">
-					<p style="color: green"><%= flash[:notice] %></p>
+					<div id="error_div_id" class="flash flash_error"></div>
+					<div id="notice_div_id" class="flash flash_notice"></div>
 
 					<%= yield  %>
 				</div>

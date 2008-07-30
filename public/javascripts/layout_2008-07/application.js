@@ -1,7 +1,21 @@
+// extend jQuery
+jQuery.fn.wait = function(delay) {
+	var delay = delay || 1000;
+	return this.animate({opacity: this.css('opacity')}, delay);
+};
+
+
+
 var stdbgcolor = '#CCCCCC';
 
 function common_content()
 {
+	// Cachable flash
+	Flash.transferFromCookies();
+	Flash.writeDataTo('error', $('#error_div_id'));
+	Flash.writeDataTo('notice', $('#notice_div_id'));
+	$('#notice_div_id').wait(1000).animate({color: 'red'}, 500).animate({color: 'green'}, 500).wait(3000).slideUp(1000);
+
 	// animate links
 	$('.content a').each(function() {
 		var elem = $(this);

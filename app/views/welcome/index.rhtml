@@ -1,6 +1,6 @@
 <h1>Welcome dude.</h1>
 
-<table>
+<table style="width: 100%">
 	<tr>
 		<td style="vertical-align: top; padding: 0">
 			<p>
@@ -35,7 +35,7 @@
 			</p>
 		</td>
 
-		<td style="vertical-align: top; padding: 0 0 0 20px">
+		<td style="vertical-align: top; padding: 0 0 0 20px; width: 240px">
 			<%= render :partial => '/shoutboxes/compact' %>
 			<p>
 				<%= will_paginate @shoutboxes, :inner_window => 0, :outer_window => 0 %>
