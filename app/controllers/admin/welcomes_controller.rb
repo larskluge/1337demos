@@ -6,7 +6,21 @@ class Admin::WelcomesController < Admin::ApplicationController
   end
 
   def list
-	  @demos = Demo.all :order => 'updated_at DESC', :conditions => 'data_correct IS NULL OR data_correct = 0'
+	@cnt_cached_files = nil
+	if RAILS_CACHE.class == ActiveSupport::Cache::FileStore
+	  @cnt_cached_files = `find "#{RAILS_CACHE.cache_path}" -type f -iname "*.cache" | wc -l`.to_i
+	end
+
+
+	@demos = Demo.all :order => 'updated_at DESC', :conditions => 'data_correct IS NULL OR data_correct = 0'
+  end
+
+  def delete_cache
+	`find "#{RAILS_CACHE.cache_path}" -type f -iname "*.cache"`.split("\n").each do |f|
+		File.delete f
+	end
+
+	redirect_to :action => 'index'
   end
 
 end

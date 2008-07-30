@@ -1,8 +1,26 @@
+<h1>Welcome.</h1>
+
+
+
+<h2>Cache</h2>
+
+<p>
+	# cached files: <%= @cnt_cached_files || 'unable to count, cache maybe not a filestore' %>
+</p>
+
+<p>
+	<% form_for :welcomes, :url => {:action => 'delete_cache'} do |f| %>
+		<%= submit_tag 'Delete cache' %>
+	<% end %>
+</p>
+
+
+
+<h2>Demos having trouble</h2>
+
 <% if @demos.length == 0 %>
 	<p>Everything looks fine. =)</p>
 <% else %>
-
-	<h1>Demos having trouble</h1>
 
 	<table>
 		<tr>
