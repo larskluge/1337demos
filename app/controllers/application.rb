@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 	protect_from_forgery # :secret => 'c111bea13c2f699f239e338712b24a4f'
 
 	# Pick a unique cookie name to distinguish our session data from others'
-	session :session_key => '_1337demos_session_id', :session_expires_after => 1.year
+	session :session_key => '1337demos_session'
 
 	layout 'application_2008'
 	#attr_accessor :mainmenu

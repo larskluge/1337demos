@@ -7,8 +7,8 @@ class Admin::WelcomesController < Admin::ApplicationController
 
   def list
 	@cnt_cached_files = nil
-	if RAILS_CACHE.class == ActiveSupport::Cache::FileStore
-	  @cnt_cached_files = `find "#{RAILS_CACHE.cache_path}" -type f -iname "*.cache" | wc -l`.to_i
+	if cache_store.class == ActiveSupport::Cache::FileStore
+		@cnt_cached_files = `find "#{cache_store.cache_path}" -type f -iname "*.cache" | wc -l`.to_i
 	end
 
 
@@ -16,7 +16,7 @@ class Admin::WelcomesController < Admin::ApplicationController
   end
 
   def delete_cache
-	`find "#{RAILS_CACHE.cache_path}" -type f -iname "*.cache"`.split("\n").each do |f|
+	`find "#{cache_store.cache_path}" -type f -iname "*.cache"`.split("\n").each do |f|
 		File.delete f
 	end
 
