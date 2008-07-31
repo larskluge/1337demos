@@ -2,7 +2,7 @@ class Admin::ApplicationController < ApplicationController
 	before_filter :authenticate
 
 
-	layout 'admin/application'
+	layout 'admin'
 
 
 	protected
