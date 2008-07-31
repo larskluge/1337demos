@@ -16,8 +16,8 @@ config.action_view.debug_rjs                         = true
 config.action_mailer.raise_delivery_errors = false
 
 # caching
-config.action_controller.perform_caching = true
-config.cache_store = :file_store, RAILS_ROOT + '/tmp/cache'
+config.action_controller.perform_caching = false
+config.cache_store = :file_store, File.join(Rails.root, 'tmp/cache')
 
 # Disable request forgery protection
 config.action_controller.allow_forgery_protection = false

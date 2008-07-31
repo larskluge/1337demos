@@ -5,16 +5,19 @@ require 'load_main_menu'
 
 class ApplicationController < ActionController::Base
 
+	# make flash messages cachable via cookie + js
+	include CacheableFlash
+
 	helper :all # include all helpers, all the time
 
 	# See ActionController::RequestForgeryProtection for details
 	# Uncomment the :secret if you're not using the cookie session store
-	protect_from_forgery # :secret => 'c111bea13c2f699f239e338712b24a4f'
+	#protect_from_forgery # :secret => 'c111bea13c2f699f239e338712b24a4f'
 
-	# Pick a unique cookie name to distinguish our session data from others'
-	session :session_key => '1337demos_session'
+	layout 'layout_2008-07'
 
-	layout 'application_2008'
+
+
 	#attr_accessor :mainmenu
 	#before_filter LoadMainMenu
 
@@ -25,15 +28,10 @@ class ApplicationController < ActionController::Base
 		#	self.load_recursive(Category.first({:conditions => '`published` = 1'}))
 		#}
 
-		Category.first({:conditions => '`published` = 1'})
+		Category.first({:conditions => '`published` = 1 AND name = "mainmenu"'})
 	end
 
 
-
-
-
-	# make flash messages cachable via cookie + js
-	include CacheableFlash
 
 
 

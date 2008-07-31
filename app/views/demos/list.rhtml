@@ -1,6 +1,6 @@
 <h1>
 	Latest demos.
-	<%= link_to '<img src="/images/rss.png" width="16" height="16" alt="rss demo feed" />',
+	<%= link_to image_tag('rss.png', :size => '16x16', :alt => 'rss demo feed'),
 		{:action => 'rss',
 		:format => 'xml'},
 		:style => "border-bottom:0"

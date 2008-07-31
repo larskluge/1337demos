@@ -138,4 +138,42 @@ module ApplicationHelper
 		h(datetime.strftime('%Y/%m/%d'))
 	end
 
+
+
+
+
+
+	# rewrite standard javascript|stylesheet|image path to active layout path
+
+	def path_to_javascript(source)
+		source = path_to_res('javascripts', source)
+		res = super
+		Rails.logger.info "--path_to_javascript: #{res}--"
+		res
+	end
+
+	def path_to_stylesheet(source)
+		source = path_to_res('stylesheets', source)
+		res = super
+		Rails.logger.info "--path_to_stylesheet: #{res}--"
+		res
+	end
+
+	def path_to_image(source)
+		source = path_to_res('images', source)
+		res = super
+		Rails.logger.info "--path_to_image: #{res}--"
+		res
+	end
+
+
+
+	protected
+
+	def path_to_res(res, source)
+		path = ['/', controller.active_layout]
+		path << "/#{res}" unless source =~ /^\//
+		path << "/#{source}"
+		return path.join
+	end
 end
