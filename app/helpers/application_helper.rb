@@ -147,23 +147,17 @@ module ApplicationHelper
 
 	def path_to_javascript(source)
 		source = path_to_res('javascripts', source)
-		res = super
-		Rails.logger.info "--path_to_javascript: #{res}--"
-		res
+		super
 	end
 
 	def path_to_stylesheet(source)
 		source = path_to_res('stylesheets', source)
-		res = super
-		Rails.logger.info "--path_to_stylesheet: #{res}--"
-		res
+		super
 	end
 
 	def path_to_image(source)
 		source = path_to_res('images', source)
-		res = super
-		Rails.logger.info "--path_to_image: #{res}--"
-		res
+		super
 	end
 
 
