@@ -43,7 +43,7 @@ module ActionView::Helpers::AssetTagHelper
 
 		if cache && ActionController::Base.perform_caching
 			joined_stylesheet_name = (cache == true ? "all" : cache) + ".css"
-			joined_stylesheet_path = File.join [Rails.public_path, path_to_stylesheets(joined_stylesheet_name)]
+			joined_stylesheet_path = File.join [Rails.public_path, path_to_stylesheet(joined_stylesheet_name)]
 
 			write_asset_file_contents(joined_stylesheet_path, my_compute_stylesheet_paths(sources))
 
@@ -67,7 +67,7 @@ module ActionView::Helpers::AssetTagHelper
 
 		if cache && ActionController::Base.perform_caching
 			joined_javascript_name = (cache == true ? "all" : cache) + ".js"
-			joined_javascript_path = File.join [Rails.public_path, path_to_javascripts(joined_javascript_name)]
+			joined_javascript_path = File.join [Rails.public_path, path_to_javascript(joined_javascript_name)]
 
 			write_asset_file_contents(joined_javascript_path, my_compute_javascript_paths(sources))
 
