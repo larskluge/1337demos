@@ -68,7 +68,7 @@ module ApplicationHelper
 	def render_time_title(demo)
 		case demo.gamemode
 			when 'freestyle'
-				demo.title.nil? ? 'n/a' : demo.title
+				demo.title.nil? ? 'n/a' : h(demo.title)
 			when 'race'
 				res = demo.position.nil? ? '' : "##{demo.position} &nbsp;"
 				res + self.render_race_time(demo.time)
