@@ -1,4 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
+
+	#map.resources :nicknames, :path_prefix => '/admin'
+
   map.resources :categories
 
 	#map.resources :cars
@@ -32,13 +35,6 @@ ActionController::Routing::Routes.draw do |map|
 	map.root :controller => "welcome"
 
 	# See how all your routes lay out with "rake routes"
-
-	# admin area
-	map.namespace :admin do |admin|
-		admin.root :controller => 'welcomes'
-		#map.connect '/admin', :controller => '/admin/welcomes', :layout => 'true'
-		#map.connect '/admin/:controller/:action/:id'        , :layout => 'true'
-	end
 
 
 
@@ -89,25 +85,35 @@ ActionController::Routing::Routes.draw do |map|
 	#map.connect ':controller/:action/p/:page',
 	#	:layout => 'true'
     #
-#	#map.connect 'players/:layout',
-#	#	:controller => 'players',
-#	#	:action => 'index',
-#	#	:requirements => { :layout => /true|false/ },
-#	#	:layout => 'true'
-#   #
-#	#map.connect 'partials',
-#	#	:controller => 'welcome',
-#	#	:layout => 'false'
-#   #
-#	#map.connect 'partials/:controller/:action/:page',
-#	#	:requirements => { :page => /\d+/ },
-#	#	:layout => 'false',
-#	#	:page => nil
+	#map.connect 'players/:layout',
+	#	:controller => 'players',
+	#	:action => 'index',
+	#	:requirements => { :layout => /true|false/ },
+	#	:layout => 'true'
+	  #
+	#map.connect 'partials',
+	#	:controller => 'welcome',
+	#	:layout => 'false'
+	  #
+	#map.connect 'partials/:controller/:action/:page',
+	#	:requirements => { :page => /\d+/ },
+	#	:layout => 'false',
+	#	:page => nil
 
+
+	# admin area
+	map.namespace :admin do |admin|
+		admin.root :controller => 'welcomes'
+
+		admin.resources :nicknames
+
+		#map.connect '/admin', :controller => '/admin/welcomes', :layout => 'true'
+		#map.connect '/admin/:controller/:action/:id'        , :layout => 'true'
+	end
 
 
 	# Install the default routes as the lowest priority.
-	map.connect ':controller/:action.:format'   # , :layout => 'true'
+	map.connect ':controller/:action.:format'
 	map.connect ':controller/:action/:id'
 	map.connect ':controller/:action/:id.:format'
 

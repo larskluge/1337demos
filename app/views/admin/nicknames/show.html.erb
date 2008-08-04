@@ -1,0 +1,8 @@
+<p>
+  <b>Nickname:</b>
+  <%= render_nickname @nickname.nickname %>
+</p>
+
+
+<%= link_to 'Edit', edit_admin_nickname_path(@nickname) %> |
+<%= link_to 'Back', admin_nicknames_path %>
