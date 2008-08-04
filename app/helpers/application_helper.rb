@@ -111,7 +111,7 @@ module ApplicationHelper
 			html = "<span class=\"c7\">#{html}</span>"
 		end
 
-		html
+		html.gsub /\^\^/, '^'
 	end
 
 
