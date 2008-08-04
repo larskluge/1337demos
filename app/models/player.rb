@@ -7,6 +7,6 @@ class Player < ActiveRecord::Base
 	validates_uniqueness_of :main_nickname_id
 
 	def main_nickname_plain
-		self.main_nickname.nickname.gsub(/\^([^\^])/){''}
+		self.main_nickname.nickname.gsub(/\^([^\^])/){''}.gsub(/\^\^/, '^')
 	end
 end

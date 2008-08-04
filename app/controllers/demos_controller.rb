@@ -57,7 +57,7 @@ class DemosController < ApplicationController
 		@demo = Demo.find params[:id]
 
 		# prevent data being modified after upload process
-		unless @demo.data_correct.nil?
+		if @demo.data_correct != true
 			redirect_to(:action => 'show', :id => @demo)
 			return
 		end
