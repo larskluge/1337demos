@@ -38,7 +38,7 @@ class Admin::PlayersController < Admin::ApplicationController
 						demos.uniq!
 						main.demos = demos
 
-						main.add_nicknames tomerge.nicknames
+						main.nicknames << tomerge.nicknames
 						main.save!
 
 						tomerge.destroy_with_transactions
