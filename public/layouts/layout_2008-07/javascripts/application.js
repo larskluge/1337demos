@@ -6,6 +6,53 @@ jQuery.fn.wait = function(delay) {
 
 
 
+
+
+function applyAjaxRating(rating)
+{
+	rating = $(rating);
+	if(rating.length == 0)
+		return false;
+
+	var type = 'POST';
+	var url = jQuery('form', rating).attr('action');
+	var data = jQuery.makeArray(
+		jQuery.map(
+			jQuery('input[type=hidden]', rating), function(e) { return $(e).attr('name') + '=' + $(e).attr('value'); }
+		)
+	);
+	data.push('rating[amount]=');
+	data = data.join('&');
+
+	jQuery('input[type=submit]', rating).click(function() {
+
+		var amount = jQuery('form select', rating).get(0).selectedIndex;
+
+		jQuery.ajax({
+			type: type,
+			url: url,
+			data: data + amount,
+			success: function(data, textStatus) {
+				// data could be xmlDoc, jsonObj, html, text, etc...
+
+				console.log('success: ' + textStatus);
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				// typically only one of textStatus or errorThrown
+				// will have info
+
+				console.log('error: ' + textStatus);
+			}
+		});
+
+		return false;
+	});
+}
+
+
+
+
+
 var stdbgcolor = '#CCCCCC';
 
 function common_content()
@@ -111,11 +158,15 @@ function demos()
 		$(this).focus();
 		$(this).select();
 	});
+
+
+
+	applyAjaxRating('.rating');
 }
 
 
 
-$(document).ready(function() {
+jQuery(function() {
 	home();
 	demos();
 

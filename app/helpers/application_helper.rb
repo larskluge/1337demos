@@ -75,6 +75,12 @@ module ApplicationHelper
 		end
 	end
 
+	def render_position(demo)
+		sprintf('%s of %d',
+			@demo.position.ordinalize,
+			@demo.map.demos.collect{|demo| (!demo.position.nil? && demo.position > 0) ? demo : nil}.compact.length)
+	end
+
 
 
 
@@ -136,6 +142,21 @@ module ApplicationHelper
 
 	def render_date(datetime)
 		h(datetime.strftime('%Y/%m/%d'))
+	end
+
+
+
+	def render_rating(rating)
+
+		if rating.rated?
+			sprintf('%.2f (%s)', rating.average, pluralize(rating.count, 'vote'))
+		else
+			#r = record.rating_range
+			#avg = (r.last - r.first) / 2.0 + r.first # std average
+			#sprintf '%.2f', avg
+
+			'(unrated)'
+		end
 	end
 end
 

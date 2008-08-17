@@ -1,4 +1,6 @@
 ActionController::Routing::Routes.draw do |map|
+  map.resources :ratings
+
 
 	#map.resources :nicknames, :path_prefix => '/admin'
 

@@ -14,7 +14,7 @@
 		<% case @demo.gamemode; when 'race' %>
 			<tr>
 				<td>Position</td>
-				<td>#<%= @demo.position %> of <%= @demo.map.demos.collect{|demo| (!demo.position.nil? && demo.position > 0) ? demo : nil}.compact.length %></td>
+				<td><%= render_position @demo %></td>
 			</tr>
 			<tr>
 				<td>Time</td>
@@ -62,6 +62,21 @@
 		<%= 'Some information may be wrong!' if @demo.data_correct == false %>
 	</p>
 <% end %>
+
+
+
+<div class="rating">
+	<% form_for :rating, nil, :url => { :controller => 'ratings', :action => 'rate' } do |f| %>
+		<%= f.hidden_field :key, :value => :default %>
+		<%= f.hidden_field :id, :value => @demo.id %>
+		<%= f.hidden_field :model, :value => 'Demo' %>
+		<%= f.select :amount, Rating.range.to_a %>
+		<%= submit_tag 'Rate' %>
+	<span id="current_rating">
+		<%= render_rating(@demo.rating(:default)) %>
+	</span>
+	<% end %>
+</div>
 
 
 
