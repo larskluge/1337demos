@@ -10,7 +10,7 @@ class Rating < ActiveRecord::Base
 	def rate(amount, ip)
 		amount = amount.to_i
 		raise(ArgumentError, "Amount #{amount} out of range #{self.range}") unless self.range.include?(amount)
-		raise(StandardError, "IP #{ip} Already voted") if last_ip == ip && Rails.env == 'production'
+		raise(StandardError, "You already voted") if last_ip == ip && Rails.env == 'production'
 
 		self.count += 1
 		self.total += amount
