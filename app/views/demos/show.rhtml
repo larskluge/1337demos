@@ -64,20 +64,7 @@
 <% end %>
 
 
-
-<div class="rating">
-	<% form_for :rating, nil, :url => { :controller => 'ratings', :action => 'rate' } do |f| %>
-		<%= f.hidden_field :key, :value => :default %>
-		<%= f.hidden_field :id, :value => @demo.id %>
-		<%= f.hidden_field :model, :value => 'Demo' %>
-		<%= f.select :amount, Rating.range.to_a %>
-		<%= submit_tag 'Rate' %>
-	<span id="current_rating">
-		<%= render_rating(@demo.rating(:default)) %>
-	</span>
-	<% end %>
-</div>
-
+<%= render :partial => '/ratings/stars_editable', :locals => { :rateable => @demo } %>
 
 
 <div class="embed">

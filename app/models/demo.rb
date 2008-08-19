@@ -1,22 +1,6 @@
 class Demo < ActiveRecord::Base
 
-	@@rating_range = 0..10
-	cattr_reader :rating_range
-	#acts_as_rated :no_rater => true, :rating_range => self.rating_range, :with_stats_table => true
-	has_many :ratings, :as => :rateable, :dependent => :destroy
-
-
-	# todo: make this better!
-	# check key
-	#
-	def rating(key)
-		key = key.to_s
-		ratings.each do |r|
-			return r if r.key == key
-		end
-		ratings.new :key => key
-	end
-
+	include FlexRating
 
 	#belongs_to :player
 	has_and_belongs_to_many :players

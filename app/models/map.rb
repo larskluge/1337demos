@@ -1,4 +1,7 @@
 class Map < ActiveRecord::Base
+
+	include FlexRating
+
 	has_many :demos
 
 	#acts_as_rated :no_rater => true

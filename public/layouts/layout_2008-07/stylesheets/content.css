@@ -163,6 +163,11 @@ form
 }
 
 
+.highscores
+{
+	margin-top: 20px;
+}
+
 .highscores .no1 .time, .highscores .no1 .player
 {
 	font-size: 200%;

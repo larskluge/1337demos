@@ -9,7 +9,7 @@ class RatingsController < ApplicationController
 			r = params[:rating]
 
 			# check params
-			raise(ArgumentError.new) unless ['Demo'].include?(r[:model])
+			raise(ArgumentError.new) unless ['Demo', 'Map'].include?(r[:model])
 			raise(ArgumentError.new) unless ['default'].include?(r[:key])
 
 			c = eval r[:model]

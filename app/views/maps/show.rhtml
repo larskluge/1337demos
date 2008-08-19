@@ -3,6 +3,8 @@
 	<div class="map_image_label"><%= @map.name %></div>
 </div>
 
+<%= render :partial => '/ratings/stars_editable', :locals => { :rateable => @map } %>
+
 <table class="highscores">
 	<tr>
 		<th>Time/Title</th>
