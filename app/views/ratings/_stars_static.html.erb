@@ -1,0 +1,13 @@
+
+<%
+
+	percent = (rating.average - rating.range.min) / (rating.range.max - rating.range.min) * 100
+
+%>
+
+<div class="rating_static" title="<%= sprintf('%.2f (%d votes)', rating.average, rating.count) %>">
+	<ul>
+		<li style="width: <%= percent %>%;" class="current-rating"></li>
+	</ul>
+</div>
+

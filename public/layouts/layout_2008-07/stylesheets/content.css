@@ -383,21 +383,28 @@ form
 
 /* Rating */
 
-.rating
+.rating, .rating_static
 {
 	display: block;
 	overflow: hidden;
+}
+
+.rating
+{
 	padding-left: 128px;
 }
 
 .rating ul,
 .rating ul a:hover,
-.rating ul .current-rating
+.rating ul .current-rating,
+.rating_static ul,
+.rating_static ul .current-rating
 {
 	background:url(../images/star.gif) left -1000px repeat-x;
 }
 
-.rating ul
+.rating ul,
+.rating_static ul
 {
 	position: relative;
 	width: 125px;
@@ -409,7 +416,8 @@ form
 	background-position: left top;
 }
 
-.rating ul li
+.rating ul li,
+.rating_static ul li
 {
 	display: inline;
 	background-image: none;
@@ -417,7 +425,8 @@ form
 }
 
 .rating ul a,
-.rating ul .current-rating
+.rating ul .current-rating,
+.rating_static ul .current-rating
 {
 	position: absolute;
 	top: 0;
@@ -472,7 +481,8 @@ form
 	z-index: 2;
 }
 
-.rating ul .current-rating
+.rating ul .current-rating,
+.rating_static ul .current-rating
 {
 	z-index: 1;
 	background-position: left center;

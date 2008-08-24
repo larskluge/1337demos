@@ -7,7 +7,7 @@
 		<%= f.select :amount, Rating.range.to_a %>
 		<%= submit_tag 'Rate' %>
 	<span id="current_rating">
-		<%= render_rating(rateable.rating(:default)) %>
+		<%= render_rating_text(rateable.rating(:default)) %>
 	</span>
 	<% end %>
 </div>

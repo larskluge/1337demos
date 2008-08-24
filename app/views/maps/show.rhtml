@@ -7,6 +7,7 @@
 
 <table class="highscores">
 	<tr>
+		<th></th>
 		<th>Time/Title</th>
 		<th>Player</th>
 		<th>Uploaded</th>
@@ -14,12 +15,13 @@
 	</tr>
 	<% for demo in @demos %>
 		<tr class="no<%= demo.position %>">
-			<!--<td><%= demo.position.nil? ? '' : "##{demo.position}" %></td>-->
+			<td>
+				<%= render_rating_static(demo.rating(:default)) if demo.gamemode != 'race' %>
+			</td>
 			<td<%= ' class="time"' if demo.gamemode == 'race' %>><%= render_time_title demo %></td>
 			<td class="player"><%= render_linked_players demo.players %></td>
 			<td><%= render_datetime demo.created_at %></td>
 			<td><%= link_to 'Play', :controller => 'demos', :action => 'show', :id => demo %></td>
-			<td><%= link_to 'Download', demo.demofile.public_filename %></td>
 		</tr>
 	<% end %>
 </table>

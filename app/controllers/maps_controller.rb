@@ -51,9 +51,9 @@ class MapsController < ApplicationController
 		@map = Map.find(params[:id])
 		@title = "demos on #{@map.name}"
 
-		all_demos = Demo.find :all,
-			:conditions => ["data_correct AND map_id = ?", @map.id],
-			:order => 'time, created_at DESC'
+		all_demos = Demo.all :conditions => ["data_correct AND map_id = ?", @map.id],
+			:order => 'time, ratings.average DESC, demos.created_at DESC',
+			:include => 'ratings'
 
 		# just show best time of each player
 		known_players = []

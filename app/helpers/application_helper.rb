@@ -146,7 +146,7 @@ module ApplicationHelper
 
 
 
-	def render_rating(rating)
+	def render_rating_text(rating)
 
 		if rating.rated?
 			sprintf('%.2f (%s)', rating.average, pluralize(rating.count, 'vote'))
@@ -156,6 +156,29 @@ module ApplicationHelper
 			#sprintf '%.2f', avg
 
 			'(unrated)'
+		end
+	end
+
+	def render_rating_dynamic(rating)
+
+		if rating.rated?
+			sprintf('%.2f (%s)', rating.average, pluralize(rating.count, 'vote'))
+		else
+			#r = record.rating_range
+			#avg = (r.last - r.first) / 2.0 + r.first # std average
+			#sprintf '%.2f', avg
+
+			'(unrated)'
+		end
+	end
+
+	def render_rating_static(rating)
+
+		if rating.rated?
+
+			render :partial => '/ratings/stars_static', :locals => { :rating => rating }
+		else
+			render_rating_text(rating)
 		end
 	end
 end
