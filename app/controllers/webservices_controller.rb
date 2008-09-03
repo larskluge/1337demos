@@ -7,7 +7,7 @@ class WebservicesController < ApplicationController
 
 	def render_request
 		return unless self.authorized?
-		cnt = params[:count].to_i || 3
+		cnt = (params[:count] || 3).to_i
 
 		timeout = 10 # 10 secs // 2 * 60 # 2 Minutes
 		@feed_title = 'Render response'
