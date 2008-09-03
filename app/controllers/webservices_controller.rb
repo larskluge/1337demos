@@ -7,13 +7,14 @@ class WebservicesController < ApplicationController
 
 	def render_request
 		return unless self.authorized?
+		cnt = params[:count].to_i || 3
 
 		timeout = 10 # 10 secs // 2 * 60 # 2 Minutes
 		@feed_title = 'Render response'
 		demo = nil
 		Demo.transaction do
 			@demos = Demo.find(:all, :conditions => ['data_correct AND (status = "uploaded" OR (status = "processing" AND updated_at < ?))', Time.now - timeout],
-				:order => 'created_at', :limit => 50)
+				:order => 'created_at', :limit => cnt)
 			@demos.each do |demo|
 				demo.status = 'processing'
 				demo.save!
