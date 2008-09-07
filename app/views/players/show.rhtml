@@ -1,14 +1,14 @@
 <h1>
-	<%= render_nickname @player.main_nickname.nickname %>
+  <%= render_nickname @player.main_nickname.nickname %>
 </h1>
 
 <p>
-	Known since <%= render_datetime @player.created_at %>
+  Known since <%= render_datetime @player.created_at %>
 </p>
 
 <% if @aliases.length > 0 %>
 <p>
-	Aliases: <%= @aliases.map{ |name| render_nickname(name.nickname) }.join(', ') %>
+  Aliases: <%= @aliases.map{ |name| render_nickname(name.nickname) }.join(', ') %>
 </p>
 <% end %>
 
@@ -16,28 +16,28 @@
 <h2>Demos</h2>
 
 <table>
-	<tr>
-		<th>Time/Title</th>
-		<th>Map</th>
-		<th>Gamemode</th>
-		<th>Uploaded</th>
-	</tr>
+  <tr>
+    <th>Time/Title</th>
+    <th>Map</th>
+    <th>Gamemode</th>
+    <th>Uploaded</th>
+  </tr>
 
 <% for demo in @demos %>
-	<tr>
-		<td><%= render_time_title demo %></td>
-		<td><%= render_linked_map demo.map %></td>
-		<td><%= h demo.gamemode %></td>
-		<td><%= render_datetime demo.created_at %></td>
-		<td><%= link_to 'Watch', :controller => 'demos', :action => 'show', :id => demo %></td>
-	</tr>
+  <tr>
+    <td><%= render_time_title demo %></td>
+    <td><%= render_linked_map demo.map %></td>
+    <td><%= h demo.gamemode %></td>
+    <td><%= render_datetime demo.created_at %></td>
+    <td><%= link_to 'Play', :controller => 'demos', :action => 'show', :id => demo %></td>
+  </tr>
 <% end %>
 
-	<tr>
-		<td colspan="4" style="text-align: center; padding-top: 1em">
-			<%= will_paginate @demos, :inner_window => 2, :outer_window => 0 %>
-		</td>
-	</tr>
+  <tr>
+    <td colspan="4" style="text-align: center; padding-top: 1em">
+      <%= will_paginate @demos, :inner_window => 2, :outer_window => 0 %>
+    </td>
+  </tr>
 
 </table>
 
