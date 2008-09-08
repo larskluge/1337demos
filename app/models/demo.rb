@@ -1,4 +1,7 @@
 class Demo < ActiveRecord::Base
+  @@video_width = 384
+  @@video_height = 288
+  cattr_reader :video_width, :video_height
 
   include FlexRating
 
@@ -50,13 +53,6 @@ class Demo < ActiveRecord::Base
 
     res = demos.index(self)
     res.nil? ? nil : 1 + res
-  end
-
-  def self.video_width
-    384
-  end
-  def self.video_height
-    288
   end
 
   def video_exists?
