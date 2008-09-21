@@ -1,14 +1,15 @@
 ActionController::Routing::Routes.draw do |map|
   def map.controller_actions(controller, actions)
     actions.each do |action|
-      self.send("#{controller}_#{action}", "#{controller}/#{action}", :controller => controller.to_s, :action => action)
-      self.send("#{controller}_#{action}", "#{controller}/#{action}.:format", :controller => controller.to_s, :action => action)
+      self.send("#{controller}_#{action}", "#{controller}/#{action}", :controller => controller, :action => action)
+      self.send("formatted_#{controller}_#{action}", "#{controller}/#{action}.:format", :controller => controller, :action => action)
     end
   end
 
 
 
-  map.controller_actions :demos, %w[race freestyle]
+  map.controller_actions 'demos', %w[race freestyle]
+  map.connect 'demos/rss.xml', :controller => 'demos', :action => 'index', :format => 'atom' # support old demos feed url
   map.resources :demos
 
   map.resources :ratings
