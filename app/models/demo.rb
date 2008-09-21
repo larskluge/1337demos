@@ -5,7 +5,6 @@ class Demo < ActiveRecord::Base
 
   include FlexRating
 
-  #belongs_to :player
   has_and_belongs_to_many :players
   belongs_to :map
   belongs_to :demofile, :dependent => :destroy
@@ -28,11 +27,13 @@ class Demo < ActiveRecord::Base
 
 
 
-  named_scope :race, :conditions => 'data_correct AND gamemode = "race"'
+  named_scope :race, :conditions => 'demos.data_correct AND demos.gamemode = "race"'
+  named_scope :freestyle, :conditions => 'data_correct AND gamemode = "freestyle"'
 
 
 
   def position
+    return @position unless @position.nil?
     return nil if self.gamemode != 'race'
 
     pos = 0
@@ -52,7 +53,7 @@ class Demo < ActiveRecord::Base
     end
 
     res = demos.index(self)
-    res.nil? ? nil : 1 + res
+    @position = res.nil? ? nil : 1 + res
   end
 
   def video_exists?

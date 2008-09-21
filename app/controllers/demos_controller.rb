@@ -11,53 +11,59 @@ class DemosController < ApplicationController
 
 
   def index
-    list
-    render :action => 'list'
-  end
-
-  def race
-    list
-    @title = 'latest race demos'
-    @headline = 'Latest race demos.'
-    render :action => 'list'
-  end
-
-  def freestyle
-    list
-    @title = 'latest freestyle demos'
-    @headline = 'Latest freestyle demos.'
-    render :action => 'list'
-  end
-
-  def list
-    conditions = 'data_correct'
-    gamemode = request.parameters[:action] if ['race', 'freestyle'].include?(request.parameters[:action])
-    conditions = [conditions + ' AND gamemode = ?', gamemode] if gamemode
+    #gamemode = request.parameters[:action] if ['race', 'freestyle'].include?(request.parameters[:action])
+    @title = "latest demos"
+    @headline = 'Latest demos.'
+    @feed_title = "1337demos.com - #{@title}"
+    @rss = { :title => @feed_title, :url => url_for(:format => 'atom') }
 
     @demos = Demo.paginate(:page => params[:page],
       :per_page => 20,
-      :conditions => conditions,
+      :conditions => 'data_correct',
       :include => %w(map),
       :order => 'demos.created_at DESC')
-    @title = "latest demos"
-    @headline = 'Latest demos.'
 
-    rss_url = url_for(:action => 'rss', :format => 'xml')
-    @rss = { :title => "1337demos.com - #{@title}", :url => rss_url }
+    respond_to do |format|
+      format.html
+      format.atom { render :action => 'rss', :layout => false }
+    end
   end
 
-  def rss
-    @feed_title = 'Latest demos on 1337demos.com'
-    @demos = Demo.find(:all,
-      :select => 'nicknames.*',
-      :conditions => 'data_correct AND status = "rendered"',
-      :include => %w(map),
-      #:joins => 'LEFT OUTER JOIN nicknames ON demos.player_id = players.id AND players.main_nickname_id = nicknames.id',
-      :order => 'demos.created_at DESC',
-      :limit => 20)
+  def race
+    @title = 'latest race demos'
+    @headline = 'Latest race demos.'
+    @feed_title = "1337demos.com - #{@title}"
+    @rss = { :title => @feed_title, :url => url_for(:format => 'atom') }
 
-    render :layout => false
+    @demos = Demo.race.paginate(:page => params[:page],
+      :per_page => 20,
+      :include => [:map, {:players => :main_nickname}],
+      :order => 'demos.created_at DESC')
+
+    respond_to do |format|
+      format.html { render :action => 'index' }
+      format.atom { render :action => 'rss', :layout => false }
+    end
   end
+
+  def freestyle
+    @title = 'latest freestyle demos'
+    @headline = 'Latest freestyle demos.'
+    @feed_title = "1337demos.com - #{@title}"
+    @rss = { :title => @feed_title, :url => url_for(:format => 'atom') }
+
+    @demos = Demo.freestyle.paginate(:page => params[:page],
+      :per_page => 20,
+      :include => [:map, {:players => :main_nickname}],
+      :order => 'demos.created_at DESC')
+
+    respond_to do |format|
+      format.html { render :action => 'index' }
+      format.atom { render :action => 'rss', :layout => false }
+    end
+  end
+
+
 
   def show
     @demo = Demo.find(params[:id])
