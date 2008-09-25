@@ -123,17 +123,20 @@ class DemosController < ApplicationController
             params[:demo][:players] = players
 
             # notify me
-            playernames = 'unknown'
-            playernames = players.map{|player| player.main_nickname_plain}.join(', ') if !players.nil? && players.length > 0
-            mail = MyMailer.create_send_demo_uploaded_notification(@demo, @demo.map.name, playernames)
-            MyMailer.deliver(mail)
+            begin
+              playernames = 'unknown'
+              playernames = players.map{|player| player.main_nickname_plain}.join(', ') if !players.nil? && players.length > 0
+              mail = MyMailer.create_send_demo_uploaded_notification(@demo, @demo.map.name, playernames)
+              MyMailer.deliver(mail)
+            rescue Exception => e
+              logger.info '=== Mail deliverty error: ' + e.message
+            end
           end
         end
       rescue Exception => e
         @demo.errors.add_to_base e.message
         params[:demo][:players] = nil
         render :action => 'verify'
-        return
       end
     end
 
