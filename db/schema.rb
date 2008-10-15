@@ -19,11 +19,14 @@ ActiveRecord::Schema.define(:version => 20080718151626) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
-    t.boolean  "published"
-    t.integer  "parent_id",  :limit => 11
-    t.integer  "order",      :limit => 11
+    t.boolean  "published",                :default => false, :null => false
+    t.integer  "parent_id",  :limit => 10
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "controller",               :default => "",    :null => false
+    t.string   "action",                   :default => "",    :null => false
+    t.integer  "lft",        :limit => 10,                    :null => false
+    t.integer  "rgt",        :limit => 10,                    :null => false
   end
 
   create_table "comments", :force => true do |t|
@@ -85,6 +88,18 @@ ActiveRecord::Schema.define(:version => 20080718151626) do
     t.integer  "main_nickname_id", :limit => 11
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "ratings", :force => true do |t|
+    t.integer  "rateable_id",   :limit => 10,                                                :null => false
+    t.string   "rateable_type",                                              :default => "", :null => false
+    t.string   "key"
+    t.integer  "count",         :limit => 10,                                :default => 0,  :null => false
+    t.integer  "total",         :limit => 10,                                :default => 0,  :null => false
+    t.decimal  "average",                     :precision => 10, :scale => 2
+    t.string   "last_ip",       :limit => 15
+    t.datetime "updated_at",                                                                 :null => false
+    t.datetime "created_at",                                                                 :null => false
   end
 
   create_table "shoutboxes", :force => true do |t|
