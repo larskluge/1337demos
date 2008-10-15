@@ -2,6 +2,12 @@
 
 module ApplicationHelper
 
+  # generates a classname for the active page
+  def classname_for_page
+    ([controller.controller_name, controller.action_name].compact * '-').downcase
+  end
+
+
   # this method doesnt render the root node
   #def render_mainmenu(tree, depth = 0, active = false)
   #	return '' if tree.nil?

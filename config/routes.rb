@@ -1,6 +1,12 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :videos
 
+
+  map.namespace :admin do |admin|
+    admin.resources :comments
+    admin.resources :shoutboxes
+  end
+
   def map.controller_actions(controller, actions)
     actions.each do |action|
       self.send("#{controller}_#{action}", "#{controller}/#{action}", :controller => controller, :action => action)
