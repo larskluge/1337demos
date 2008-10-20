@@ -3,10 +3,6 @@ class Admin::CommentsController < Admin::ApplicationController
   # caching
   cache_sweeper :comment_sweeper, :only => [:create, :update, :destroy]
 
-  # GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-  verify :method => :post, :only => [ :destroy, :create, :update ],
-         :redirect_to => { :action => :list }
-
 
 
   def index

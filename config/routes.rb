@@ -1,11 +1,18 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :videos
 
-
+  # admin area
   map.namespace :admin do |admin|
+    admin.root :controller => 'welcomes'
+
+    admin.resources :nicknames
     admin.resources :comments
     admin.resources :shoutboxes
   end
+
+
+
+  map.resources :videos
+
 
   def map.controller_actions(controller, actions)
     actions.each do |action|
@@ -22,8 +29,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :ratings
 
-
-  #map.resources :nicknames, :path_prefix => '/admin'
 
   map.resources :categories
 
@@ -122,16 +127,6 @@ ActionController::Routing::Routes.draw do |map|
   #	:layout => 'false',
   #	:page => nil
 
-
-  # admin area
-  map.namespace :admin do |admin|
-    admin.root :controller => 'welcomes'
-
-    admin.resources :nicknames
-
-    #map.connect '/admin', :controller => '/admin/welcomes', :layout => 'true'
-    #map.connect '/admin/:controller/:action/:id'        , :layout => 'true'
-  end
 
 
   # Install the default routes as the lowest priority.
