@@ -80,6 +80,10 @@ form
 	font-weight: bold;
 }
 
+.untrusted
+{
+  color: gray;
+}
 
 
 /* Home */

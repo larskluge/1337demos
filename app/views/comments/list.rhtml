@@ -4,6 +4,7 @@
 	<tr>
 		<th>Comment</th>
 		<th>By</th>
+		<th>Identification</th>
 		<th>On</th>
 	</tr>
 
@@ -11,6 +12,9 @@
 	<tr>
 		<td><%= h comment.message %></td>
 		<td class="nowrap"><%= render_nickname comment.name %></td>
+    <td<%= ' class="untrusted"' unless comment.token_short %>>
+      <%= comment.token_short || 'untrusted' %>
+    </td>
 		<td class="nowrap"><%= comment.demo.players.map{|player| render_linked_player(player)}.join(', ') %> on <%= render_linked_map comment.demo.map %></td>
 		<td class="nowrap"><%= link_to 'Play', :controller => 'demos', :action => 'show', :id => comment.demo %></td>
 	</tr>
