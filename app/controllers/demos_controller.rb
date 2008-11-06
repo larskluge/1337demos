@@ -177,7 +177,10 @@ class DemosController < ApplicationController
   def create_comment
     self.show
 
-    if (@comment = @demo.comments.create(params[:comment])) && @comment.valid?
+    hash = params[:comment]
+    hash.delete :token
+
+    if (@comment = @demo.comments.create(hash)) && @comment.valid?
       flash[:notice] = 'Comment was successfully created.'
       redirect_to :action => 'show', :id => @demo
     else

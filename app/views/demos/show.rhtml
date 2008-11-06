@@ -104,6 +104,7 @@
 			<%= render_date comment.created_at %>
 			by
 			<%= render_nickname comment.name %>
+      <%= '(identified by %s)' % comment.token_short if comment.token_short %>
 		</p>
 	<% end; end %>
 </div>

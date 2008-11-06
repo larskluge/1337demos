@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080718151626) do
+ActiveRecord::Schema.define(:version => 20081106223503) do
 
   create_table "announcements", :force => true do |t|
     t.text     "message"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20080718151626) do
     t.string   "commentable_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "token",            :limit => 32
   end
 
   create_table "demofiles", :force => true do |t|
@@ -106,6 +107,14 @@ ActiveRecord::Schema.define(:version => 20080718151626) do
     t.string   "name"
     t.text     "message"
     t.datetime "created_at"
+  end
+
+  create_table "videos", :force => true do |t|
+    t.string   "uri",         :default => "",    :null => false
+    t.boolean  "approved",    :default => false
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
