@@ -13,8 +13,15 @@ class CommentSweeper < ActionController::Caching::Sweeper
 
 	private
 	def expire_cache_for(record)
-		expire_action(:controller => '/comments', :action => 'index')
-		expire_fragment(%r{/comments/index*})
+    case(record.class.to_s)
+    when 'Welcome'
+      expire_action(:controller => '/welcome', :action => 'index')
+      # and delete all pages
+      expire_fragment(%r{/welcome/index*})
+    when 'Demo'
+      expire_action(:controller => '/comments', :action => 'index')
+      expire_fragment(%r{/comments/index*})
+    end
 	end
 end
 
