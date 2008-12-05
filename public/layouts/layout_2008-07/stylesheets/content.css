@@ -59,6 +59,11 @@ form
 	padding: 0;
 }
 
+.errorExplanation h2
+{
+  font-size: 11px;
+  color: red;
+}
 
 .error
 {
@@ -335,9 +340,9 @@ form
 	margin-top: 0;
 }
 
-.shout_form #shoutbox_name, .shout_form #shoutbox_message
+.shout_form input.text, .shout_form textarea
 {
-	width: 194px;
+	width: 95%;
 }
 
 .shout p

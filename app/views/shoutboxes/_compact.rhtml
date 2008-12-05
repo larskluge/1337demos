@@ -15,8 +15,8 @@
 				color codes: <%= render_nickname '^11^22^33^44^55^66^77^88^99^00' %>).
 			</p>
 
-			<% form_tag({:controller => 'shoutboxes', :action => 'create', :layout => 'true'}, {:class => 'shout_form'}) do %>
-				<%= render :partial => '/shoutboxes/form' %>
+			<% form_tag({:controller => 'welcome', :action => 'create_comment'}, {:class => 'shout_form'}) do %>
+				<%= render :partial => '/comments/form' %>
 				<%= submit_tag 'Submit' %>
 			<% end %>
 		</div>
@@ -30,6 +30,7 @@
 				<%= render_date shoutbox.created_at %>
 				by
 				<%= render_nickname shoutbox.name %>
+        <%= '(identified by %s)' % shoutbox.token_short if shoutbox.token_short %>
 			</p>
 		</div>
 	<% end %>

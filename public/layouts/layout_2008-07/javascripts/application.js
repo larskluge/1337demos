@@ -114,7 +114,8 @@ function home()
 
 
 	// init shoutbox
-	$('#shoutbox_container_toggle').hide();
+  if($('#shoutbox_container_toggle .errorExplanation').length === 0)
+    $('#shoutbox_container_toggle').hide();
 	$('#toggle').click(function() {
 		$('#shoutbox_container_toggle').toggle('normal');
 	});
@@ -148,7 +149,8 @@ function demos()
 
 
 	// animate comment form on demos details
-	$('#demo_comments_form_body').hide();
+  if($('#demo_comments_form_body .errorExplanation').length === 0)
+    $('#demo_comments_form_body').hide();
 	$('#demo_comments_form_head a:first').click(function() {
 		$('#demo_comments_form_body').toggle('normal');
 	});

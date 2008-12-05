@@ -1,9 +1,12 @@
 class Comment < ActiveRecord::Base
 	belongs_to :commentable, :polymorphic => :true
 
-	validates_presence_of :name, :message
+	validates_presence_of :message, :name
   validates_length_of :message, :maximum => 255
   validate :prevent_url_posting
+
+	validates_presence_of :passphrase, :on => :create
+  validates_length_of :passphrase, :minimum => 6, :on => :create
 
   def prevent_url_posting
     if message =~ /[a-zA-Z0-9\-\.]+\.(com|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk|de)/
@@ -24,10 +27,11 @@ class Comment < ActiveRecord::Base
 	end
 
   def passphrase
-    nil
+    @passphrase
   end
 
   def passphrase=(pass)
+    @passphrase = pass
     self.token = Digest::MD5.hexdigest(pass) if pass.respond_to?('empty?') && !pass.empty?
   end
 
