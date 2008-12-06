@@ -1,15 +1,16 @@
 class WelcomeController < ApplicationController
 
-	caches_action :index, :cache_path => :cache_path.to_proc
+  caches_action :index, :cache_path => :cache_path.to_proc
+  cache_sweeper :comment_sweeper, :only => [:create_comment]
 
 
 
-	def index
-		@title = ''
-		@announcements = Announcement.all(:order => 'created_at DESC')
-		# @shoutboxes = Shoutbox.paginate(:page => params[:page], :per_page => 5, :order => 'created_at DESC')
-		@shoutboxes = Comment.paginate(:page => params[:page], :per_page => 5, :order => 'created_at DESC', :conditions => {:commentable_type => 'Welcome'} )
-	end
+  def index
+    @title = ''
+    @announcements = Announcement.all(:order => 'created_at DESC')
+    # @shoutboxes = Shoutbox.paginate(:page => params[:page], :per_page => 5, :order => 'created_at DESC')
+    @shoutboxes = Comment.paginate(:page => params[:page], :per_page => 5, :order => 'created_at DESC', :conditions => {:commentable_type => 'Welcome'} )
+  end
 
 
 
