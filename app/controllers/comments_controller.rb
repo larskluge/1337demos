@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
 	end
 
 	def list
-		@comments = Comment.paginate(:page => params[:page], :per_page => 20, :order => 'created_at DESC')
+		@comments = Comment.paginate(:page => params[:page], :per_page => 20, :order => 'created_at DESC', :conditions => { :commentable_type => 'Demo' })
 		@title = "latest comments"
 	end
 end
