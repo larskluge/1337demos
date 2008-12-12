@@ -1,16 +1,15 @@
 common: &common
   adapter: mysql
-  #socket: /var/lib/mysql/mysql.sock
-  host: localhost
   encoding: utf8
   timeout: 5000
 
 
 development:
   <<: *common
+  socket: /var/run/mysqld/mysqld.sock
   database: 1337demos_development
-  username: 1337dev
-  password: 'zk*YGuKP@S&"'
+  username: '1337demos'
+  password: '1337demos'
 
 # Warning: The database defined as 'test' will be erased and
 # re-generated from your development database when you run 'rake'.
@@ -22,6 +21,7 @@ test:
 
 production:
   <<: *common
+  host: localhost
   database: 1337demos_production
   username: 1337prod
   password: '!j4s7xJ?Hq4R'
