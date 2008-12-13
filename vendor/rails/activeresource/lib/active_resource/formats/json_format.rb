@@ -12,7 +12,7 @@ module ActiveResource
       end
 
       def encode(hash, options={})
-        hash.to_json(options)
+        hash.to_json
       end
 
       def decode(json)
