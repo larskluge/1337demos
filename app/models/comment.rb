@@ -8,18 +8,15 @@ class Comment < ActiveRecord::Base
 	validates_presence_of :passphrase, :on => :create
   validates_length_of :passphrase, :minimum => 6, :on => :create
 
-  def prevent_url_posting
-    if message =~ /[a-zA-Z0-9\-\.]+\.(com|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk|de)/
-      errors.add_to_base("No urls allowed")
-    end
-  end
+
+
 
 
 
 
 
 	def demo
-		return null if self.commentable_type != 'Demo'
+		return nil if self.commentable_type != 'Demo'
 		return @demo if !@demo.nil?
 
 		@demo = Demo.find(self.commentable_id)
@@ -37,5 +34,15 @@ class Comment < ActiveRecord::Base
 
   def token_short
     self.token[0..7] if token
+  end
+
+
+
+  protected
+
+  def prevent_url_posting
+    if message =~ /[a-zA-Z0-9\-\.]+\.(com|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk|de)/
+      errors.add_to_base("No urls allowed")
+    end
   end
 end
