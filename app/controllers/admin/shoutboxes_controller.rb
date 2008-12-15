@@ -6,34 +6,20 @@ class Admin::ShoutboxesController < Admin::ApplicationController
 
 
   def index
-    @shoutboxes = Shoutbox.paginate(:page => params[:page],
-      :per_page => 10, :order => 'created_at DESC')
+    @shoutboxes = Comment.paginate(:page => params[:page],
+      :per_page => 10, :order => 'updated_at DESC', :conditions => { :commentable_type => 'Welcome' })
   end
 
   def show
-    @shoutbox = Shoutbox.find(params[:id])
-  end
-
-  def new
-    @shoutbox = Shoutbox.new
-  end
-
-  def create
-    @shoutbox = Shoutbox.new(params[:shoutbox])
-    if @shoutbox.save
-      flash[:notice] = 'Shoutbox was successfully created.'
-      redirect_to :action => 'index'
-    else
-      render :action => 'new'
-    end
+    @shoutbox = Comment.find(params[:id])
   end
 
   def edit
-    @shoutbox = Shoutbox.find(params[:id])
+    @shoutbox = Comment.find(params[:id])
   end
 
   def update
-    @shoutbox = Shoutbox.find(params[:id])
+    @shoutbox = Comment.find(params[:id])
     if @shoutbox.update_attributes(params[:shoutbox])
       flash[:notice] = 'Shoutbox was successfully updated.'
       redirect_to :action => 'show', :id => @shoutbox
@@ -43,7 +29,7 @@ class Admin::ShoutboxesController < Admin::ApplicationController
   end
 
   def destroy
-    Shoutbox.find(params[:id]).destroy
+    Comment.find(params[:id]).destroy
 
     respond_to do |format|
       format.html { redirect_to :action => 'index' }
