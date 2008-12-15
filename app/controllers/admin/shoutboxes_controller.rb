@@ -7,7 +7,7 @@ class Admin::ShoutboxesController < Admin::ApplicationController
 
   def index
     @shoutboxes = Comment.paginate(:page => params[:page],
-      :per_page => 10, :order => 'updated_at DESC', :conditions => { :commentable_type => 'Welcome' })
+      :per_page => 10, :order => 'created_at DESC', :conditions => { :commentable_type => 'Welcome' })
   end
 
   def show
