@@ -41,7 +41,7 @@ class Comment < ActiveRecord::Base
   protected
 
   def prevent_url_posting
-    if message =~ /[a-zA-Z0-9\-\.]+\.(com|edu|gov|mil|net|org|biz|info|name|museum|us|ca|uk|de|cz|es|to)/
+    if message =~ /[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,6}/
       errors.add_to_base("No urls allowed")
     end
   end
