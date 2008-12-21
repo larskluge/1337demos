@@ -1,2 +1,0 @@
-require 'multiple_layouts'
-
