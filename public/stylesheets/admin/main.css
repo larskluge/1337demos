@@ -90,20 +90,20 @@ form
 
 #header_outer
 {
-	background: url(../images/header_border.gif);
+	background: url(/images/admin/header_border.gif);
 	height: 127px;
 	padding: 0 5px;
 }
 
 #header_inner
 {
-	background: url(../images/header_bg.gif);
+	background: url(/images/admin/header_bg.gif);
 	height: 127px;
 }
 
 #header_logo
 {
-	background: no-repeat top right url(../images/header_logo.gif);
+	background: no-repeat top right url(/images/admin/header_logo.gif);
 	height: 127px;
 }
 
