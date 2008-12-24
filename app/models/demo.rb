@@ -32,20 +32,33 @@ class Demo < ActiveRecord::Base
 
 
 
+  def <=>(o)
+    return 0 if o.class != Demo || self.gamemode != o.gamemode
+
+    case(self.gamemode)
+    when "race"
+      self.time <=> o.time
+    else
+      0
+    end
+  end
+
+
+
   def position
     return @position unless @position.nil?
     return nil if self.gamemode != 'race'
 
     pos = 0
-    demos = self.map.demos
+    demos = self.map.demos.race
     return 1 if demos.length == 1
 
-    demos = demos.sort { |x,y| x.time <=> y.time }.collect {|demo| demo unless demo.time == self.time && demo != self}.compact
+    demos = demos.sort.collect {|demo| demo unless demo.time == self.time && demo != self}.compact
 
     # just consider best time of each player
     known_players = []
     demos = demos.inject([]) do |list, demo|
-      if demo.gamemode == 'race' && !known_players.include?(demo.players.first)
+      if !known_players.include?(demo.players.first)
         known_players << demo.players.first
         list << demo
       end
