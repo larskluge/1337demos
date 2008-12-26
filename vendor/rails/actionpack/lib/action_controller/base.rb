@@ -1,3 +1,12 @@
+require 'action_controller/mime_type'
+require 'action_controller/request'
+require 'action_controller/response'
+require 'action_controller/routing'
+require 'action_controller/resources'
+require 'action_controller/url_rewriter'
+require 'action_controller/status_codes'
+require 'action_view'
+require 'drb'
 require 'set'
 
 module ActionController #:nodoc:
@@ -164,8 +173,8 @@ module ActionController #:nodoc:
   #
   # Other options for session storage are:
   #
-  # * ActiveRecord::SessionStore - Sessions are stored in your database, which works better than PStore with multiple app servers and,
-  #   unlike CookieStore, hides your session contents from the user. To use ActiveRecord::SessionStore, set
+  # * ActiveRecordStore - Sessions are stored in your database, which works better than PStore with multiple app servers and,
+  #   unlike CookieStore, hides your session contents from the user. To use ActiveRecordStore, set
   #
   #     config.action_controller.session_store = :active_record_store
   #
@@ -326,10 +335,6 @@ module ActionController #:nodoc:
     # Sets the token parameter name for RequestForgery. Calling +protect_from_forgery+
     # sets it to <tt>:authenticity_token</tt> by default.
     cattr_accessor :request_forgery_protection_token
-
-    # Controls the IP Spoofing check when determining the remote IP.
-    @@ip_spoofing_check = true
-    cattr_accessor :ip_spoofing_check
 
     # Indicates whether or not optimise the generated named
     # route helper methods
@@ -524,7 +529,7 @@ module ActionController #:nodoc:
       end
 
       def send_response
-        response.prepare!
+        response.prepare! unless component_request?
         response
       end
 
@@ -871,9 +876,8 @@ module ActionController #:nodoc:
           end
         end
 
-        layout = pick_layout(options)
-        response.layout = layout.path_without_format_and_extension if layout
-        logger.info("Rendering template within #{layout.path_without_format_and_extension}") if logger && layout
+        response.layout = layout = pick_layout(options)
+        logger.info("Rendering template within #{layout}") if logger && layout
 
         if content_type = options[:content_type]
           response.content_type = content_type.to_s
@@ -990,7 +994,7 @@ module ActionController #:nodoc:
         @performed_redirect = false
         response.redirected_to = nil
         response.redirected_to_method_params = nil
-        response.status = DEFAULT_RENDER_STATUS_CODE
+        response.headers['Status'] = DEFAULT_RENDER_STATUS_CODE
         response.headers.delete('Location')
       end
 
@@ -1160,7 +1164,9 @@ module ActionController #:nodoc:
       def reset_session #:doc:
         request.reset_session
         @_session = request.session
+        response.session = @_session
       end
+
 
     private
       def render_for_file(template_path, status = nil, layout = nil, locals = {}) #:nodoc:
@@ -1171,7 +1177,7 @@ module ActionController #:nodoc:
       def render_for_text(text = nil, status = nil, append_response = false) #:nodoc:
         @performed_render = true
 
-        response.status = interpret_status(status || DEFAULT_RENDER_STATUS_CODE)
+        response.headers['Status'] = interpret_status(status || DEFAULT_RENDER_STATUS_CODE)
 
         if append_response
           response.body ||= ''
@@ -1211,6 +1217,7 @@ module ActionController #:nodoc:
       def log_processing
         if logger && logger.info?
           log_processing_for_request_id
+          log_processing_for_session_id
           log_processing_for_parameters
         end
       end
@@ -1221,6 +1228,13 @@ module ActionController #:nodoc:
         request_id << "(for #{request_origin}) [#{request.method.to_s.upcase}]"
 
         logger.info(request_id)
+      end
+
+      def log_processing_for_session_id
+        if @_session && @_session.respond_to?(:session_id) && @_session.respond_to?(:dbman) &&
+            !@_session.dbman.is_a?(CGI::Session::CookieStore)
+          logger.info "  Session ID: #{@_session.session_id}"
+        end
       end
 
       def log_processing_for_parameters
@@ -1255,6 +1269,11 @@ module ActionController #:nodoc:
       def assign_names
         @action_name = (params['action'] || 'index')
       end
+
+      def assign_default_content_type_and_charset
+        response.assign_default_content_type_and_charset!
+      end
+      deprecate :assign_default_content_type_and_charset => :'response.assign_default_content_type_and_charset!'
 
       def action_methods
         self.class.action_methods
@@ -1317,12 +1336,5 @@ module ActionController #:nodoc:
       def process_cleanup
         close_session
       end
-  end
-
-  Base.class_eval do
-    include Flash, Filters, Layout, Benchmarking, Rescue, MimeResponds, Helpers
-    include Cookies, Caching, Verification, Streaming
-    include SessionManagement, HttpAuthentication::Basic::ControllerMethods
-    include RecordIdentifier, RequestForgeryProtection, Translation
   end
 end

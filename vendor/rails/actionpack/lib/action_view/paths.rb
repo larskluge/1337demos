@@ -40,25 +40,21 @@ module ActionView #:nodoc:
     end
 
     class Path #:nodoc:
-      attr_reader :path, :paths
-      delegate :hash, :inspect, :to => :path
+      def self.eager_load_templates!
+        @eager_load_templates = true
+      end
 
-      def initialize(path, load = false)
+      def self.eager_load_templates?
+        @eager_load_templates || false
+      end
+
+      attr_reader :path, :paths
+      delegate :to_s, :to_str, :hash, :inspect, :to => :path
+
+      def initialize(path, load = true)
         raise ArgumentError, "path already is a Path class" if path.is_a?(Path)
         @path = path.freeze
         reload! if load
-      end
-
-      def to_s
-        if defined?(RAILS_ROOT)
-          path.to_s.sub(/^#{Regexp.escape(File.expand_path(RAILS_ROOT))}\//, '')
-        else
-          path.to_s
-        end
-      end
-
-      def to_str
-        path.to_str
       end
 
       def ==(path)
@@ -69,35 +65,9 @@ module ActionView #:nodoc:
         to_str == path.to_str
       end
 
-      # Returns a ActionView::Template object for the given path string. The
-      # input path should be relative to the view path directory,
-      # +hello/index.html.erb+. This method also has a special exception to
-      # match partial file names without a handler extension. So
-      # +hello/index.html+ will match the first template it finds with a
-      # known template extension, +hello/index.html.erb+. Template extensions
-      # should not be confused with format extensions +html+, +js+, +xml+,
-      # etc. A format must be supplied to match a formated file. +hello/index+
-      # will never match +hello/index.html.erb+.
-      #
-      # This method also has two different implementations, one that is "lazy"
-      # and makes file system calls every time and the other is cached,
-      # "eager" which looks up the template in an in memory index. The "lazy"
-      # version is designed for development where you want to automatically
-      # find new templates between requests. The "eager" version is designed
-      # for production mode and it is much faster but requires more time
-      # upfront to build the file index.
       def [](path)
-        if loaded?
-          @paths[path]
-        else
-          Dir.glob("#{@path}/#{path}*").each do |file|
-            template = create_template(file)
-            if path == template.path_without_extension || path == template.path
-              return template
-            end
-          end
-          nil
-        end
+        raise "Unloaded view path! #{@path}" unless @loaded
+        @paths[path]
       end
 
       def loaded?
@@ -114,7 +84,9 @@ module ActionView #:nodoc:
         @paths = {}
 
         templates_in_path do |template|
-          template.load!
+          # Eager load memoized methods and freeze cached template
+          template.freeze if self.class.eager_load_templates?
+
           @paths[template.path] = template
           @paths[template.path_without_extension] ||= template
         end
@@ -126,12 +98,10 @@ module ActionView #:nodoc:
       private
         def templates_in_path
           (Dir.glob("#{@path}/**/*/**") | Dir.glob("#{@path}/**")).each do |file|
-            yield create_template(file) unless File.directory?(file)
+            unless File.directory?(file)
+              yield Template.new(file.split("#{self}/").last, self)
+            end
           end
-        end
-
-        def create_template(file)
-          Template.new(file.split("#{self}/").last, self)
         end
     end
 
@@ -148,21 +118,6 @@ module ActionView #:nodoc:
         if template = path[template_path]
           return template
         end
-      end
-      nil
-    end
-
-    def find_template(path, *formats)
-      if formats && formats.first == :all
-        formats = Mime::EXTENSION_LOOKUP.values.map(&:to_sym)
-      end
-      formats.each do |format|
-        if template = self["#{path}.#{format}"]
-          return template
-        end
-      end
-      if template = self[path]
-        return template
       end
       nil
     end

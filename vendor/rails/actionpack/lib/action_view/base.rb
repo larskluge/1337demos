@@ -5,7 +5,7 @@ module ActionView #:nodoc:
   class MissingTemplate < ActionViewError #:nodoc:
     def initialize(paths, path, template_format = nil)
       full_template_path = path.include?('.') ? path : "#{path}.erb"
-      display_paths = paths.compact.join(":")
+      display_paths = paths.join(':')
       template_type = (path =~ /layouts/i) ? 'layout' : 'template'
       super("Missing #{template_type} #{full_template_path} in view path #{display_paths}")
     end
@@ -157,7 +157,7 @@ module ActionView #:nodoc:
   #
   # See the ActionView::Helpers::PrototypeHelper::GeneratorMethods documentation for more details.
   class Base
-    include Helpers, Partials, ::ERB::Util
+    include ERB::Util
     extend ActiveSupport::Memoizable
 
     attr_accessor :base_path, :assigns, :template_extension
@@ -183,17 +183,13 @@ module ActionView #:nodoc:
       @@exempt_from_layout.merge(regexps)
     end
 
-    @@debug_rjs = false
-    ##
-    # :singleton-method:
     # Specify whether RJS responses should be wrapped in a try/catch block
     # that alert()s the caught exception (and then re-raises it).
+    @@debug_rjs = false
     cattr_accessor :debug_rjs
 
-    @@warn_cache_misses = false
-    ##
-    # :singleton-method:
     # A warning will be displayed whenever an action results in a cache miss on your view paths.
+    @@warn_cache_misses = false
     cattr_accessor :warn_cache_misses
 
     attr_internal :request
@@ -238,21 +234,21 @@ module ActionView #:nodoc:
       @view_paths = self.class.process_view_paths(paths)
     end
 
-    # Returns the result of a render that's dictated by the options hash. The primary options are:
-    # 
-    # * <tt>:partial</tt> - See ActionView::Partials.
-    # * <tt>:update</tt> - Calls update_page with the block given.
-    # * <tt>:file</tt> - Renders an explicit template file (this used to be the old default), add :locals to pass in those.
-    # * <tt>:inline</tt> - Renders an inline template similar to how it's done in the controller.
-    # * <tt>:text</tt> - Renders the text passed in out.
-    #
-    # If no options hash is passed or :update specified, the default is to render a partial and use the second parameter
-    # as the locals hash.
+    # Renders the template present at <tt>template_path</tt> (relative to the view_paths array).
+    # The hash in <tt>local_assigns</tt> is made available as local variables.
     def render(options = {}, local_assigns = {}, &block) #:nodoc:
       local_assigns ||= {}
 
-      case options
-      when Hash
+      if options.is_a?(String)
+        ActiveSupport::Deprecation.warn(
+          "Calling render with a string will render a partial from Rails 2.3. " +
+          "Change this call to render(:file => '#{options}', :locals => locals_hash)."
+        )
+
+        render(:file => options, :locals => local_assigns)
+      elsif options == :update
+        update_page(&block)
+      elsif options.is_a?(Hash)
         options = options.reverse_merge(:locals => {})
         if options[:layout]
           _render_with_layout(options, local_assigns, &block)
@@ -265,10 +261,6 @@ module ActionView #:nodoc:
         elsif options[:text]
           options[:text]
         end
-      when :update
-        update_page(&block)
-      else
-        render_partial(:partial => options, :locals => local_assigns)
       end
     end
 
@@ -279,7 +271,7 @@ module ActionView #:nodoc:
       if defined? @template_format
         @template_format
       elsif controller && controller.respond_to?(:request)
-        @template_format = controller.request.template_format.to_sym
+        @template_format = controller.request.template_format
       else
         @template_format = :html
       end
@@ -326,10 +318,15 @@ module ActionView #:nodoc:
         end
 
         # OPTIMIZE: Checks to lookup template in view path
-        if template = self.view_paths.find_template(template_file_name, template_format)
+        if template = self.view_paths["#{template_file_name}.#{template_format}"]
+          template
+        elsif template = self.view_paths[template_file_name]
           template
         elsif (first_render = @_render_stack.first) && first_render.respond_to?(:format_and_extension) &&
             (template = self.view_paths["#{template_file_name}.#{first_render.format_and_extension}"])
+          template
+        elsif template_format == :js && template = self.view_paths["#{template_file_name}.html"]
+          @template_format = :html
           template
         else
           template = Template.new(template_path, view_paths)

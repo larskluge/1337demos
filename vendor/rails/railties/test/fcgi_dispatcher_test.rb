@@ -1,6 +1,7 @@
 require 'abstract_unit'
 
-begin
+uses_mocha 'fcgi dispatcher tests' do
+
 require 'fcgi_handler'
 
 module ActionController; module Routing; module Routes; end end end
@@ -295,6 +296,4 @@ class RailsFCGIHandlerPeriodicGCTest < Test::Unit::TestCase
   end
 end
 
-rescue LoadError => e
-  raise unless e.message =~ /fcgi/
-end
+end # uses_mocha

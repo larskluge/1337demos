@@ -1,4 +1,5 @@
 require 'abstract_unit'
+require 'action_controller/rack_process'
 
 class BaseRackTest < Test::Unit::TestCase
   def setup
@@ -153,12 +154,12 @@ class RackRequestTest < BaseRackTest
 
   def test_cookie_syntax_resilience
     cookies = @request.cookies
-    assert_equal "c84ace84796670c052c6ceb2451fb0f2", cookies["_session_id"], cookies.inspect
-    assert_equal "yes", cookies["is_admin"], cookies.inspect
+    assert_equal ["c84ace84796670c052c6ceb2451fb0f2"], cookies["_session_id"], cookies.inspect
+    assert_equal ["yes"], cookies["is_admin"], cookies.inspect
 
     alt_cookies = @alt_cookie_fmt_request.cookies
-    #assert_equal "c84ace847,96670c052c6ceb2451fb0f2", alt_cookies["_session_id"], alt_cookies.inspect
-    assert_equal "yes", alt_cookies["is_admin"], alt_cookies.inspect
+    assert_equal ["c84ace847,96670c052c6ceb2451fb0f2"], alt_cookies["_session_id"], alt_cookies.inspect
+    assert_equal ["yes"], alt_cookies["is_admin"], alt_cookies.inspect
   end
 end
 
@@ -229,15 +230,16 @@ end
 class RackResponseTest < BaseRackTest
   def setup
     super
-    @response = ActionController::Response.new
+    @response = ActionController::RackResponse.new(@request)
+    @output = StringIO.new('')
   end
 
   def test_simple_output
     @response.body = "Hello, World!"
     @response.prepare!
 
-    status, headers, body = @response.to_a
-    assert_equal 200, status
+    status, headers, body = @response.out(@output)
+    assert_equal "200 OK", status
     assert_equal({
       "Content-Type" => "text/html; charset=utf-8",
       "Cache-Control" => "private, max-age=0, must-revalidate",
@@ -257,31 +259,54 @@ class RackResponseTest < BaseRackTest
     end
     @response.prepare!
 
-    status, headers, body = @response.to_a
-    assert_equal 200, status
+    status, headers, body = @response.out(@output)
+    assert_equal "200 OK", status
     assert_equal({"Content-Type" => "text/html; charset=utf-8", "Cache-Control" => "no-cache", "Set-Cookie" => []}, headers)
 
     parts = []
     body.each { |part| parts << part }
     assert_equal ["0", "1", "2", "3", "4"], parts
   end
+
+  def test_set_session_cookie
+    cookie = CGI::Cookie.new({"name" => "name", "value" => "Josh"})
+    @request.cgi.send :instance_variable_set, '@output_cookies', [cookie]
+
+    @response.body = "Hello, World!"
+    @response.prepare!
+
+    status, headers, body = @response.out(@output)
+    assert_equal "200 OK", status
+    assert_equal({
+      "Content-Type" => "text/html; charset=utf-8",
+      "Cache-Control" => "private, max-age=0, must-revalidate",
+      "ETag" => '"65a8e27d8879283831b664bd8b7f0ad4"',
+      "Set-Cookie" => ["name=Josh; path="],
+      "Content-Length" => "13"
+    }, headers)
+
+    parts = []
+    body.each { |part| parts << part }
+    assert_equal ["Hello, World!"], parts
+  end
 end
 
 class RackResponseHeadersTest < BaseRackTest
   def setup
     super
-    @response = ActionController::Response.new
-    @response.status = "200 OK"
+    @response = ActionController::RackResponse.new(@request)
+    @output = StringIO.new('')
+    @response.headers['Status'] = "200 OK"
   end
 
   def test_content_type
     [204, 304].each do |c|
-      @response.status = c.to_s
+      @response.headers['Status'] = c.to_s
       assert !response_headers.has_key?("Content-Type"), "#{c} should not have Content-Type header"
     end
 
     [200, 302, 404, 500].each do |c|
-      @response.status = c.to_s
+      @response.headers['Status'] = c.to_s
       assert response_headers.has_key?("Content-Type"), "#{c} did not have Content-Type header"
     end
   end
@@ -293,6 +318,6 @@ class RackResponseHeadersTest < BaseRackTest
   private
     def response_headers
       @response.prepare!
-      @response.to_a[1]
+      @response.out(@output)[1]
     end
 end

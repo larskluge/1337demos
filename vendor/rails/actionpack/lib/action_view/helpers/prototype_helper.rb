@@ -1,5 +1,4 @@
 require 'set'
-require 'active_support/json'
 
 module ActionView
   module Helpers
