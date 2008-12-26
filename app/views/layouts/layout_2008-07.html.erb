@@ -7,9 +7,9 @@
 	<title>
 		<%=
 			if @title
-			"#{@title}#{' - ' unless @title.empty?}1337demos.com"
+        "#{@title}#{' - ' unless @title.empty?}1337demos.com"
 			else
-				([controller.controller_name] << (" // " + controller.action_name if controller.action_name != 'index') << " - 1337demos.com").compact.join
+        default_title
 			end
 		%>
 	</title>
@@ -45,9 +45,7 @@
 			<div class="inner_left">
 				<div class="inner_right">
 					<div class="inner">
-					<% cache(cache_path_mainmenu) do %>
-							<%= render_mainmenu(ApplicationController::mainmenu) %>
-						<% end %>
+            <%= render_mainmenu %>
 					</div>
 				</div>
 			</div>

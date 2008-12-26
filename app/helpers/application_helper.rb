@@ -8,60 +8,31 @@ module ApplicationHelper
   end
 
 
-  # this method doesnt render the root node
-  #def render_mainmenu(tree, depth = 0, active = false)
-  #	return '' if tree.nil?
-  #	depth += 1
-  #	leaf = depth < 2 && !node.children.empty? # render max 2 levels
-    #
-  #	ret = "\n<ul #{'class="nav"' if depth == 1} #{'style="display:block"' if active}>"
-  #	tree.children.each do |node|
-  #		ret += "\n\t<li>"
-  #			options = { :controller => node.controller, :action => node.action }
-  #			active = controller.controller_name == node.controller
-  #			attr = { :class => 'active' } if active
-  #			ret += link_to node.name, options, attr
-  #			ret += render_mainmenu(node, depth, active) if leaf
-  #		ret += "\t</li>\n"
-  #	end
-  #	ret += "</ul>\n"
-  #end
-
-  # this method doesnt render the root node
-  #def render_mainmenu(node)
-  #	return if node.nil?
-    #
-  #	ret = "\n<ul #{'class="nav"' if node.depth.zero?} #{'style="display:block"' if node.self_or_descendant_active?(controller.controller_name, controller.action_name)}>"
-  #	node.children.each do |child|
-  #		ret += "\n\t<li>"
-  #			options = { :controller => child.controller, :action => child.action }
-  #			attr = { :class => 'active' } if child.self_or_descendant_active?(controller.controller_name, controller.action_name)
-  #			ret += link_to child.name, options, attr
-  #			ret += render_mainmenu(child) unless child.leaf?
-  #		ret += "\t</li>\n"
-  #	end
-  #	ret += "</ul>\n"
-  #end
-
-  # this method doesnt render the root node
-  def render_mainmenu(node)
-    return if node.nil?
-
-    ret = "\n<ul #{'class="nav"' if node.level.zero?} #{'style="display:block"' if node.self_or_descendant_active?(controller.controller_name, controller.action_name)}>"
-    node.children.each do |child|
-      ret += "\n\t<li>"
-        options = { :controller => child.controller, :action => child.action }
-        attr = { :class => 'active' } if child.self_or_descendant_active?(controller.controller_name, controller.action_name)
-        ret += link_to child.name, options, attr
-        ret += render_mainmenu(child) unless child.leaf?
-      ret += "\t</li>\n"
-    end
-    ret += "</ul>\n"
+  def default_title
+    ([controller.controller_name] << (" // " + controller.action_name if controller.action_name != 'index') << " - 1337demos.com").compact.join
   end
+
+
+  def render_mainmenu
+    semantic_menu :class => 'nav' do |root|
+      root.add 'Home', root_path
+      root.add 'Demos', demos_path do |demos|
+        demos.add 'All demos', demos_path
+        demos.add 'Race demos', demos_race_path
+        demos.add 'Freestyle demos', demos_freestyle_path
+        demos.add 'Comments', comments_path
+        demos.add 'Map browser', maps_path
+      end
+      root.add 'Players', players_path
+      root.add 'Upload', new_demofile_path
+    end
+  end
+
 
   def render_linked_map(map)
     link_to(map.name, {:controller => 'maps', :action => 'show', :id => map}, {:class => "map_link map_link_#{map.id}"}) if map.kind_of? Map
   end
+
 
   def render_linked_player(player)
     link_to(render_nickname(player.main_nickname.nickname), :controller => 'players', :action => 'show', :id => player) if player.kind_of? Player
@@ -80,6 +51,7 @@ module ApplicationHelper
         res + self.render_race_time(demo.time)
     end
   end
+
 
   def render_position(demo)
     pos = demo.position
@@ -101,6 +73,7 @@ module ApplicationHelper
       return 0
     end
   end
+
 
   def render_nickname(name)
 
@@ -129,7 +102,6 @@ module ApplicationHelper
   end
 
 
-
   def render_race_time(msec)
     return 'n/a' if msec.nil?
 
@@ -155,35 +127,23 @@ module ApplicationHelper
 
 
   def render_rating_text(rating)
-
     if rating.rated?
       sprintf('%.2f (%s)', rating.average, pluralize(rating.count, 'vote'))
     else
-      #r = record.rating_range
-      #avg = (r.last - r.first) / 2.0 + r.first # std average
-      #sprintf '%.2f', avg
-
       '(unrated)'
     end
   end
 
   def render_rating_dynamic(rating)
-
     if rating.rated?
       sprintf('%.2f (%s)', rating.average, pluralize(rating.count, 'vote'))
     else
-      #r = record.rating_range
-      #avg = (r.last - r.first) / 2.0 + r.first # std average
-      #sprintf '%.2f', avg
-
       '(unrated)'
     end
   end
 
   def render_rating_static(rating)
-
     if rating.rated?
-
       render :partial => '/ratings/stars_static', :locals => { :rating => rating }
     else
       render_rating_text(rating)

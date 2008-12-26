@@ -1,8 +1,6 @@
 # Filters added to this controller apply to all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 
-require 'load_main_menu'
-
 class ApplicationController < ActionController::Base
 
 	# make flash messages cachable via cookie + js
@@ -15,23 +13,6 @@ class ApplicationController < ActionController::Base
 	#protect_from_forgery # :secret => 'c111bea13c2f699f239e338712b24a4f'
 
 	layout 'layout_2008-07'
-
-
-
-	#attr_accessor :mainmenu
-	#before_filter LoadMainMenu
-
-	helper_method :cache_path_mainmenu
-
-	def self.mainmenu
-		#Rails.cache.fetch('mainmenu') {
-		#	self.load_recursive(Category.first({:conditions => '`published` = 1'}))
-		#}
-
-		Category.first({:conditions => '`published` = 1 AND name = "mainmenu"'})
-	end
-
-
 
 
 
@@ -69,22 +50,8 @@ class ApplicationController < ActionController::Base
 
 	protected
 
-	def self.load_recursive(node)
-		return if node.nil? || node.children.empty?
-
-		node.children.each do |child|
-			load_recursive child
-		end
-		return node
-	end
-
-
 	def cache_path
 		"#{controller_name}/#{action_name}/#{params[:page] || 1}"
-	end
-
-	def cache_path_mainmenu
-		"#{controller_name}/#{action_name}/mainmenu"
 	end
 
 end

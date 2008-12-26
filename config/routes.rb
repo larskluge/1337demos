@@ -25,7 +25,15 @@ ActionController::Routing::Routes.draw do |map|
 
   map.controller_actions 'demos', %w[race freestyle]
   map.connect 'demos/rss.xml', :controller => 'demos', :action => 'index', :format => 'atom' # support old demos feed url
-  map.resources :demos
+
+
+
+  map.resources :demos, :collection => { :race => :get, :freestyle => :get }
+
+  map.resources :players
+  map.resources :demofiles
+  map.resources :comments
+  map.resources :maps
 
   map.resources :ratings
 

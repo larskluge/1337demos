@@ -272,12 +272,12 @@ body, .content .inner
 	text-decoration: none;
 }
 
-.nav a.active,
+.nav .active a,
 .nav a:hover,
 .nav a:focus
 {
 	color: white;
-	background-image: url(/images/layout_2008-07/bg_nav_active.gif);
+	background: left top repeat url(/images/layout_2008-07/bg_nav_active.gif);
 }
 
 /* subnavigation */
@@ -290,10 +290,13 @@ body, .content .inner
 	margin-left: 50px;
 }
 
-.nav ul a,
-.nav ul a.active,
-.nav ul a:hover,
-.nav ul a:focus
+.nav li.active ul
+{
+  display: block;
+}
+
+.nav li.active ul a,
+.nav li.active ul li.active a
 {
 	color: white;
 	opacity: 0.5;
@@ -307,9 +310,9 @@ body, .content .inner
 	background: left 10px no-repeat url(/images/layout_2008-07/bg_subnav_active.gif);
 }
 
-.nav ul a.active,
-.nav ul a:hover,
-.nav ul a:focus
+.nav li.active ul li.active a,
+.nav li.active ul a:hover,
+.nav li.active ul a:focus
 {
 	opacity: 1.0;
 }
