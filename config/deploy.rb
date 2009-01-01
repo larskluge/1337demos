@@ -33,7 +33,11 @@ role :db,  '1337demos.com', :primary => true
 
 # symlink shared static files to new release
 task :after_update_code, :roles => :app do
-  run "sudo chown www-1337demos #{release_path}/config/environment.rb"
+  writeable_paths = %w(config/environment.rb tmp public/javascripts public/stylesheets)
+  writeable_paths.each do |path|
+    run "chmod g+w #{release_path}/#{path}"
+    run "sudo chown www-1337demos #{release_path}/#{path}"
+  end
 
 
 
