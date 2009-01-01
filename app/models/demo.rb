@@ -69,6 +69,11 @@ class Demo < ActiveRecord::Base
     @position = res.nil? ? nil : 1 + res
   end
 
+  def rerender
+    self.status = :uploaded
+    save!
+  end
+
   def video_exists?
     self.status == :rendered && File.exists?(self.video_filename)
   end
