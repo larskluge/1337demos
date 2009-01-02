@@ -71,6 +71,11 @@ form
 	font-weight: bold;
 }
 
+.nowrap
+{
+  white-space:nowrap;
+}
+
 /* flash[:notice] */
 #notice_div_id
 {
