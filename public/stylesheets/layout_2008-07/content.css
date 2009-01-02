@@ -90,6 +90,14 @@ form
   color: gray;
 }
 
+/* Gravatar */
+
+.gravatar
+{
+  float: left;
+  margin: 0 5px 1px 0;
+}
+
 
 /* Home */
 
@@ -352,6 +360,7 @@ form
 
 .shout
 {
+  overflow: hidden;
 	padding-bottom: 20px;
 }
 

@@ -100,12 +100,15 @@
 
 	<% for comment in @demo.comments; if comment.valid? %>
 		<p>
+      <% if comment.gravatarable %>
+        <img class="gravatar" src="<%=  comment.gravatar_url %>" width="32" height="32" alt="" title="<%= 'identified by %s' % comment.token_short if comment.token_short %>" />
+      <% end %>
+
 			<%= h comment.message %>
 			<br />
 			<%= render_date comment.created_at %>
 			by
 			<%= render_nickname comment.name %>
-      <%= '(identified by %s)' % comment.token_short if comment.token_short %>
 		</p>
 	<% end; end %>
 </div>

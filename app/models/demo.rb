@@ -1,14 +1,17 @@
 class Demo < ActiveRecord::Base
+  include FlexRating
+
+
   @@video_width = 384
   @@video_height = 288
   cattr_reader :video_width, :video_height
 
-  include FlexRating
 
   has_and_belongs_to_many :players
   belongs_to :map
   belongs_to :demofile, :dependent => :destroy
   has_many :comments, :as => :commentable, :dependent => :destroy, :order => 'created_at ASC'
+
 
   validates_presence_of :map_id
   validates_presence_of :demofile_id

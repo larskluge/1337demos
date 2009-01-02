@@ -25,6 +25,8 @@ Rails::Initializer.run do |config|
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
 
+  config.gem 'gravtastic'
+
   SYS_MAP_IMAGES = RAILS_ROOT + '/data/maps/images/'
   SYS_MAP_IMAGE_THUMBS = RAILS_ROOT + '/public/images/maps/thumbs/'
   SYS_VIDEOS = RAILS_ROOT + '/public/videos/'

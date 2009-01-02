@@ -1,4 +1,7 @@
 class Comment < ActiveRecord::Base
+  is_gravtastic :with => :gravatarable, :size => 32, :default => 'identicon'
+
+
 	belongs_to :commentable, :polymorphic => :true
 
 	validates_presence_of :message, :name
@@ -12,6 +15,10 @@ class Comment < ActiveRecord::Base
 
 
 
+
+  def gravatarable
+    token
+  end
 
 
 

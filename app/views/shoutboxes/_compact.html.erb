@@ -22,15 +22,21 @@
 		</div>
 	</div>
 
-	<% for shoutbox in @shoutboxes %>
+	<% for shout in @shoutboxes %>
 		<div class="shout">
 			<p>
-				<%= h shoutbox.message %>
+        <% if shout.gravatarable %>
+          <img class="gravatar" src="<%=  shout.gravatar_url %>" width="32" height="32" alt="" title="<%= 'identified by %s' % shout.token_short if shout.token_short %>" />
+        <% end %>
+
+				<%= h shout.message %>
 				<br />
-				<%= render_date shoutbox.created_at %>
+				<%= render_date shout.created_at %>
 				by
-				<%= render_nickname shoutbox.name %>
-        <%= '(identified by %s)' % shoutbox.token_short if shoutbox.token_short %>
+				<%= render_nickname shout.name %>
+
+
+
 			</p>
 		</div>
 	<% end %>
