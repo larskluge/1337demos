@@ -2,19 +2,21 @@
 
 <table>
 	<tr>
-		<th>Comment</th>
 		<th>By</th>
-		<th>Identification</th>
+		<th>Comment</th>
 		<th>On</th>
 	</tr>
 
 <% for comment in @comments %>
 	<tr>
-		<td><%= h comment.message %></td>
-		<td class="nowrap"><%= render_nickname comment.name %></td>
-    <td<%= ' class="untrusted"' unless comment.token_short %>>
-      <%= comment.token_short || 'untrusted' %>
+    <td class="nowrap">
+      <% if comment.gravatarable %>
+        <img class="gravatar" src="<%=  comment.gravatar_url %>" width="20" height="20" alt="" title="identified by <%= comment.token_short %>" />
+      <% end %>
+
+      <%= render_nickname comment.name %>
     </td>
+		<td><%= h comment.message %></td>
 		<td class="nowrap"><%= comment.demo.players.map{|player| render_linked_player(player)}.join(', ') %> on <%= render_linked_map comment.demo.map %></td>
 		<td class="nowrap"><%= link_to 'Play', :controller => 'demos', :action => 'show', :id => comment.demo %></td>
 	</tr>

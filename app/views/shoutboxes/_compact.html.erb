@@ -26,7 +26,7 @@
 		<div class="shout">
 			<p>
         <% if shout.gravatarable %>
-          <img class="gravatar" src="<%=  shout.gravatar_url %>" width="32" height="32" alt="" title="<%= 'identified by %s' % shout.token_short if shout.token_short %>" />
+          <img class="gravatar" src="<%=  shout.gravatar_url %>" alt="" title="identified by <%= shout.token_short %>" />
         <% end %>
 
 				<%= h shout.message %>

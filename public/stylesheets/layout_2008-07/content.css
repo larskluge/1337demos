@@ -96,6 +96,18 @@ form
 {
   float: left;
   margin: 0 5px 1px 0;
+  width: 32px;
+  height: 32px;
+}
+
+
+/* Comments */
+
+.comments-index .gravatar
+{
+  width: 20px;
+  height: 20px;
+  margin-right: 1.5em;
 }
 
 
