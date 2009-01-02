@@ -6,11 +6,6 @@ class Admin::DemosController < Admin::ApplicationController
 
 
 	def index
-		list
-		render :action => 'list'
-	end
-
-	def list
 		@demos = Demo.paginate(:page => params[:page],
 			:per_page => 50, :order => 'updated_at DESC')
 	end
@@ -27,7 +22,7 @@ class Admin::DemosController < Admin::ApplicationController
 		@demo = Demo.new(params[:demo])
 		if @demo.save
 			flash[:notice] = 'Demo was successfully created.'
-			redirect_to :action => 'list'
+			redirect_to :action => 'index'
 		else
 			render :action => 'new'
 		end
@@ -49,6 +44,6 @@ class Admin::DemosController < Admin::ApplicationController
 
 	def destroy
 		Demo.find(params[:id]).destroy
-		redirect_to :action => 'list'
+		redirect_to :action => 'index'
 	end
 end

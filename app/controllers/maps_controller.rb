@@ -12,11 +12,6 @@ class MapsController < ApplicationController
 
 
 	def index
-		list
-		render :action => 'list'
-	end
-
-	def list
 		@mapsearch = session[:mapsearch]
 		searchstr = '%%%s%%' % session[:mapsearch] || '%'
 		@maps = Map.paginate(:page => params[:page],
@@ -39,12 +34,12 @@ class MapsController < ApplicationController
 		else
 			session[:mapsearch] = nil
 		end
-		redirect_to :action => 'list'
+		redirect_to :action => 'index'
 	end
 
 	def clearsearch
 		session[:mapsearch] = nil
-		redirect_to :action => 'list'
+		redirect_to :action => 'index'
 	end
 
 	def show

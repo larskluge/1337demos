@@ -1,18 +1,15 @@
 class PlayersController < ApplicationController
 
 	# caching
-	caches_action :index, :list, :cache_path => :cache_path.to_proc
+	caches_action :index, :cache_path => :cache_path.to_proc
 
 
 
 	def index
-		list
-		render :action => 'list'
-	end
-
-	def list
 		@players = Player.find :all,
-			:include => 'demos'
+			:include => ['demos', 'main_nickname']
+      # :conditions => 'COUNT(demos.*) > 0'
+    @players = @players.map { |p| p if p.demos.size > 0 }.compact
 		@players.sort! { |x,y| y.demos.length <=> x.demos.length }
 	end
 

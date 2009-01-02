@@ -6,11 +6,6 @@ class Admin::PlayersController < Admin::ApplicationController
 
 
 	def index
-		list
-		render :action => 'list'
-	end
-
-	def list
 		@players = Player.paginate(:page => params[:page],
 			:per_page => 50, :order => 'created_at DESC')
 	end
@@ -65,7 +60,7 @@ class Admin::PlayersController < Admin::ApplicationController
 		@player = Player.new(params[:player])
 		if @player.save
 			flash[:notice] = 'Player was successfully created.'
-			redirect_to :action => 'list'
+			redirect_to :action => 'index'
 		else
 			render :action => 'new'
 		end
@@ -87,6 +82,6 @@ class Admin::PlayersController < Admin::ApplicationController
 
 	def destroy
 		Player.find(params[:id]).destroy
-		redirect_to :action => 'list'
+		redirect_to :action => 'index'
 	end
 end
