@@ -17,5 +17,9 @@ module Admin::StuffHelper
     number_to_human_size record.size
   end
 
+  def comment_column(record)
+    h record.comment.message
+  end
+
 end
 
