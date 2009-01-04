@@ -25,9 +25,7 @@
 	<% for shout in @shoutboxes %>
 		<div class="shout">
 			<p>
-        <% if shout.gravatarable %>
-          <img class="gravatar" src="<%=  shout.gravatar_url %>" alt="" title="identified by <%= shout.token_short %>" />
-        <% end %>
+        <%= gravatar_tag shout, 32 %>
 
 				<%= h shout.message %>
 				<br />

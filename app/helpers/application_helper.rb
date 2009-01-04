@@ -24,7 +24,10 @@ module ApplicationHelper
         demos.add 'Map browser', maps_path
       end
       root.add 'Players', players_path
-      root.add 'Upload', new_demofile_path
+      root.add 'Upload', new_demofile_path do |upload|
+        upload.add 'Demo upload', new_demofile_path
+        upload.add 'Stuff upload', new_stuff_path
+      end
     end
   end
 
@@ -101,6 +104,11 @@ module ApplicationHelper
     html.gsub /\^\^/, '^'
   end
 
+  def render_nickname_plain(name)
+    strip_tags(render_nickname(name))
+  end
+
+
 
   def render_race_time(msec)
     return 'n/a' if msec.nil?
@@ -147,6 +155,14 @@ module ApplicationHelper
       render :partial => '/ratings/stars_static', :locals => { :rating => rating }
     else
       render_rating_text(rating)
+    end
+  end
+
+
+  def gravatar_tag(record, size = 50)
+    if record.respond_to?(:gravatarable) && record.gravatarable
+      alt = 'identified by ' + record.token_short
+      image_tag record.gravatar_url(:size => size), :class => 'gravatar', :alt => alt, :title => alt, size => [size,size].join('x')
     end
   end
 end

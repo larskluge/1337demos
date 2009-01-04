@@ -7,6 +7,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :nicknames
     admin.resources :comments
     admin.resources :shoutboxes
+    admin.resources :stuffs
   end
 
 
@@ -32,6 +33,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :players
   map.resources :demofiles
+  map.resources :stuffs
   map.resources :comments
   map.resources :maps, :collection => { :clearsearch => :get }
 

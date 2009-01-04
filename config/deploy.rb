@@ -41,7 +41,7 @@ task :after_update_code, :roles => :app do
 
 
 
-  static_dirs = %w(data/maps/images public/demofiles public/videos public/images/maps)
+  static_dirs = %w(data/maps/images public/stuffs public/demofiles public/videos public/images/maps)
   static_path = "#{deploy_to}/shared/static"
 
   static_dirs.each do |dir|

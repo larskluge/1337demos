@@ -1,0 +1,27 @@
+<h1>Listing demofiles</h1>
+
+<table>
+  <tr>
+  <% for column in Demofile.content_columns %>
+    <th><%= column.human_name %></th>
+  <% end %>
+  </tr>
+  
+<% for demofile in @demofiles %>
+  <tr>
+  <% for column in Demofile.content_columns %>
+    <td><%=h demofile.send(column.name) %></td>
+  <% end %>
+    <td><%= link_to 'Show', :action => 'show', :id => demofile %></td>
+    <td><%= link_to 'Edit', :action => 'edit', :id => demofile %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => demofile }, :confirm => 'Are you sure?', :method => :post %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'Previous page', { :page => @demofile_pages.current.previous } if @demofile_pages.current.previous %>
+<%= link_to 'Next page', { :page => @demofile_pages.current.next } if @demofile_pages.current.next %> 
+
+<br />
+
+<%= link_to 'New demofile', :action => 'new' %>

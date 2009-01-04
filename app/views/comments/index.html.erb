@@ -10,9 +10,7 @@
 <% for comment in @comments %>
 	<tr>
     <td class="nowrap">
-      <% if comment.gravatarable %>
-        <img class="gravatar" src="<%=  comment.gravatar_url %>" width="20" height="20" alt="" title="identified by <%= comment.token_short %>" />
-      <% end %>
+      <%= gravatar_tag comment, 20 %>
 
       <%= render_nickname comment.name %>
     </td>
