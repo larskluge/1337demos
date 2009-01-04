@@ -1,6 +1,6 @@
 class AddStuffsTable < ActiveRecord::Migration
   def self.up
-    create_table(:stuffs, :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8') do |t|
+    create_table(:stuffs, :force => true, :options => 'ENGINE=InnoDB DEFAULT CHARSET=utf8') do |t|
       t.integer :id
       t.integer :size
       t.string :filename
