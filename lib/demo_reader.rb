@@ -84,10 +84,10 @@ class DemoReader
 		regex = /&([^ ]+) /
 
 		gamemodes = []
-		@scoreboards.each { |scb|
+		@scoreboards.each do |scb|
 			matchdata = regex.match(scb)
 			gamemodes.push matchdata[1]
-		}
+    end
 		gamemodes.uniq!
 		if gamemodes.length.zero?
 			@gamemode = 'unknown'
@@ -103,7 +103,7 @@ class DemoReader
 
 
 		# detect time by sent message string with time from server
-		if @gamemode == 'race'
+		if ['race', 'unknown'].include?(@gamemode)
 			matches = []
 			regex = /(Server record|Race finished): ([0-9]+:[0-9]+\.[0-9]+)/
 			matchdata = regex.match(content)
@@ -115,6 +115,7 @@ class DemoReader
 
 			if matches.length > 0
 				@time = matches.sort.first
+        @gamemode = 'race' if @gamemode == 'unknown'
 			end
 		end
 
