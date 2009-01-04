@@ -24,12 +24,14 @@ class StuffsController < ApplicationController
 	def create
     @stuff = Stuff.new(params[:stuff])
     if @stuff.valid? && @stuff.save
-      flash[:notice] = 'Thanks for uploading.'
-      redirect_to new_stuff_path
+      redirect_to thanks_stuffs_path
     else
       render :action => 'new'
     end
 	end
+
+  def thanks
+  end
 
 
 

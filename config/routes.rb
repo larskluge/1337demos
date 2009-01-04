@@ -33,7 +33,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :players
   map.resources :demofiles
-  map.resources :stuffs
+  map.resources :stuffs, :collection => { :thanks => :get }
   map.resources :comments
   map.resources :maps, :collection => { :clearsearch => :get }
 
