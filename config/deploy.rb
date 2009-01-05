@@ -1,4 +1,3 @@
-require 'capistrano_colors'
 load "lib/recipes/servers/passenger.rb"
 
 
