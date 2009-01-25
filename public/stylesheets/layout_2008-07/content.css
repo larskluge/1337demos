@@ -322,6 +322,26 @@ form
 }
 
 
+/* toplist */
+
+.toplist
+{
+  border-collapse: collapse;
+}
+
+.toplist td
+{
+  padding: 0 1em 0 0;
+}
+
+.toplist .active-demo td
+{
+  font-weight: bold;
+}
+
+
+
+
 
 /* Player list */
 

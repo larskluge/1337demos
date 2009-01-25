@@ -16,6 +16,12 @@
 				<td>Position</td>
 				<td><%= render_position @demo %></td>
 			</tr>
+      <% if @top3.size > 1 || @demo.position.nil? %>
+        <tr>
+          <td>Toplist</td>
+          <td><%= render_toplist(@top3, @demo) %></td>
+        </tr>
+      <% end %>
 			<tr>
 				<td>Time</td>
 				<td><%= render_race_time @demo.time %></td>

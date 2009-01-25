@@ -65,6 +65,10 @@ module ApplicationHelper
   end
 
 
+  def render_toplist(demos, active_demo = nil)
+    render :partial => '/demos/toplist', :locals => { :toplist => demos, :active_demo => active_demo }
+  end
+
 
 
 
@@ -120,6 +124,29 @@ module ApplicationHelper
     sec = sec % 60
 
     '%02d:%02d.%03d' % [ min, sec, msec ]
+  end
+
+  def render_race_time_difference(from_msec, to_msec)
+    return '-' if from_msec == to_msec
+
+    diff = from_msec - to_msec
+    msec = diff.abs
+
+    sec = msec / 1000
+    msec = msec % 1000
+
+    min = sec / 60
+    sec = sec % 60
+
+    prefix, color = if diff == 0
+               ['', 'yellow']
+             elsif diff > 0
+               ['-', 'red']
+             else
+               ['+', 'green']
+             end
+
+    '<span style="color:%s">%s %02d:%02d.%03d</span>' % [ color, prefix, min, sec, msec ]
   end
 
 

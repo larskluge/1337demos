@@ -6,6 +6,8 @@ class Demo < ActiveRecord::Base
   @@video_height = 288
   cattr_reader :video_width, :video_height
 
+  before_save :calc_position
+
 
   has_and_belongs_to_many :players
   belongs_to :map
@@ -20,7 +22,9 @@ class Demo < ActiveRecord::Base
 
   def validate
     #logger.info "status: #{self.status}"
-    errors.add(:status, 'can not be "rendered" without an existing video file') if self.status == :rendered && !File.exists?(self.video_filename)
+    if Rails.env == 'production' # ignore if demo file is not available in dev-mode
+      errors.add(:status, 'can not be "rendered" without an existing video file') if self.status == :rendered && !File.exists?(self.video_filename)
+    end
     #logger.info "error cnt: #{errors.count}"
   end
 
@@ -47,14 +51,16 @@ class Demo < ActiveRecord::Base
   end
 
 
+  def toplist
+    map.demos.race.all :conditions => "position IS NOT NULL", :order => 'position'
+  end
 
-  def position
-    return @position unless @position.nil?
+  def calc_position
     return nil if self.gamemode != 'race'
 
     pos = 0
     demos = self.map.demos.race
-    return 1 if demos.length == 1
+    return self.position = 1 if demos.length == 1
 
     demos = demos.sort.collect {|demo| demo unless demo.time == self.time && demo != self}.compact
 
@@ -69,7 +75,7 @@ class Demo < ActiveRecord::Base
     end
 
     res = demos.index(self)
-    @position = res.nil? ? nil : 1 + res
+    self.position = res.nil? ? nil : 1 + res
   end
 
   def rerender
