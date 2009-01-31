@@ -7,6 +7,7 @@ class Demo < ActiveRecord::Base
   cattr_reader :video_width, :video_height
 
   before_save :calc_position
+  after_save :update_other_positions
 
 
   has_and_belongs_to_many :players
@@ -58,10 +59,13 @@ class Demo < ActiveRecord::Base
   def calc_position
     return nil if self.gamemode != 'race'
 
+    logger.info "Calc position for demo#id #{self.id}"
+
     pos = 0
     demos = self.map.demos.race
     return self.position = 1 if demos.length == 1
 
+    demos << self unless demos.include?(self)
     demos = demos.sort.collect {|demo| demo unless demo.time == self.time && demo != self}.compact
 
     # just consider best time of each player
@@ -76,7 +80,28 @@ class Demo < ActiveRecord::Base
 
     res = demos.index(self)
     self.position = res.nil? ? nil : 1 + res
+
+    true
   end
+
+  def recalc_position
+    @external_recalc_request = true
+    #self.calc_position
+    position = nil # to trigger calc_position before-save-filter
+    self.save!
+  end
+
+  def update_other_positions
+    return if @external_recalc_request # to avoid recursive recalc calls
+
+    demos = map.demos.race
+    demos.delete self
+    demos.each(&:recalc_position)
+
+    true
+  end
+
+
 
   def rerender
     self.status = :uploaded
