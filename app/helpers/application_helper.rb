@@ -141,9 +141,9 @@ module ApplicationHelper
     prefix, color = if diff == 0
                ['', 'yellow']
              elsif diff > 0
-               ['-', 'red']
+               ['+', 'red']
              else
-               ['+', 'green']
+               ['-', 'green']
              end
 
     '<span style="color:%s">%s %02d:%02d.%03d</span>' % [ color, prefix, min, sec, msec ]
