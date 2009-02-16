@@ -1,4 +1,7 @@
 class Admin::ApplicationController < ApplicationController
+  include ExceptionNotifiable
+
+
   before_filter :authenticate
 
 
