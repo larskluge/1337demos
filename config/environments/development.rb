@@ -22,6 +22,3 @@ config.cache_store = :file_store, File.join(Rails.root, 'tmp/cache')
 # Disable request forgery protection
 config.action_controller.allow_forgery_protection = false
 
-# configure exception-notification
-ExceptionNotifier.exception_recipients = %w(1337demos@freshthinking.de)
-
