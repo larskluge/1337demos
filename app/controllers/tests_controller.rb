@@ -1,8 +1,7 @@
 require 'demo_reader'
 
 class TestsController < ApplicationController
-	#SYS_DEMOFILES = RAILS_ROOT + '/public/demofiles/'
-	SYS_DEMOFILES = RAILS_ROOT + '/data/test_demos/warsow_0.4/'
+	SYS_DEMOFILES = RAILS_ROOT + '/data/test_demos/'
 
 
 

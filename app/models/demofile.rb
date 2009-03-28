@@ -32,7 +32,7 @@ class Demofile < ActiveRecord::Base
 			errors.add_to_base 'Could not find any players in this demofile!!' if read_demo.playernames.nil? || read_demo.playernames.compact.empty?
 			errors.add_to_base 'Could not detect the gamemode!!' if read_demo.gamemode.nil?
 
-			errors.add_to_base 'Any mods of warsow are not supported!! Please play with "normal physics" or request to support a specific mod.' if read_demo.basegamedir != 'basewsw' || read_demo.gamedir != 'basewsw'
+			errors.add_to_base 'Any mods of warsow are not supported!! Please play with "normal physics" or request to support a specific mod.' if read_demo.basegamedir != 'basewsw' || !['basewsw', 'racesow_local_0.1a'].include?(read_demo.gamedir)
 
 			# checks gametype dependent
 			case self.gametype
