@@ -29,6 +29,7 @@ ActionController::Routing::Routes.draw do |map|
 
 
 
+  map.resources :announcements, :only => [:index, :show]
   map.resources :demos, :collection => { :race => :get, :freestyle => :get }
 
   map.resources :players

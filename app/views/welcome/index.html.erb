@@ -16,14 +16,20 @@
 			</p>
 
 			<p>
-				<h2>News:</h2>
+      <h2>
+        News
+        <%= link_to image_tag('layout_2008-07/rss.png', :size => '16x16', :alt => 'atom news feed'),
+          formatted_announcements_path('atom'),
+          :style => "border-bottom:0"
+        %>
+      </h2>
 				<div id="news">
 					<%= render :partial => '/announcements/simple_list' %>
 				</div>
 			</p>
 
 			<p>
-				<h2>Roadmap:</h2>
+				<h2>Roadmap</h2>
 				<ol>
 					<li>Add support for more games/gamemodes</li>
 					<li>HOWTO record a demo and other HOWTOs, FAQ, about, contact, etc.</li>

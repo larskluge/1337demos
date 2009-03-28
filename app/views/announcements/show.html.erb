@@ -1,0 +1,9 @@
+<h1>News.</h1>
+
+<p>
+  <strong><%= render_datetime @ann.created_at %></strong>
+</p>
+
+<p>
+  <%= render :inline => @ann.message %>
+</p>
