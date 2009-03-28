@@ -1,9 +1,9 @@
 <h1>Editing comment</h1>
 
-<% form_tag :action => 'update', :id => @comment do %>
+<% form_tag admin_comment_path(@comment), :method => 'PUT' do %>
   <%= render :partial => 'form' %>
   <%= submit_tag 'Edit' %>
 <% end %>
 
-<%= link_to 'Show', :action => 'show', :id => @comment %> |
-<%= link_to 'Back', :action => 'list' %>
+<%= link_to 'Show', admin_comment_path(@comment) %> |
+<%= link_to 'Back', admin_comments_path %>

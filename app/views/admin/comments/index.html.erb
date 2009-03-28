@@ -17,9 +17,9 @@
     <td><%= render_nickname comment.name %></td>
     <td><%= comment.demo.players.map{|player| render_linked_player(player)}.join(', ') %> on <%= render_linked_map comment.demo.map %></td>
     <td><%= link_to 'Watch demo', :controller => '/demos', :action => 'show', :id => comment.demo %></td>
-    <td><%= link_to 'Show', :action => 'show', :id => comment %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => comment %></td>
-    <td class="destroy"><%= link_to 'Destroy', admin_comment_url(comment) %></td>
+    <td><%= link_to 'Show', admin_comment_path(comment) %></td>
+    <td><%= link_to 'Edit', edit_admin_comment_path(comment) %></td>
+    <td class="destroy"><%= link_to 'Destroy', admin_comment_path(comment) %></td>
   </tr>
 <% end %>
 </table>
