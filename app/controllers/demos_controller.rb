@@ -73,6 +73,9 @@ class DemosController < ApplicationController
     @comment = Comment.new
     @video_player = (['flash', 'quicktime'].include?(session[:video_player])) ? session[:video_player] : 'flash'
     @top3 = @demo.toplist
+
+    @prev = Demo.last(:conditions => ['id < ?', @demo.id])
+    @next = Demo.first(:conditions => ['id > ?', @demo.id])
   end
 
   def file
