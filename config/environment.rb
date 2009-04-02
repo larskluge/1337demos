@@ -90,3 +90,7 @@ Rails::Initializer.run do |config|
 
   $KCODE = 'u'
 end
+
+# configure exception-notification
+ExceptionNotifier.exception_recipients = %w(1337demos@freshthinking.de)
+ExceptionNotifier.sender_address = %("1337demos exception notifier" <exception-notifier@1337demos.com>)

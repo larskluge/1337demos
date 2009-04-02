@@ -23,8 +23,3 @@ config.cache_store = :file_store, RAILS_ROOT + '/tmp/cache'
 
 # Disable request forgery protection
 config.action_controller.allow_forgery_protection = false
-
-# configure exception-notification
-ExceptionNotifier.exception_recipients = %w(1337demos@freshthinking.de)
-ExceptionNotifier.sender_address = %("1337demos exception notifier" <exception-notifier@1337demos.com>)
-
