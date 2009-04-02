@@ -31,19 +31,15 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :announcements, :only => [:index, :show]
   map.resources :demos, :collection => { :race => :get, :freestyle => :get }
-
   map.resources :players
   map.resources :demofiles
   map.resources :stuffs, :collection => { :thanks => :get }
   map.resources :comments
   map.resources :maps, :collection => { :clearsearch => :get }
-
   map.resources :ratings
-
-
   map.resources :categories
 
-  #map.resources :cars
+  map.resource :check, :member => {:fail => :get}
 
   # The priority is based upon order of creation: first created -> highest priority.
 
