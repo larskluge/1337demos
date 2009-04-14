@@ -131,7 +131,7 @@ form
 
 /* Nav */
 
-ul#nav
+ul.nav
 {
 	list-style-type: none;
 	margin: 0pt;
@@ -142,7 +142,7 @@ ul#nav
 	display: block;
 }
 
-ul#nav li {
+ul.nav li {
 	margin: 0pt;
 	padding: 0 3px 0 0;
 	position: relative;
@@ -150,10 +150,10 @@ ul#nav li {
 	height: 39px;
 }
 
-ul#nav li a,
-ul#nav li a:link,
-ul#nav li a:active,
-ul#nav li a:visited
+ul.nav li a,
+ul.nav li a:link,
+ul.nav li a:active,
+ul.nav li a:visited
 {
 	color: #BF9595;
 	display: block;
@@ -165,9 +165,9 @@ ul#nav li a:visited
 	line-height: 39px;
 }
 
-ul#nav li a:hover,
-ul#nav li a:focus,
-ul#nav li a.active
+ul.nav li a:hover,
+ul.nav li a:focus,
+ul.nav li.active a
 {
 	background-color: white;
 	color: #740606;

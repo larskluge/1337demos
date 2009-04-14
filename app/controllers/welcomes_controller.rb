@@ -1,4 +1,4 @@
-class WelcomeController < ApplicationController
+class WelcomesController < ApplicationController
 
   caches_action :index, :cache_path => :cache_path.to_proc
   cache_sweeper :comment_sweeper, :only => [:create_comment]

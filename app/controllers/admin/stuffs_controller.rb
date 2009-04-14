@@ -9,3 +9,4 @@ class Admin::StuffsController < Admin::ApplicationController
   end
 
 end
+

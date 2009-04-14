@@ -4,6 +4,7 @@
 			<%= render_datetime announcement.created_at %>
 		</div>
 		<div class="message">
-			<%= render :inline => announcement.message %>
+      <%= render :inline => announcement.message rescue nil %>
 		</div>
 <% end %>
+

@@ -5,3 +5,5 @@ tmp/**/*
 db/schema.rb
 public/demofiles/**/*
 public/stuffs/**/*
+.idea
+db/test.sqlite3

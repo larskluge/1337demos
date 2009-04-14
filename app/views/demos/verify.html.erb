@@ -1,6 +1,6 @@
 <h1>Verify information.</h1>
 
-<% form_tag :action => 'update', :id => @demo, :layout => 'true' do %>
+<% form_tag demo_path(@demo), :method => :put do %>
 
 	<%= error_messages_for 'demo' %>
 

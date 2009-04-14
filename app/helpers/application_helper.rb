@@ -18,8 +18,8 @@ module ApplicationHelper
       root.add 'Home', root_path
       root.add 'Demos', demos_path do |demos|
         demos.add 'All demos', demos_path
-        demos.add 'Race demos', demos_race_path
-        demos.add 'Freestyle demos', demos_freestyle_path
+        demos.add 'Race demos', race_demos_path
+        demos.add 'Freestyle demos', freestyle_demos_path
         demos.add 'Comments', comments_path
         demos.add 'Map browser', maps_path
       end
@@ -32,8 +32,22 @@ module ApplicationHelper
   end
 
 
+  def render_admin_mainmenu
+    semantic_menu :class => 'nav' do |root|
+      root.add 'Home', admin_root_path
+      root.add 'Announcements', admin_announcements_path
+      root.add 'Shouts', admin_shoutboxes_path
+      root.add 'Demos', admin_demos_path
+      root.add 'Players', admin_players_path
+      root.add 'Comments', admin_comments_path
+      root.add 'Nicknames', admin_nicknames_path
+      root.add 'Stuff', admin_stuffs_path
+    end
+  end
+
+
   def render_linked_map(map)
-    link_to(map.name, {:controller => 'maps', :action => 'show', :id => map}, {:class => "map_link map_link_#{map.id}"}) if map.kind_of? Map
+    link_to(map.name, map_path(map), {:class => "map_link map_link_#{map.id}"}) if map.kind_of? Map
   end
 
 

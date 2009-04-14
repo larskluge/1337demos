@@ -23,15 +23,15 @@
 		<td><%= render_linked_map demo.map %></td>
 		<td><%= demo.players.map{|player| render_linked_player(player)}.join(', ') %></td>
 		<td><div class="statusbox <%= demo.status %>" title="rendering status: <%= demo.status %>"></div></td>
-    <td><%= link_to 'Show', :controller => '/demos', :action => 'show', :id => demo %></td>
-    <td><%= link_to 'Edit', :action => 'edit', :id => demo %></td>
+    <td><%= link_to 'Show', demo_path(demo) %></td>
+    <td><%= link_to 'Edit', edit_demo_path(demo) %></td>
 		<td id="rerender<%=demo.id%>">
 			<%= link_to_remote 'Rerender',
-				:url => { :controller => '/webservices', :action => :update_demo, :id => demo, :appsec => '1CGBre7Rk36vjBfT8cVEhhXIjEGVaPpI', 'demo[status]' => 'uploaded' },
+				:url => webservices_update_demo_path(demo, :appsec => '1CGBre7Rk36vjBfT8cVEhhXIjEGVaPpI', 'demo[status]' => 'uploaded'),
 				:success => '$("rerender%d").update("Requested.");' % demo.id
 			%>
 		</td>
-    <td><%= link_to 'Destroy', { :action => 'destroy', :id => demo }, :confirm => 'Are you sure?', :method => :post %></td>
+    <td><%= link_to 'Destroy', { :action => 'destroy', :id => demo, :_method => :delete }, :confirm => 'Are you sure?', :method => :post %></td>
 	</tr>
 <% end %>
 </table>
