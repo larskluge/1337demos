@@ -19,6 +19,7 @@ set :scm_verbose, true # to support older git versions on server
 # remote server
 set :deploy_to, "/var/www/1337demos.com/#{application}"
 set :deploy_via, :remote_cache    # default checkout
+set :copy_exclude, ".git"
 set :rails_env, (ENV['RAILS_ENV'] || 'production')
 set :use_sudo, false
 set :keep_releases, 3
