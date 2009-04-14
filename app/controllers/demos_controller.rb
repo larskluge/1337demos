@@ -178,10 +178,12 @@ class DemosController < ApplicationController
 
 
 
+  # FIXME: a comment sould not be created via demo
+  #
   def create_comment
     self.show
 
-    hash = params[:comment]
+    hash = params[:comment] || {}
     hash.delete :token
 
     if (@comment = @demo.comments.create(hash)) && @comment.valid?
