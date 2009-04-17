@@ -29,7 +29,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'demos/rss.xml', :controller => 'demos', :action => 'index', :format => 'atom'
 
   map.resource :check, :member => {:fail => :get}
-  map.resource :welcome, :only => :index, :member => {:create_comment => :post}
+  map.resource :welcome, :only => :index, :collection => {:create_comment => :post}
 
   map.resources :announcements, :only => [:index, :show]
   map.resources :categories
