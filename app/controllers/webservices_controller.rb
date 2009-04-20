@@ -3,7 +3,7 @@ class WebservicesController < ApplicationController
 
   before_filter :authorized?
 
-  cache_sweeper :demo_sweeper, :only => [:update_demo]
+  # cache_sweeper :demo_sweeper, :only => [:update_demo]
 
 
 
