@@ -20,10 +20,9 @@ class WelcomesController < ApplicationController
     hash[:commentable_type] = 'Welcome'
 
 
-
     if (@comment = Comment.create(hash)) && @comment.valid?
       flash[:notice] = 'Comment was successfully created.'
-      redirect_to root_path
+      redirect_to root_url
     else
       self.index
       render :action => 'index'
