@@ -46,9 +46,8 @@ ActionController::Routing::Routes.draw do |map|
 
   # webservices ###############################################################
 
-  map.namespace :webservices do |ws|
-    ws.update_demo 'update_demo/:id', :action => :update_demo, :conditions => {:method => :get}
-  end
+  map.render_request '/webservices/render_request.:format', :controller => 'webservices', :action => 'render_request', :conditions => {:method => :get}
+  map.update_demo '/webservices/update_demo/:id', :controller => 'webservices', :action => 'update_demo', :conditions => {:method => :get}
 
 
 

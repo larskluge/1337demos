@@ -1,7 +1,7 @@
 xml.instruct! :xml, :version => '1.0', :encoding => 'UTF-8'
 xml.rss('version' => '2.0') do
 	xml.channel do
-		xml.title @feed_title
+		xml.title 'Render response'
 		xml.link request.protocol + request.host_with_port + url_for(:rss => nil)
 		xml.description @feed_title
 		xml.language 'en-us'
@@ -22,3 +22,4 @@ xml.rss('version' => '2.0') do
 		end
 	end
 end
+
