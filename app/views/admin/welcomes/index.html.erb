@@ -39,7 +39,8 @@
       <td><%= link_to 'Edit', edit_demo_path(demo) %></td>
       <td id="rerender<%=demo.id%>">
         <%= link_to_remote 'Rerender',
-          :url => webservices_update_demo_path(demo, :appsec => '1CGBre7Rk36vjBfT8cVEhhXIjEGVaPpI', 'demo[status]' => 'uploaded'),
+          :method => 'GET',
+          :url => update_demo_path(demo, :appsec => '1CGBre7Rk36vjBfT8cVEhhXIjEGVaPpI', 'demo[status]' => 'uploaded'),
           :success => '$("rerender%d").update("Requested.");' % demo.id
         %>
       </td>
