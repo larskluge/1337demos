@@ -21,9 +21,9 @@ class ShoutboxSweeper < ActionController::Caching::Sweeper
 	private
 	def expire_cache_for(record)
 
-		expire_action(:controller => '/welcome', :action => 'index')
+		expire_action(:controller => '/welcomes', :action => 'index')
 		# and delete all pages
-		expire_fragment(%r{/welcome/index*})
+		expire_fragment(%r{/welcomes/index*})
 
 		# Also expire the show page, incase we just edited a blog entry
 		#expire_page(:controller => 'shoutbox', :action => 'show', :id => record.id)

@@ -26,7 +26,7 @@ class ShoutboxesController < ApplicationController
 		@shoutbox = Shoutbox.new(params[:shoutbox])
 		if @shoutbox.save
 			flash[:notice] = 'Shoutbox was successfully created.'
-			redirect_to :controller => 'welcome' #:action => 'list'
+			redirect_to root_path
 		else
 			render :action => 'new'
 		end

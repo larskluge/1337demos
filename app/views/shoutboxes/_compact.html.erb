@@ -15,7 +15,7 @@
 				color codes: <%= render_nickname '^11^22^33^44^55^66^77^88^99^00' %>).
 			</p>
 
-      <% form_tag(create_comment_welcome_path, {:method => :post, :class => 'shout_form'}) do %>
+      <% form_tag(create_comment_welcomes_path, {:method => :post, :class => 'shout_form'}) do %>
 				<%= render :partial => '/comments/form' %>
 				<%= submit_tag 'Submit' %>
 			<% end %>
