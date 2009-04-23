@@ -74,8 +74,8 @@ class DemosController < ApplicationController
     @video_player = (['flash', 'quicktime'].include?(session[:video_player])) ? session[:video_player] : 'flash'
     @top3 = @demo.toplist
 
-    @prev = Demo.last(:conditions => ['id < ?', @demo.id])
-    @next = Demo.first(:conditions => ['id > ?', @demo.id])
+    @prev = Demo.last(:conditions => ['id < ? AND data_correct', @demo.id])
+    @next = Demo.first(:conditions => ['id > ? AND data_correct', @demo.id])
   end
 
   def file
