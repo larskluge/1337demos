@@ -10,7 +10,7 @@ ActionController::Routing::Routes.draw do |map|
     admin.resource :welcomes, :only => :index, :member => {:delete_cache => :delete}
 
     admin.resources :announcements, :active_scaffold => true
-    admin.resources :comments
+    admin.resources :comments, :only => :index
     admin.resources :demos
     admin.resources :nicknames, :active_scaffold => true
     admin.resources :players, :member => {:merge => :get}, :collection => {:merge_players => :put}
