@@ -6,7 +6,8 @@ set :application, '1337demos'
 
 # ssh
 set :user, 'lars'
-set :repository,  "ssh://#{user}@1337demos.com/home/lars/git/1337demos.git"
+# set :repository,  "ssh://#{user}@1337demos.com/home/lars/git/1337demos.git"
+set :repository,  "file:///home/lars/git/1337demos.git"
 ssh_options[:forward_agent] = true
 
 
