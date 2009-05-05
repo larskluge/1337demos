@@ -42,6 +42,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :stuffs, :collection => {:thanks => :get}
   map.resources :videos
 
+  map.list_demos_test '/tests/list_demos', :controller => 'tests', :action => 'list_demos', :conditions => {:method => :get}
+
 
 
   # webservices ###############################################################

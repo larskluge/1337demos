@@ -11,6 +11,9 @@ class Demofile < ActiveRecord::Base
 	has_attachment :storage => :file_system, :max_size => 2.megabytes
 	validates_as_attachment
 
+  validate_on_create :validate_basegamedir
+  validate_on_create :validate_gamedir
+
 
 
 	def validate
@@ -32,7 +35,6 @@ class Demofile < ActiveRecord::Base
 			errors.add_to_base 'Could not find any players in this demofile!!' if read_demo.playernames.nil? || read_demo.playernames.compact.empty?
 			errors.add_to_base 'Could not detect the gamemode!!' if read_demo.gamemode.nil?
 
-			errors.add_to_base 'Any mods of warsow are not supported!! Please play with "normal physics" or request to support a specific mod.' if read_demo.basegamedir != 'basewsw' || !['basewsw', 'racesow_local_0.1a'].include?(read_demo.gamedir)
 
 			# checks gametype dependent
 			case self.gametype
@@ -73,4 +75,21 @@ class Demofile < ActiveRecord::Base
 
 		@read_demo = dr if dr.valid
 	end
+
+
+  protected
+
+  def validate_basegamedir
+    errors.add_to_base 'Only warsow demos are supported atm. Please request to support your demo with uploading it to Upload > Stuff upload.' if read_demo.basegamedir != 'basewsw'
+  end
+
+  def validate_gamedir
+    case read_demo.gamedir
+    when 'basewsw': true
+    when /^racesow_local_0\.\w+$/: true
+    else
+      errors.add_to_base 'This mod of warsow is not supported. If you want request to support this mod with uploading it to Upload > Stuff upload'
+    end
+  end
 end
+
