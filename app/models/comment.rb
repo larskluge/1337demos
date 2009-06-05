@@ -20,7 +20,7 @@ class Comment < ActiveRecord::Base
 
 
 
-  is_gravtastic :with => :mail_pass
+  is_gravtastic :mail_pass
 
   def has_gravatar?
     !!mail_pass

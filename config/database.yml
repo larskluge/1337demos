@@ -6,7 +6,7 @@ common: &common
 
 development:
   <<: *common
-  socket: /var/run/mysqld/mysqld.sock
+  host: localhost
   database: 1337demos_development
   username: '1337demos'
   password: '1337demos'
