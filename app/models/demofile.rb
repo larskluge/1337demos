@@ -17,7 +17,8 @@ class Demofile < ActiveRecord::Base
 
 
 	def validate
-			errors.add_to_base 'The demofile u try to upload is already online. :-)' if Demofile.find_by_md5_and_size(self.md5, self.size)
+    same = Demofile.find_by_md5_and_size(self.md5, self.size)
+    errors.add :duplicated_demo, same.id if same
 	end
 
 	def validate_on_create

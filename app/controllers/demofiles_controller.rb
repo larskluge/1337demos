@@ -54,6 +54,12 @@ class DemofilesController < ApplicationController
 			#rescue Exception => e
 			#	@demofile.errors.add_to_base 'AAAAAAAAAAAAARG ' + e.message
 			#end
+    else
+      same_id = @demofile.errors.on :duplicated_demo
+      if same_id
+        flash[:notice] = 'You tried to upload this already uploaded demo :)'
+        return redirect_to demo_path(same_id)
+      end
 		end
 
 		render :action => 'new'
