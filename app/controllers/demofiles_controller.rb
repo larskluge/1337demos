@@ -1,4 +1,3 @@
-require 'demo_reader'
 require 'tempfile'
 
 class DemofilesController < ApplicationController

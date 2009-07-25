@@ -1,5 +1,3 @@
-require 'demo_reader'
-
 class TestsController < ApplicationController
 	# SYS_DEMOFILES = RAILS_ROOT + '/data/test_demos/'
 	# SYS_DEMOFILES = File.join(Rails.root, '../interessting_demos')

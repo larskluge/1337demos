@@ -1,5 +1,3 @@
-require 'demo_reader'
-
 class DemosController < ApplicationController
 
   # caching
