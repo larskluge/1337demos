@@ -8,7 +8,7 @@ class TestsController < ApplicationController
 
 	def list_demos
 		files = Dir.glob(File.join(SYS_DEMOFILES, '**', '*.wd*'))
-		@drs = files.collect{ |file| DemoReader.new file }
+		@drs = files.collect{ |file| DemoReaderWarsow.new file }
 
 		files = Dir.glob(File.join(SYS_DEMOFILES, '**', '*.dm_*'))
 		@drs += files.collect{ |file| DemoReaderDefrag.new file }

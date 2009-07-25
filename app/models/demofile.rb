@@ -72,7 +72,7 @@ class Demofile < ActiveRecord::Base
 		#dr = DemoReader.new out.path
 		#File.delete out.path
 
-		dr = DemoReader.new self.temp_path
+		dr = DemoReaderWarsow.new self.temp_path
 
 		@read_demo = dr if dr.valid
 	end

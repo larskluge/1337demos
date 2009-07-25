@@ -93,7 +93,7 @@ class DemosController < ApplicationController
     end
 
     @playernames, @fixed_nickname = nil
-    dr = DemoReader.new @demo.demofile.full_filename
+    dr = DemoReaderWarsow.new @demo.demofile.full_filename
     if dr.player
       @fixed_nickname = dr.player
     else

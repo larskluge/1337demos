@@ -1,4 +1,4 @@
-class DemoReader
+class DemoReaderWarsow
 	attr_reader :filename, :version, :mapname, :time, :playernames, :scoreboards, :gamemode, :player, :basegamedir, :gamedir, :valid
 
 
