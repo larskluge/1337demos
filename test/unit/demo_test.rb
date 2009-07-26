@@ -22,14 +22,12 @@ class DemoTest < ActiveSupport::TestCase
     should "calc position right" do
       @d1 = Demo.create!(@demo_attributes)
       @d1.reload
-      assert_equal 1, @d1.map.demos.size
       assert_equal 1, @d1.position
     end
 
     should "calc position right, create order: 1st, 2nd" do
       @d1 = Demo.create!(@demo_attributes)
       @d1.reload
-      assert_equal @map, @d1.map
       assert_equal 1, @d1.position
 
       @p2 = Player.create!(:main_nickname_id => 2)
@@ -39,8 +37,6 @@ class DemoTest < ActiveSupport::TestCase
       }))
       @d1.reload
       @d2.reload
-      assert_equal 2, @d1.map.demos.race.size
-      assert_equal 2, @d2.map.demos.race.size
       assert_equal 1, @d1.position
       assert_equal 2, @d2.position
     end
@@ -59,6 +55,18 @@ class DemoTest < ActiveSupport::TestCase
       @d2.reload
       assert_equal 1, @d2.position
       assert_equal 2, @d1.position
+    end
+
+    should "set position of 1st uploaded demo to nil when improved by same player" do
+      @d1 = Demo.create!(@demo_attributes.merge(:time => 20000))
+      @d1.reload
+      assert_equal 1, @d1.position
+
+      @d2 = Demo.create!(@demo_attributes.merge(:time => 15000))
+      @d1.reload
+      @d2.reload
+      assert_nil @d1.position
+      assert_equal 1, @d2.position
     end
   end
 end

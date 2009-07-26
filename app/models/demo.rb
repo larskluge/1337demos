@@ -6,11 +6,12 @@ class Demo < ActiveRecord::Base
   @@video_height = 288
   cattr_reader :video_width, :video_height
 
-  before_save :calc_position
-  after_save :update_other_positions
+  after_create :update_positions
 
 
-  has_and_belongs_to_many :players
+  has_many :players, :through => :demos_player#, :autosave => true
+  has_many :demos_player#, :autosave => true
+
   belongs_to :map
   belongs_to :demofile, :dependent => :destroy
   has_many :comments, :as => :commentable, :dependent => :destroy, :order => 'created_at ASC'
@@ -35,8 +36,11 @@ class Demo < ActiveRecord::Base
 
 
 
-  named_scope :race, :conditions => 'demos.data_correct AND demos.gamemode = "race"'
-  named_scope :freestyle, :conditions => 'data_correct AND gamemode = "freestyle"'
+  named_scope :race, :conditions => {:gamemode => "race", :data_correct => true}, :order => "time"
+  named_scope :freestyle, :conditions => {:gamemode => "freestyle", :data_correct => true}
+
+
+  named_scope :by_map, proc {|map_id| {:conditions => {:map_id => map_id, :gamemode => "race"}}}
 
 
 
@@ -61,41 +65,45 @@ class Demo < ActiveRecord::Base
 
     logger.info "Calc position for demo#id #{self.id}"
 
-    pos = 0
-    demos = self.map.demos.race
-    return self.position = 1 if demos.length == 1
+    # demos = self.map.demos.race
+    demos = Demo.race.by_map(self.map_id) + [self]
+    demos.uniq!
 
-    demos << self unless demos.include?(self)
-    demos = demos.sort.collect {|demo| demo unless demo.time == self.time && demo != self}.compact
+    demos = demos.inject([]) do |list, d|
+      logger.info("==================#{d.players.size}==#{d.time}=========")
+      # player_id = d.players.first.id # it's ok, cause it's race (1 demo = 1 player)
 
-    # just consider best time of each player
-    known_players = []
-    demos = demos.inject([]) do |list, demo|
-      if !known_players.include?(demo.players.first)
-        known_players << demo.players.first
-        list << demo
-      end
+      # list[player_id] ||= []
+      # list[player_id][d.time] = d
+
+      list << d
       list
     end
 
-    res = demos.index(self)
-    self.position = res.nil? ? nil : 1 + res
+    # demos.map! do |d|
+    #   d.compact.first # concider only best demo of player
+    # end
+
+    # if !demos.include?(self)
+    #   self.position = nil
+    #   return true
+    # end
+
+    times = demos.map(&:time).uniq.sort
+    self.position = times.index(self.time) + 1
 
     true
   end
 
   def recalc_position
-    @external_recalc_request = true
-    #self.calc_position
-    position = nil # to trigger calc_position before-save-filter
-    self.save!
+    calc_position
+    pos = self.position
+    logger.info("update demo #{self.id}.position = #{pos}")
+    update_attribute(:position, pos)
   end
 
-  def update_other_positions
-    return if @external_recalc_request # to avoid recursive recalc calls
-
-    demos = map.demos.race
-    demos.delete self
+  def update_positions
+    demos = Demo.race.by_map(self.map_id)
     demos.each(&:recalc_position)
 
     true
