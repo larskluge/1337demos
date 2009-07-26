@@ -13,7 +13,7 @@ class DemosController < ApplicationController
     @title = "latest demos"
     @headline = 'Latest demos.'
     @feed_title = "1337demos.com - #{@title}"
-    @rss = { :title => @feed_title, :url => formatted_demos_url('atom') }
+    @rss = { :title => @feed_title, :url => demos_url(:format => 'atom') }
 
     @demos = Demo.paginate(:page => params[:page],
       :per_page => 20,
