@@ -38,22 +38,10 @@ class ApplicationController < ActionController::Base
 
 
 
-	# extend render to add global support to render all actions with/without layout
-	alias true_render render
-
-	def render(options = nil, extra_options = {}, &block)
-		options = {} unless options
-		options[:layout] = false if !params[:layout].nil? && params[:layout] == 'false'
-		true_render options, extra_options, &block
-	end
-
-
-
 	protected
 
 	def cache_path
 		"#{controller_name}/#{action_name}/#{params[:page] || 1}"
 	end
-
 end
 
