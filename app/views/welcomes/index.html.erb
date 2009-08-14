@@ -15,7 +15,6 @@
 				<%= render_nickname '^7soh^8#^9die^1.^9viper' %>
 			</p>
 
-			<p>
       <h2>
         News
         <%= link_to image_tag('layout_2008-07/icons/rss.png', :size => '16x16', :alt => 'atom news feed'),
@@ -23,29 +22,24 @@
           :style => "border-bottom:0"
         %>
       </h2>
-				<div id="news">
-					<%= render :partial => '/announcements/simple_list' %>
-				</div>
-			</p>
+      <div id="news">
+        <%= render :partial => '/announcements/simple_list' %>
+      </div>
 
-			<p>
-				<h2>Roadmap</h2>
-				<ol>
-					<li>Add support for more games/gamemodes</li>
-					<li>HOWTO record a demo and other HOWTOs, FAQ, about, contact, etc.</li>
-					<li>Make ratings game mode-dependent</li>
-					<li>Player registration with special features! =)</li>
-					<li>Sound support</li>
-					<li>(sticky) Improve rendering</li>
-				</ol>
-			</p>
+      <h2>Roadmap</h2>
+      <ol>
+        <li>Add support for more games/gamemodes</li>
+        <li>HOWTO record a demo and other HOWTOs, FAQ, about, contact, etc.</li>
+        <li>Make ratings game mode-dependent</li>
+        <li>Player registration with special features! =)</li>
+        <li>Sound support</li>
+        <li>(sticky) Improve rendering</li>
+      </ol>
 		</td>
 
 		<td style="vertical-align: top; padding: 0 0 0 20px; width: 240px">
 			<%= render :partial => '/shoutboxes/compact' %>
-			<p>
-				<%= will_paginate @shoutboxes, :inner_window => 0, :outer_window => 0 %>
-			</p>
+      <%= will_paginate @shoutboxes, :inner_window => 0, :outer_window => 0 %>
 		</td>
 	</tr>
 </table>
