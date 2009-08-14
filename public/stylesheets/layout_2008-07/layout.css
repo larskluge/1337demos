@@ -96,7 +96,7 @@ img
 {
 	position:relative; /* needed for footer positioning*/
 
-	top: 129px;
+	padding-top: 129px;
 
 	padding-bottom: 0 !important;
 	overflow: hidden;
