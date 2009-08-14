@@ -11,9 +11,6 @@ class Demofile < ActiveRecord::Base
 	has_attachment :storage => :file_system, :max_size => 2.megabytes
 	validates_as_attachment
 
-  validate_on_create :validate_basegamedir
-  validate_on_create :validate_gamedir
-
 
 
 	def validate
@@ -32,6 +29,8 @@ class Demofile < ActiveRecord::Base
 
 			return if errors.count > 0
 
+      validate_basegamedir
+      validate_gamedir
 			errors.add_to_base 'Could not detect a mapname!!' if read_demo.mapname.nil? || read_demo.mapname.empty?
 			errors.add_to_base 'Could not find any players in this demofile!!' if read_demo.playernames.nil? || read_demo.playernames.compact.empty?
 			errors.add_to_base 'Could not detect the gamemode!!' if read_demo.gamemode.nil?
