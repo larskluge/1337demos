@@ -6,15 +6,22 @@ class Demo < ActiveRecord::Base
   @@video_height = 288
   cattr_reader :video_width, :video_height
 
-  after_create :update_positions
 
 
-  has_many :players, :through => :demos_player#, :autosave => true
-  has_many :demos_player#, :autosave => true
+  has_many :players, :through => :demos_player, :autosave => true
+  has_many :demos_player, :autosave => true
 
   belongs_to :map
   belongs_to :demofile, :dependent => :destroy
   has_many :comments, :as => :commentable, :dependent => :destroy, :order => 'created_at ASC'
+
+
+
+  # place callbacks after associations to avoid errors,
+  # because autosave => true is also implemented by after_create callbacks!
+  #
+  after_create :update_positions
+
 
 
   validates_presence_of :map_id
@@ -63,48 +70,41 @@ class Demo < ActiveRecord::Base
   def calc_position
     return nil if self.gamemode != 'race'
 
-    logger.info "Calc position for demo#id #{self.id}"
+    demos = Demo.race.by_map(self.map_id)
 
-    # demos = self.map.demos.race
-    demos = Demo.race.by_map(self.map_id) + [self]
-    demos.uniq!
+    # short cut for one demo
+    return 1 if demos.size == 1
 
-    demos = demos.inject([]) do |list, d|
-      logger.info("==================#{d.players.size}==#{d.time}=========")
-      # player_id = d.players.first.id # it's ok, cause it's race (1 demo = 1 player)
 
-      # list[player_id] ||= []
-      # list[player_id][d.time] = d
+    demos_by_player = demos.inject([]) do |arr,d|
+      player_id = d.players.first.id
 
-      list << d
-      list
+      arr[player_id] ||= []
+      arr[player_id][d.time] = d
+
+      arr
+    end.compact
+
+
+    concider_demos = demos_by_player.map do |demos_of_one_player|
+      demos_of_one_player.compact.sort.first
     end
 
-    # demos.map! do |d|
-    #   d.compact.first # concider only best demo of player
-    # end
 
-    # if !demos.include?(self)
-    #   self.position = nil
-    #   return true
-    # end
+    # demo was improved by same player
+    return nil unless concider_demos.include?(self)
 
-    times = demos.map(&:time).uniq.sort
-    self.position = times.index(self.time) + 1
 
-    true
-  end
-
-  def recalc_position
-    calc_position
-    pos = self.position
-    logger.info("update demo #{self.id}.position = #{pos}")
-    update_attribute(:position, pos)
+    times = concider_demos.map(&:time).sort
+    return times.index(self.time) + 1
   end
 
   def update_positions
     demos = Demo.race.by_map(self.map_id)
-    demos.each(&:recalc_position)
+    demos.each do |d|
+      pos = d.calc_position
+      d.update_attribute(:position, pos)
+    end
 
     true
   end

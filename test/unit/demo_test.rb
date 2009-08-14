@@ -29,6 +29,7 @@ class DemoTest < ActiveSupport::TestCase
       @d1 = Demo.create!(@demo_attributes)
       @d1.reload
       assert_equal 1, @d1.position
+      assert_equal @player, @d1.players.first
 
       @p2 = Player.create!(:main_nickname_id => 2)
       @d2 = Demo.create!(@demo_attributes.merge({
