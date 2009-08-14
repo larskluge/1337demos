@@ -101,7 +101,7 @@
 				(e.g. ^1nick^7name = <%= render_nickname('^1nick^7name') %>;
 				color codes: <%= render_nickname '^11^22^33^44^55^66^77^88^99^00' %>).
 			</p>
-			<% form_tag :action => 'create_comment', :id => @demo, :layout => 'true' do %>
+			<% form_tag :action => 'create_comment', :id => @demo do %>
 
 				<%= render :partial => '/comments/form' %>
 				<%= submit_tag "Submit" %>

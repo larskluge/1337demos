@@ -9,7 +9,7 @@ xml.rss('version' => '2.0') do
 		xml.pubDate @demos.first.created_at.strftime('%a, %d %b %Y %H:%M:%S %Z')
 		@demos.each do |demo|
 			title = (demo.position.nil? ? "#{demo.title}" : "##{demo.position} ") + "#{demo.players.map{|player| player.main_nickname_plain}.join(', ')} on #{demo.map.name}"
-			url = url_for(:host => WEB_DEFAULT_HOST, :controller => 'demos', :action => 'show', :id => demo, :layout => 'true')
+			url = url_for(:host => WEB_DEFAULT_HOST, :controller => 'demos', :action => 'show', :id => demo)
 			xml.item do
 				xml.title title
 				xml.link url
