@@ -1,9 +1,8 @@
-log/*.log
-tmp/**/*
-.DS_Store
 *.swp
-db/schema.rb
-public/demofiles/**/*
-public/stuffs/**/*
+.DS_Store
 .idea
 db/test.sqlite3
+log/*.log
+public/demofiles/**/*
+public/stuffs/**/*
+tmp/**/*
