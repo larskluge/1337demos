@@ -97,27 +97,10 @@ module ApplicationHelper
 
 
   def render_nickname(name)
-
     return nil if name.nil? || name.empty?
 
     html = h(name).gsub(/\^([^\^])/){"</span><span class=\"c#{self.color_index($1)}\">"}
-
-    # remove first </span> if needed
-    matchdata = /^<\/span>/.match(html)
-    if matchdata
-      html = matchdata.post_match
-    end
-
-    matchdata = /<span.*>/.match(html)
-    if matchdata
-      html += '</span>'
-    end
-
-    # if no colors used, use standard
-    matchdata = /^<span.*>/.match(html)
-    if !matchdata
-      html = "<span class=\"c7\">#{html}</span>"
-    end
+    html = "<span class=\"c7\">#{html}</span>"
 
     html.gsub /\^\^/, '^'
   end
