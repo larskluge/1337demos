@@ -44,7 +44,7 @@
           :success => '$("rerender%d").update("Requested.");' % demo.id
         %>
       </td>
-      <td><%= link_to 'Destroy', demo_path(demo, :method => :delete), :confirm => 'Are you sure?', :method => :post %></td>
+      <td><%= link_to 'Destroy', admin_demo_path(demo), :confirm => 'Are you sure?', :method => :delete %></td>
     </tr>
   <% end %>
   </table>
