@@ -19,7 +19,12 @@ class MapsController < ApplicationController
 			:include => :demos,
 			:conditions => ["demos.data_correct AND maps.name LIKE ?", searchstr],
 			:order => 'name')
-	end
+
+    @players = @maps.map do |m|
+      demo = m.demos.first(:conditions => {:position => 1})
+      demo.players.first if demo
+    end
+  end
 
 	def listall
 		@maps = Map.all(

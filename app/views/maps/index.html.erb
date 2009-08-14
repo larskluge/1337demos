@@ -12,14 +12,17 @@
 			No maps found.
 		</p>
 	<% end %>
-	<% for map in @maps %>
+  <% @maps.each_with_index do |map,i| %>
 		<div class="map_image_thumb">
 			<a href="<%= url_for :action => 'show', :id => map %>">
 				<img src="/images/maps/thumbs/200x150/<%= map.id %>.jpeg" width="200" height="150" alt="<%= map.name %>" />
 				<div class="map_image_thumb_label"><%= map.name %>
-					<!--<br />
-					<span class="no1">#1</span> <%= #render_nickname(map.demos.sort { |x,y| x.time <=> y.time }.first.player.main_nickname.nickname)
-					%>-->
+          <br />
+          <% if @players[i] %>
+            <span class="no1">#1</span> <%= render_nickname(@players[i].main_nickname.nickname) %>
+          <% else %>
+            &nbsp;
+          <% end %>
 				</div>
 			</a>
 		</div>
