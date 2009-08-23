@@ -4,9 +4,9 @@
 	<%
 		for player in @players
 			label = 'demo'
-			label = label.pluralize if player.demos.length > 1
+			label = label.pluralize if @demo_cnt[player.id] > 1
 	%>
-		<%= '<nobr>%s <sup>%d %s</sup></nobr>' % [ render_linked_player(player), player.demos.length, label ] %>
+		<%= '<nobr>%s <sup>%d %s</sup></nobr>' % [ render_linked_player(player), @demo_cnt[player.id], label ] %>
 	<% end %>
 </div>
 

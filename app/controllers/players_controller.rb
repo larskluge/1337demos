@@ -6,11 +6,11 @@ class PlayersController < ApplicationController
 
 
 	def index
-		@players = Player.find :all,
-			:include => ['demos', 'main_nickname']
-      # :conditions => 'COUNT(demos.*) > 0'
-    @players = @players.map { |p| p if p.demos.size > 0 }.compact
-		@players.sort! { |x,y| y.demos.length <=> x.demos.length }
+		@players = Player.all(:include => ['main_nickname'])
+    @demo_cnt = DemosPlayer.count(:group => :player_id)
+
+    @players = @players.reject { |p| @demo_cnt[p.id].nil? || @demo_cnt[p.id] <= 0 }
+		@players.sort! { |x,y| @demo_cnt[y.id] <=> @demo_cnt[x.id] }
 	end
 
 	def show
