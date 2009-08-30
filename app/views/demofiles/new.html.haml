@@ -1,0 +1,29 @@
+%h1 Upload a demo.
+
+%p Upload a warsow demo (*.wd9 or *.wd10 file).
+
+- form_for :demofile, :url => { :action => :create }, :html => { :multipart => true } do |f|
+  %p
+    = error_messages_for 'demofile'
+  %p
+    = f.file_field :uploaded_data, :size => 50
+  %p
+    Gametype:
+    = radio_button 'demofile', 'gametype', 'race', :checked => 'checked'
+    %label{ :for => "demofile_gametype_race" }
+      race
+    \&nbsp;
+    = radio_button 'demofile', 'gametype', 'freestyle'
+    %label{ :for => "demofile_gametype_freestyle" }
+      freestyle
+  %p
+    = submit_tag :Upload
+
+  - if !@valid
+    %p.error
+      If you have trouble with uploading demos and you want me to check it,
+      %br
+      please upload this demo with a good error report to
+      = link_to "stuff upload.", new_stuff_path
+      Thanks.
+

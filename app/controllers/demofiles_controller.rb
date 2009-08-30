@@ -12,6 +12,7 @@ class DemofilesController < ApplicationController
 	def new
 		@title = 'upload'
 		@demofile = Demofile.new
+    @valid = true
 
 		#d = Demo.new
 		#render :text => Demo.methods.sort.join(', ')
@@ -21,8 +22,9 @@ class DemofilesController < ApplicationController
 		demo, map, player, nickname = nil
 		@demofile = Demofile.new(params[:demofile])
 		@demofile.generate_md5
+    @valid = @demofile.valid?
 
-		if @demofile.valid?
+		if @valid
 			dr = @demofile.read_demo
 
 			# new demo
