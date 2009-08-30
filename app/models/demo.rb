@@ -20,7 +20,8 @@ class Demo < ActiveRecord::Base
   # place callbacks after associations to avoid errors,
   # because autosave => true is also implemented by after_create callbacks!
   #
-  after_create :update_positions
+  before_save :check_if_positions_need_update
+  after_save :update_positions
 
 
 
@@ -64,7 +65,7 @@ class Demo < ActiveRecord::Base
 
 
   def toplist
-    map.demos.race.all :conditions => "position IS NOT NULL", :order => 'position'
+    Demo.race.by_map(self.map_id).all :conditions => "position IS NOT NULL", :order => 'position'
   end
 
   def calc_position
@@ -99,11 +100,17 @@ class Demo < ActiveRecord::Base
     return times.index(self.time) + 1
   end
 
+  def check_if_positions_need_update
+    @trigger_update_demos_after_save = new_record? || data_correct_changed?
+  end
+
   def update_positions
-    demos = Demo.race.by_map(self.map_id)
-    demos.each do |d|
-      pos = d.calc_position
-      d.update_attribute(:position, pos)
+    if @trigger_update_demos_after_save
+      demos = Demo.race.by_map(self.map_id)
+      demos.each do |d|
+        pos = d.calc_position
+        d.update_attribute(:position, pos)
+      end
     end
 
     true
