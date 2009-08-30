@@ -104,8 +104,8 @@ class Demo < ActiveRecord::Base
     @trigger_update_demos_after_save = new_record? || data_correct_changed?
   end
 
-  def update_positions
-    if @trigger_update_demos_after_save
+  def update_positions(force = false)
+    if @trigger_update_demos_after_save || force
       demos = Demo.race.by_map(self.map_id)
       demos.each do |d|
         pos = d.calc_position
