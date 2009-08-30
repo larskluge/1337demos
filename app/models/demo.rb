@@ -102,6 +102,8 @@ class Demo < ActiveRecord::Base
 
   def check_if_positions_need_update
     @trigger_update_demos_after_save = new_record? || data_correct_changed?
+
+    true
   end
 
   def update_positions(force = false)
