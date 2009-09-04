@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090830153418) do
+ActiveRecord::Schema.define(:version => 20090904220838) do
 
   create_table "announcements", :force => true do |t|
     t.text     "message"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(:version => 20090830153418) do
 
   add_index "demos", ["map_id"], :name => "map_id"
 
-  create_table "demos_players", :id => false, :force => true do |t|
+  create_table "demos_players", :force => true do |t|
     t.integer "demo_id"
     t.integer "player_id"
     t.enum    "label",     :limit => [:alpha, :beta, :gamma, :delta]
