@@ -22,3 +22,11 @@ config.cache_store = :file_store, File.join(Rails.root, 'tmp/cache')
 # Disable request forgery protection
 config.action_controller.allow_forgery_protection = false
 
+
+if File.exists?(File.join(RAILS_ROOT,'tmp', 'debug.txt'))
+  require 'ruby-debug'
+  Debugger.wait_connection = true
+  Debugger.start_remote
+  File.delete(File.join(RAILS_ROOT,'tmp', 'debug.txt'))
+end
+
