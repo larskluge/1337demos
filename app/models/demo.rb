@@ -9,7 +9,7 @@ class Demo < ActiveRecord::Base
 
 
   has_many :players, :through => :demos_player, :autosave => true
-  has_many :demos_player, :autosave => true
+  has_many :demos_player, :autosave => true, :dependent => :destroy
 
   belongs_to :map
   belongs_to :demofile, :dependent => :destroy
