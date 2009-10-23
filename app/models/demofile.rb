@@ -86,6 +86,7 @@ class Demofile < ActiveRecord::Base
   def validate_gamedir
     case read_demo.gamedir
     when 'basewsw': true
+    when 'racesow': true
     when /^racesow_local_0\.\w+$/: true
     else
       errors.add_to_base 'This mod of warsow is not supported. If you want request to support this mod with uploading it to Upload > Stuff upload'
