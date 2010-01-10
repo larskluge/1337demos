@@ -27,8 +27,10 @@
 		<tr>
 			<td>All information correct? <sup>*</sup></td>
 			<td>
-				<%= radio_button 'demo', 'data_correct', true %> yes
-				<%= radio_button 'demo', 'data_correct', false %> no
+        <%= radio_button 'demo', 'data_correct', true %>
+        <%= label 'demo', 'data_correct', 'yes', :value => true %>
+				<%= radio_button 'demo', 'data_correct', false %>
+        <%= label 'demo', 'data_correct', 'no', :value => false %>
 			</td>
 		</tr>
 	</table>
