@@ -20,3 +20,11 @@ Feature: Upload a demo
     And I should see "Demo details"
     And I should see /Map.*cmc02_gead/
 
+  Scenario: upload two demos with same file size
+    Given I upload the demo "dk-lygdos_12.526.wd10" for player "rlx|Schakal"
+    Then I should see "Demo details"
+    And I should see /Map.*dk-lygdos/
+    Given I upload the demo "cmc02gead_16.4.wd10" for player "<acc/RiFo"
+    Then I should see "Demo details"
+    And I should see /Map.*cmc02_gead/
+
