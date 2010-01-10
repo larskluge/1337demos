@@ -3,9 +3,9 @@ class HashStuffWithSha1 < ActiveRecord::Migration
     ActiveRecord::Base.transaction do
       add_column :stuffs, :sha1, :string, :limit => 40
 
-      # Stuff.find_each do |stuff|
-      #   stuff.update_attributes!(:sha1 => Digest::SHA1::hexdigest(File.read(stuff.full_filename)))
-      # end
+      Stuff.find_each do |stuff|
+        stuff.update_attribute(:sha1, Digest::SHA1::hexdigest(File.read(stuff.full_filename)))
+      end
 
       add_index :stuffs, :sha1
 
