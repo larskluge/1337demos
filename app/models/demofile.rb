@@ -1,4 +1,4 @@
-require 'digest/md5'
+require 'digest/sha1'
 
 class Demofile < ActiveRecord::Base
 	belongs_to :demo
@@ -11,12 +11,11 @@ class Demofile < ActiveRecord::Base
 	has_attachment :storage => :file_system, :max_size => 2.megabytes
 	validates_as_attachment
 
+  before_validation_on_create :generate_sha1
 
+  validates_presence_of :sha1
+  validates_uniqueness_of :sha1, :message => "File was already uploaded."
 
-	def validate
-    same = Demofile.find_by_md5_and_size(self.md5, self.size)
-    errors.add :duplicated_demo, same.id if same
-	end
 
 	def validate_on_create
 		# check wheather anyfile is uploaded
@@ -54,9 +53,8 @@ class Demofile < ActiveRecord::Base
 		self.temp_data
 	end
 
-	def generate_md5
-		return nil if size.nil?
-		self.md5 = Digest::MD5.hexdigest(self.temp_data)
+	def generate_sha1
+		self.sha1 = Digest::SHA1.hexdigest(self.temp_data)
 	end
 
 

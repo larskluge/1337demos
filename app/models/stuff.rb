@@ -1,4 +1,4 @@
-require 'digest/md5'
+require 'digest/sha1'
 
 class Stuff < ActiveRecord::Base
 
@@ -9,13 +9,11 @@ class Stuff < ActiveRecord::Base
 
 
 
-  before_save :generate_md5
+  before_validation_on_create :generate_sha1
 
+  validates_presence_of :sha1
+  validates_uniqueness_of :sha1, :message => "File was already uploaded."
 
-
-	def validate
-    errors.add_to_base 'File was already uploaded.' if Stuff.find_by_md5_and_size(self.md5 || self.generate_md5, self.size)
-	end
 
 
   def comment_attributes=(hash)
@@ -28,10 +26,8 @@ class Stuff < ActiveRecord::Base
 
 
 
-	def generate_md5
-		return false if !size || !temp_data;
-
-		self.md5 = Digest::MD5.hexdigest(self.temp_data)
+	def generate_sha1
+		self.sha1 = Digest::SHA1.hexdigest(self.temp_data)
 	end
 end
 

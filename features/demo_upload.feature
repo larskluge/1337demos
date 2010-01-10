@@ -3,7 +3,7 @@ Feature: Upload a demo
 
   Scenario: upload a demo
     When I go to demo upload
-    And I attach "cmc02gead_16.4.wd10" to the "demofile[uploaded_data]" file field
+    And I attach "demofiles/cmc02gead_16.4.wd10" to the "demofile[uploaded_data]" file field
     And I press "Upload"
     Then I should see "Verify information"
     When I select "<acc/RiFo" from "demo[players]"

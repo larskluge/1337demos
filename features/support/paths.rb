@@ -12,6 +12,8 @@ module NavigationHelpers
       '/'
     when /demo upload/
       '/demofiles/new'
+    when /stuff upload/
+      '/stuffs/new'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

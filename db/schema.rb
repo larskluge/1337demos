@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20090904220838) do
+ActiveRecord::Schema.define(:version => 20100110190101) do
 
   create_table "announcements", :force => true do |t|
     t.text     "message"
@@ -40,8 +40,10 @@ ActiveRecord::Schema.define(:version => 20090904220838) do
     t.string   "thumbnail"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "md5",          :limit => 32
+    t.string   "sha1",         :limit => 40
   end
+
+  add_index "demofiles", ["sha1"], :name => "index_demofiles_on_sha1"
 
   create_table "demos", :force => true do |t|
     t.integer  "version"
@@ -108,9 +110,11 @@ ActiveRecord::Schema.define(:version => 20090904220838) do
     t.integer  "size"
     t.string   "filename"
     t.string   "content_type"
-    t.string   "md5"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "sha1",         :limit => 40
   end
+
+  add_index "stuffs", ["sha1"], :name => "index_stuffs_on_sha1"
 
 end
