@@ -18,7 +18,7 @@ class DemosController < ApplicationController
     @demos = Demo.paginate(:page => params[:page],
       :per_page => 20,
       :conditions => 'data_correct' + (params[:format] == 'atom' ? ' AND status = "rendered"' : ''),
-      :include => %w(map),
+      :include => :map,
       :order => 'demos.created_at DESC')
 
     respond_to do |format|
@@ -36,7 +36,7 @@ class DemosController < ApplicationController
     @demos = Demo.race.paginate(:page => params[:page],
       :per_page => 20,
       :conditions => (params[:format] == 'atom' ? 'status = "rendered"' : ''),
-      :include => [:map, {:players => :main_nickname}],
+      :include => :map,
       :order => 'demos.created_at DESC')
 
     respond_to do |format|
@@ -54,7 +54,7 @@ class DemosController < ApplicationController
     @demos = Demo.freestyle.paginate(:page => params[:page],
       :per_page => 20,
       :conditions => (params[:format] == 'atom' ? 'status = "rendered"' : ''),
-      :include => [:map, {:players => :main_nickname}],
+      :include => :map,
       :order => 'demos.created_at DESC')
 
     respond_to do |format|
