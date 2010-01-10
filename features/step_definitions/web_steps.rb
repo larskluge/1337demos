@@ -157,8 +157,8 @@ Then /^(?:|I )should see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
   end
 end
 
-Then /^(?:|I )should see \/([^\/]*)\/$/ do |regexp|
-  regexp = Regexp.new(regexp)
+Then /^(?:|I )should see \/(.*)\/$/ do |regexp|
+  regexp = Regexp.new(regexp, Regexp::MULTILINE)
   if defined?(Spec::Rails::Matchers)
     response.should contain(regexp)
   else
@@ -168,7 +168,7 @@ end
 
 Then /^(?:|I )should see \/([^\/]*)\/ within "([^\"]*)"$/ do |regexp, selector|
   within(selector) do |content|
-    regexp = Regexp.new(regexp)
+    regexp = Regexp.new(regexp, Regexp::MULTILINE)
     if defined?(Spec::Rails::Matchers)
       content.should contain(regexp)
     else
@@ -196,7 +196,7 @@ Then /^(?:|I )should not see "([^\"]*)" within "([^\"]*)"$/ do |text, selector|
 end
 
 Then /^(?:|I )should not see \/([^\/]*)\/$/ do |regexp|
-  regexp = Regexp.new(regexp)
+  regexp = Regexp.new(regexp, Regexp::MULTILINE)
   if defined?(Spec::Rails::Matchers)
     response.should_not contain(regexp)
   else
@@ -206,7 +206,7 @@ end
 
 Then /^(?:|I )should not see \/([^\/]*)\/ within "([^\"]*)"$/ do |regexp, selector|
   within(selector) do |content|
-    regexp = Regexp.new(regexp)
+    regexp = Regexp.new(regexp, Regexp::MULTILINE)
     if defined?(Spec::Rails::Matchers)
       content.should_not contain(regexp)
     else
