@@ -1,7 +1,7 @@
 require 'digest/sha1'
 
 class Demofile < ActiveRecord::Base
-	belongs_to :demo
+	has_one :demo
 	attr_writer :gametype
 	attr_reader :gametype
 
