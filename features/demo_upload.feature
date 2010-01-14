@@ -28,3 +28,9 @@ Feature: Upload a demo
     Then I should see "Demo details"
     And I should see /Map.*cmc02_gead/
 
+  Scenario: upload a wd11 demo
+    Given I upload the demo "wd11/race_killua-hykon.wd11"
+    Then I should see "Demo details"
+    And I should see /Map.*killua-hykon/
+    And I should see "-]DvR[-"
+

@@ -24,7 +24,7 @@ class Demofile < ActiveRecord::Base
 			errors.add :uploaded_data, 'is empty - upload a demofile (*.wdX).'
 		else
 			errors.add :uploaded_data, 'is not a valid warsow demo file (*.wdX).' if read_demo.nil?
-			errors.add_to_base 'Just supporting *.wd9 and *.wd10 files.' if read_demo && ![9, 10].include?(read_demo.version)
+			errors.add_to_base 'Just supporting *.wd9, *.wd10 and *.wd11 files.' if read_demo && ![9, 10, 11].include?(read_demo.version)
 
 			return if errors.count > 0
 
