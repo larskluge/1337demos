@@ -62,21 +62,21 @@ function common_content()
   Flash.writeDataTo('notice', $('#notice_div_id'));
   $('#notice_div_id').wait(1000).animate({color: 'red'}, 500).animate({color: 'green'}, 500).wait(3000).slideUp(1000);
 
-  // animate links
-  $('.content a').each(function() {
-    var elem = $(this);
-    if(elem.css('border-bottom-color') == 'transparent')
-    {
-      //elem.hover(function() { elem.addClass('hover', 'slow'); }, function() { elem.removeClass('hover', 'slow'); });
 
-      elem.hover(function() {
-        elem.animate({borderBottomColor: '#006DCB'}, 'normal');
-      },function() {
-        elem.animate({borderBottomColor: stdbgcolor}, 'slow', 'linear', function() {
-          elem.css('border-bottom-color', 'transparent');
-        });
-      });
-    }
+  // animate links
+  $(".content a").each(function() {
+    if($(this).css('border-bottom-color') == 'transparent')
+      $(this).addClass("animate-link");
+  });
+
+  $('.content a.animate-link').live("mouseover", function() {
+    $(this).animate({borderBottomColor: '#006DCB'}, 'normal');
+  });
+
+  $('.content a.animate-link').live("mouseout", function() {
+    $(this).animate({borderBottomColor: stdbgcolor}, 'slow', 'linear', function() {
+      $(this).css('border-bottom-color', 'transparent');
+    });
   });
 
   // open external links in new window

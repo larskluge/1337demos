@@ -127,6 +127,7 @@ form
 #news .message
 {
 	overflow: hidden;
+  padding-bottom: 1px;
 }
 
 
