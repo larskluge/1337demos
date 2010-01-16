@@ -52,7 +52,6 @@ function applyAjaxRating(rating)
 
 
 
-var stdbgcolor = '#CCCCCC';
 
 function common_content()
 {
@@ -64,6 +63,8 @@ function common_content()
 
 
   // animate links
+  var stdbgcolor = '#CCCCCC';
+
   $(".content a").each(function() {
     if($(this).css('border-bottom-color') == 'transparent')
       $(this).addClass("animate-link");
@@ -81,6 +82,9 @@ function common_content()
 
   // open external links in new window
   $('a[rel=external]').attr('target', '_blank');
+
+  // enable tip-tip tooltips
+  $(".content [title]").tipTip({edgeOffset: 5});
 }
 
 function common_layout()
