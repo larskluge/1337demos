@@ -27,7 +27,7 @@ class Stuff < ActiveRecord::Base
 
 
 	def generate_sha1
-		self.sha1 = Digest::SHA1.hexdigest(self.temp_data)
+		self.sha1 = Digest::SHA1.hexdigest(temp_data) if temp_data.present?
 	end
 end
 

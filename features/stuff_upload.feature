@@ -10,3 +10,11 @@ Feature: Upload stuff
     And I press "Upload"
     Then I should see "Thanks"
 
+  Scenario: upload stuff without attachment should not break
+    When I go to the stuff upload
+    And I fill in "stuff[comment_attributes][name]" with "die.viper"
+    And I fill in "stuff[comment_attributes][mail]" with "foo@bar.com"
+    And I fill in "stuff[comment_attributes][message]" with "important message"
+    And I press "Upload"
+    Then I should see "Filename can't be blank"
+
