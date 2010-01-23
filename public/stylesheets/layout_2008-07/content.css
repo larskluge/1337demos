@@ -242,6 +242,11 @@ form
 	color: #999;
 }
 
+.demo_video object
+{
+  float: left;
+}
+
 .demo_video #player a
 {
 	display: block;
