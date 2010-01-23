@@ -1,9 +1,9 @@
 = demo-reader
 
-Description goes here.
+A library to parse warsow demo files
 
 == Note on Patches/Pull Requests
- 
+
 * Fork the project.
 * Make your feature addition or bug fix.
 * Add tests for it. This is important so I don't break it in a
@@ -14,4 +14,5 @@ Description goes here.
 
 == Copyright
 
-Copyright (c) 2009 aekym. See LICENSE for details.
+Copyright (c) 2010 aekym. See LICENSE for details.
+
