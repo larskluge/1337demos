@@ -6,7 +6,7 @@ class Admin::DemosController < Admin::ApplicationController
 
 
 	def index
-		@demos = Demo.paginate(:page => params[:page],
+		@demos = Demo.paginate(:page => page_param,
 			:per_page => 50, :order => 'updated_at DESC')
 	end
 

@@ -16,7 +16,7 @@ class PlayersController < ApplicationController
 	def show
 		@player = Player.find(params[:id], :include => 'nicknames')
 		@aliases = @player.nicknames - [@player.main_nickname]
-		@demos = Demo.paginate :page => params[:page],
+		@demos = Demo.paginate :page => page_param,
 			:per_page => 10,
 			:include => :map,
 			#:conditions => ['data_correct AND player_id = ?', @player.id],

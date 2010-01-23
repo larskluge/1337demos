@@ -6,7 +6,7 @@ class Admin::CommentsController < Admin::ApplicationController
 
 
   def index
-    @comments = Comment.paginate(:page => params[:page],
+    @comments = Comment.paginate(:page => page_param,
       :per_page => 50, :order => 'updated_at DESC', :conditions => { :commentable_type => 'Demo' })
   end
 

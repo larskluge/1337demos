@@ -6,7 +6,7 @@ class Admin::PlayersController < Admin::ApplicationController
 
 
 	def index
-		@players = Player.paginate(:page => params[:page],
+		@players = Player.paginate(:page => page_param,
 			:per_page => 50, :order => 'created_at DESC')
 	end
 

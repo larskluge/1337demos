@@ -5,7 +5,7 @@ class AnnouncementsController < ApplicationController
 	end
 
   def index
-    @announcements = Announcement.paginate(:page => params[:page],
+    @announcements = Announcement.paginate(:page => page_param,
       :per_page => 20,
       :order => 'created_at DESC')
 

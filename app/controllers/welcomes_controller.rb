@@ -8,8 +8,7 @@ class WelcomesController < ApplicationController
   def index
     @title = ''
     @announcements = Announcement.all(:order => 'created_at DESC')
-    # @shoutboxes = Shoutbox.paginate(:page => params[:page], :per_page => 5, :order => 'created_at DESC')
-    @shoutboxes = Comment.paginate(:page => params[:page], :per_page => 5, :order => 'created_at DESC', :conditions => {:commentable_type => 'Welcome'} )
+    @shoutboxes = Comment.paginate(:page => page_param, :per_page => 5, :order => 'created_at DESC', :conditions => {:commentable_type => 'Welcome'} )
   end
 
 

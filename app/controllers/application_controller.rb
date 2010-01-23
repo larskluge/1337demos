@@ -43,5 +43,10 @@ class ApplicationController < ActionController::Base
 	def cache_path
 		"#{controller_name}/#{action_name}/#{params[:page] || 1}"
 	end
+
+  def page_param
+    page = params[:page].to_i
+    page > 0 ? page : 1
+  end
 end
 

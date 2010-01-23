@@ -15,7 +15,7 @@ class DemosController < ApplicationController
     @feed_title = "1337demos.com - #{@title}"
     @rss = { :title => @feed_title, :url => demos_url(:format => 'atom') }
 
-    @demos = Demo.paginate(:page => params[:page],
+    @demos = Demo.paginate(:page => page_param,
       :per_page => 20,
       :conditions => 'data_correct' + (params[:format] == 'atom' ? ' AND status = "rendered"' : ''),
       :include => :map,
@@ -33,7 +33,7 @@ class DemosController < ApplicationController
     @feed_title = "1337demos.com - #{@title}"
     @rss = { :title => @feed_title, :url => url_for(:format => 'atom') }
 
-    @demos = Demo.race.paginate(:page => params[:page],
+    @demos = Demo.race.paginate(:page => page_param,
       :per_page => 20,
       :conditions => (params[:format] == 'atom' ? 'status = "rendered"' : ''),
       :include => :map,
@@ -51,7 +51,7 @@ class DemosController < ApplicationController
     @feed_title = "1337demos.com - #{@title}"
     @rss = { :title => @feed_title, :url => url_for(:format => 'atom') }
 
-    @demos = Demo.freestyle.paginate(:page => params[:page],
+    @demos = Demo.freestyle.paginate(:page => page_param,
       :per_page => 20,
       :conditions => (params[:format] == 'atom' ? 'status = "rendered"' : ''),
       :include => :map,

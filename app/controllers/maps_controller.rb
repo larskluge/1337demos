@@ -2,19 +2,10 @@ require 'RMagick'
 
 class MapsController < ApplicationController
 
-	# caching
-	caches_action :listall, :cache_path => :cache_path.to_proc
-
-	# GETs should be safe (see http://www.w3.org/2001/tag/doc/whenToUseGet.html)
-	#verify :method => :post, :only => [ :mapsearch ],
-	#			 :redirect_to => { :action => :list }
-
-
-
 	def index
 		@mapsearch = session[:mapsearch]
 		searchstr = '%%%s%%' % session[:mapsearch] || '%'
-		@maps = Map.paginate(:page => params[:page],
+		@maps = Map.paginate(:page => page_param,
 			:per_page => 12,
 			:include => :demos,
 			:conditions => ["demos.data_correct AND maps.name LIKE ?", searchstr],
