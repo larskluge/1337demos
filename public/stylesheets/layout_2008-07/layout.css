@@ -270,6 +270,7 @@ body, .content .inner
 	font-size: 16px;
 	font-weight: bold;
 	text-decoration: none;
+	background: url(/images/layout_2008-07/bg_nav_active.png) no-repeat 0 0;
 }
 
 .nav .active a,
@@ -277,7 +278,11 @@ body, .content .inner
 .nav a:focus
 {
 	color: white;
-	background: left top repeat url(/images/layout_2008-07/bg_nav_active.gif);
+}
+
+.nav .active a
+{
+	background-position: -600px 0;
 }
 
 /* subnavigation */

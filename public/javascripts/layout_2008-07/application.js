@@ -89,6 +89,33 @@ function common_content()
 
 function common_layout()
 {
+  // change nav before page loading
+  //
+  $(".nav > li > a").click(function() {
+    $(".nav > li.active").removeClass("active");
+    $(this).parent("li").addClass("active");
+  });
+
+  // nav bg sprite animation
+  //
+  $('.nav > li:not(.active) > a')
+    .css({backgroundPosition: "0 0"})
+    .mouseover(function() {
+      $(this).stop().animate(
+        {backgroundPosition:"-600px 0"},
+        {duration:300})
+    })
+    .mouseout(function() {
+      $(this).stop().animate(
+        {backgroundPosition:"0px 0"},
+        {duration:500})
+    })
+    .click(function() {
+      $(this).unbind("mouseout");
+    });
+
+
+
   // set footer content opacity
   var semi = 0.5;
   $('.footer a').css('opacity', semi).hover(function() {
