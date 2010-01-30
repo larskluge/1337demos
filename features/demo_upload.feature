@@ -7,7 +7,7 @@ Feature: Upload a demo
     And I should see /Position.*1st of 1/
     And I should see /Time.*16.460/
     And I should see /Map.*cmc02_gead/
-    And I should see /Gamemode.*race/
+    And I should see /Game.*Warsow 0.4 race/
     And I should see /Player.*<acc\/RiFo/
     And I should not see "Some information may be wrong!"
 

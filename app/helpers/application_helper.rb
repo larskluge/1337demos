@@ -190,5 +190,16 @@ module ApplicationHelper
       image_tag url, :class => 'gravatar', :alt => alt, :title => alt, size => [size,size].join('x')
     end
   end
+
+
+  def format_game_with_mode(demo)
+    gameversion = case demo.version
+                  when 10 then "0.4"
+                  when 11 then "0.5"
+                  else "0.x"
+                  end
+
+    "Warsow #{gameversion} #{demo.gamemode}"
+  end
 end
 

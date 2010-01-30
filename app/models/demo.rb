@@ -141,3 +141,4 @@ class Demo < ActiveRecord::Base
     self.id.to_s + ".mp4"
   end
 end
+

@@ -46,8 +46,8 @@
 			<td><%= render_linked_map @demo.map %></td>
 		</tr>
 		<tr>
-			<td>Gamemode</td>
-			<td><%= @demo.gamemode %></td>
+			<td>Game</td>
+			<td><%= h format_game_with_mode(@demo) %></td>
 		</tr>
 		<tr>
 			<td>Players</td>

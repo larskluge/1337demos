@@ -9,7 +9,7 @@
 <table>
   <tr>
     <th>Uploaded</th>
-    <th>Mode</th>
+    <th>Game</th>
     <th>Time/Title</th>
     <th>Map</th>
     <th>Players</th>
@@ -18,7 +18,7 @@
 <% for demo in @demos %>
   <tr>
     <td><%= render_datetime demo.created_at %></td>
-    <td><%= h demo.gamemode %></td>
+    <td><%= h format_game_with_mode(demo) %></td>
     <td>
       <%= render_time_title demo %>
     </td>
