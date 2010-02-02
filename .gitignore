@@ -1,8 +1,12 @@
+*.bundle
+*.o
 *.swp
 .DS_Store
 .idea
 db/test.sqlite3
 log/*.log
+Makefile
+mkmf.log
 public/demofiles/**/*
 public/stuffs/**/*
 rerun.txt
