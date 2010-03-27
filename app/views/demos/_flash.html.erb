@@ -6,15 +6,25 @@
 </div>
 
 
-
 <script type="text/javascript">
 
-var flashvars = {};
-flashvars.file = "<%= @demo.video_file %>";
-flashvars.image = "<%= request.protocol + request.host_with_port + '/images/maps/thumbs/384x288/' + @demo.map_id.to_s %>.jpeg";
-var params = {};
-params.allowfullscreen = "true";
-var attributes = {};
-swfobject.embedSWF("/flashes/mediaplayer.swf", "player", "384", "308", "9.0.115", "/flashes/expressInstall.swf", flashvars, params, attributes);
+var flashvars = {
+  "plugins": 'ltas',
+  "ltas.cc": 'jlxzayqffdyqksz',
+  "file": '<%= File.join(root_url, "videos", @demo.video_file) %>',
+  "id": 'player',
+  "image": "<%= File.join(root_url, '/images/maps/thumbs/384x288/', @demo.map_id.to_s) %>.jpeg"
+};
+var params = {
+  'allowscriptaccess': 'always',
+  'allowfullscreen': 'true',
+  'wmode': 'transparent'
+};
+var attributes = {
+  'id': 'player',
+  'name': 'player'
+};
+swfobject.embedSWF('/flashes/player.swf', 'player', '384', '308', '9.0.115', false, flashvars, params, attributes);
 
 </script>
+

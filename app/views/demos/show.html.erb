@@ -5,7 +5,9 @@
 <% if @demo.status == :rendered %>
 	<%= render :partial => @video_player %>
 <% else %>
-	Waiting for rendering server.
+  <div class="message">
+    Waiting for rendering server.
+  </div>
 <% end %>
 </div>
 

@@ -236,10 +236,13 @@ form
 	margin: 20px 0 10px 0;
 	width: 384px;
 	min-height: 308px;
-	line-height: 308px;
 	text-align: center;
 	font-style: italic;
 	color: #999;
+}
+
+.demo_video .message {
+	line-height: 308px;
 }
 
 .demo_video object
