@@ -1,0 +1,54 @@
+%script{ :src => "http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js", :type => "text/javascript" }
+
+%style{ :type => "text/css" }
+  :sass
+    .even td
+      background-color: #eee
+
+    .odd td
+      background-color: #ddd
+
+    .more-link
+      cursor: pointer
+
+%table
+  %tr
+    %th valid
+    %th Filename
+    %th version
+    %th mapname
+    %th time
+    %th playernames
+    %th scoreboards
+    %th gamemode
+    %th player
+    %th basegamedir
+    %th gamedir
+    %th textures
+
+  - i = 0
+  - for dr in @drs
+    %tr{ :class => ((i += 1) % 2 == 0) ? 'even' : 'odd' }
+      %td = dr.valid
+      %td = File.basename(dr.filename)
+      %td = dr.version
+      %td = dr.mapname
+      %td = dr.time
+      %td = dr.playernames.collect{|name| render_nickname(name)}.join(', ')
+      %td
+        - if dr.scoreboards.empty?
+          \&nbsp;
+        - else
+          %div{ :onclick => "$(this).find('.more-link').hide(); $(this).find('.scoreboards').show()" }
+            %span.more-link
+              show
+              = dr.scoreboards.size
+              scoreboard entries
+            %span.scoreboards{ :style => "display:none" }
+              = dr.scoreboards.join('<br />')
+      %td = dr.gamemode
+      %td = dr.player
+      %td = dr.basegamedir
+      %td = dr.gamedir
+      %td = dr.textures
+

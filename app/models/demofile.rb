@@ -2,8 +2,7 @@ require 'digest/sha1'
 
 class Demofile < ActiveRecord::Base
 	has_one :demo
-	attr_writer :gametype
-	attr_reader :gametype
+	attr_accessor :gametype
 
 	@read_demo = nil
 	@gametype = 'race'
