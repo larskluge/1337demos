@@ -1,0 +1,93 @@
+%h1 Demo details.
+
+.demo_video
+  - if @demo.status == :rendered
+    = render :partial => @video_player
+  - else
+    .message
+      Waiting for rendering server.
+
+.demo_info
+  %table
+    - case @demo.gamemode
+    - when 'race'
+      %tr
+        %td Position
+        %td= render_position @demo
+      - if @top3.size > 1 || @demo.position.nil?
+        %tr
+          %td Toplist
+          %td= render_toplist(@top3, @demo)
+      %tr
+        %td Time
+        %td= render_race_time @demo.time
+    - when 'freestyle'
+      %tr
+        %td Title
+        %td= render_time_title @demo
+
+    %tr
+      %td ID
+      %td
+        - img = '<img src="/images/layout_2008-07/icons/arrow_%s.png" width="16" height="16" alt="%s demos" />'
+        = link_to(img % ['left', 'Previous'], demo_path(@prev)) if @prev
+        = @demo.id
+        = link_to(img % ['right', 'Next'], demo_path(@next)) if @next
+    %tr
+      %td Map
+      %td= render_linked_map @demo.map
+    %tr
+      %td Game
+      %td= h format_game_with_mode(@demo)
+    %tr
+      %td Players
+      %td= render_linked_players(@demo.players) if @demo.players
+    %tr
+      %td Uploaded
+      %td= render_datetime @demo.created_at
+    %tr
+      %td{ :colspan => "2" }
+        = link_to "Download wd#{@demo.version} demo file", @demo.demofile.public_filename
+
+%div{ :style => "clear: both" }
+
+- if !@demo.data_correct
+  %p.error
+    = 'Uploader did not verified the information!' if @demo.data_correct.nil?
+    = 'Some information may be wrong!' if @demo.data_correct == false
+
+= render :partial => '/ratings/stars_editable', :locals => { :rateable => @demo }
+
+.embed
+  %p
+    Embed this movie in your homepage:
+  %input#embed_code{ :readonly => "readonly", :type => "text", :value => h(render(:partial => 'embed_code')).gsub(/\n|\t/, '') }
+.demo_comments
+  #demo_comments_form
+    #demo_comments_form_head
+      %p
+        %a{ :href => "javascript:;" }
+          Write a comment on this demo.
+    #demo_comments_form_body
+      -# %p{ :style => "margin: 0; padding: 10px 0 0 0" }
+      -#   Please post in english.
+      -#   You may use warsow/quake color codes for your name
+      -#   (e.g. ^1nick^7name =
+      -#   = render_nickname('^1nick^7name')
+      -#   ;
+      -#   color codes:
+      -#   = render_nickname '^11^22^33^44^55^66^77^88^99^00'
+      -#   ).
+      -# - form_tag :action => 'create_comment', :id => @demo do
+      = render :partial => '/comments/form'
+
+  - for comment in @demo.comments
+    - if comment.valid?
+      %p
+        = gravatar_tag comment, 32
+        = h comment.message
+        %br
+        = render_date comment.created_at
+        by
+        = render_nickname comment.name
+

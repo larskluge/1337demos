@@ -1,0 +1,32 @@
+- form_for @comment, :url => {:action => "create_comment"} do |f|
+  = error_messages_for 'comment'
+
+  %p
+    Write whatever is on your mind. Please write in english so everybody can read it.
+  %p
+    You may use color codes for your name:
+    e.g. ^1nick^7name =
+    = render_nickname('^1nick^7name')
+    , color codes:
+    = render_nickname '^11^22^33^44^55^66^77^88^99^00'
+
+  %p
+    = f.label :name, "Your name*"
+    %br
+    = f.text_field :name, :class => "text"
+
+  %p
+    = f.label :mail_pass, "Mail for"
+    = link_to "Gravatar", "http://gravatar.com", :target => "_blank"
+    or passphrase for
+    = link_to "Identicon", "http://www.levitated.net/daily/lev9block.html", :target => "_blank"
+    * (will not be published)
+    %br
+    = f.text_field :mail_pass, :class => 'text'
+
+  %p
+    = f.label :message, "Message*"
+    = f.text_area :message, :rows => 3
+
+  = submit_tag "Submit"
+

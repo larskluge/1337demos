@@ -1,0 +1,21 @@
+.shoutbox
+  %h2 Shoutbox
+
+  #shoutbox_container
+    %p{ :style => "margin: 0" }
+      %a#toggle{ :href => "javascript:void(0)" }
+        Click to shout!
+
+    #shoutbox_container_toggle
+      = render :partial => '/comments/form'
+
+  - for shout in @shoutboxes
+    .shout
+      %p
+        = gravatar_tag shout, 32
+        = h shout.message
+        %br
+        = render_date shout.created_at
+        by
+        = render_nickname shout.name
+

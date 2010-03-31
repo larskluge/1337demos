@@ -394,7 +394,7 @@ form
 	margin-top: 0;
 }
 
-.shout_form input.text, .shout_form textarea
+.new_comment input.text, .new_comment textarea
 {
 	width: 95%;
 }
