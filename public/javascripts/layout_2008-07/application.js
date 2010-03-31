@@ -1,7 +1,26 @@
+/*globals Flash*/
+
+
 // extend jQuery
 jQuery.fn.wait = function(delay) {
   delay = delay || 1000;
   return this.animate({opacity: this.css('opacity')}, delay);
+};
+
+
+jQuery.fn.as_html_nickname = function() {
+  var name = ($(this).text() || $(this).val() || "").trim();
+
+  if(!name) {
+    return "";
+  }
+
+  return '<span class="c7">' +
+    name
+      .replace(/\^([^\^])/g, "</span><span class=\"c$1\">")
+      .replace(/class=\"c[^0-9][^\"]*\"/, 'class="c0"')
+      .replace(/\^\^/g, "^") +
+    "</span>";
 };
 
 
@@ -11,8 +30,9 @@ jQuery.fn.wait = function(delay) {
 function applyAjaxRating(rating)
 {
   rating = $(rating);
-  if(rating.length === 0)
+  if(rating.length === 0) {
     return;
+  }
 
   var type = 'POST';
   var url = jQuery('form', rating).attr('action');
@@ -66,8 +86,9 @@ function common_content()
   var stdbgcolor = '#CCCCCC';
 
   $(".content a").each(function() {
-    if($(this).css('border-bottom-color') == 'transparent')
+    if($(this).css('border-bottom-color') == 'transparent') {
       $(this).addClass("animate-link");
+    }
   });
 
   $('.content a.animate-link').live("mouseover", function() {
@@ -85,6 +106,21 @@ function common_content()
 
   // enable tip-tip tooltips
   $(".content [title]").tipTip({edgeOffset: 5});
+
+
+  var nickname = $("input#comment_name");
+  if(nickname.length > 0) {
+    var updatePreview = function() {
+      $(this).next(".preview").html("Preview: " + $(this).as_html_nickname());
+    };
+
+    var preview = $('<div>', {"class": "preview"});
+    nickname.after(preview);
+
+    nickname.change(updatePreview);
+    nickname.keyup(updatePreview);
+    $.proxy(updatePreview, nickname)();
+  }
 }
 
 function common_layout()
@@ -103,12 +139,12 @@ function common_layout()
     .mouseover(function() {
       $(this).stop().animate(
         {backgroundPosition:"-600px 0"},
-        {duration:300})
+        {duration:300});
     })
     .mouseout(function() {
       $(this).stop().animate(
         {backgroundPosition:"0px 0"},
-        {duration:500})
+        {duration:500});
     })
     .click(function() {
       $(this).unbind("mouseout");
@@ -144,10 +180,17 @@ function home()
 
 
   // init shoutbox
-  if($('#shoutbox_container_toggle .errorExplanation').length === 0)
+  if($('#shoutbox_container_toggle .errorExplanation').length === 0) {
     $('#shoutbox_container_toggle').hide();
+  }
   $('#toggle').click(function() {
-    $('#shoutbox_container_toggle').toggle('normal');
+    // toggle display of container
+    //
+    $('#shoutbox_container_toggle').toggle('normal', function() {
+      // focus first empty input field
+      //
+      $(this).find("input.text[value=''], textarea").first().focus();
+    });
   });
 }
 
@@ -179,8 +222,9 @@ function demos()
 
 
   // animate comment form on demos details
-  if($('#demo_comments_form_body .errorExplanation').length === 0)
+  if($('#demo_comments_form_body .errorExplanation').length === 0) {
     $('#demo_comments_form_body').hide();
+  }
   $('#demo_comments_form_head a:first').click(function() {
     $('#demo_comments_form_body').toggle('normal');
   });
