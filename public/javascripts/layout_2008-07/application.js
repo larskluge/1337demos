@@ -9,7 +9,7 @@ jQuery.fn.wait = function(delay) {
 
 
 jQuery.fn.as_html_nickname = function() {
-  var name = ($(this).text() || $(this).val() || "").trim();
+  var name = $.trim(($(this).text() || $(this).val() || ""));
 
   if(!name) {
     return "";
