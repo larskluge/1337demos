@@ -1,10 +1,5 @@
 class Admin::PlayersController < Admin::ApplicationController
 
-	# caching
-	cache_sweeper :player_sweeper, :only => [:create, :update, :destroy]
-
-
-
 	def index
 		@players = Player.paginate(:page => page_param,
 			:per_page => 50, :order => 'created_at DESC')

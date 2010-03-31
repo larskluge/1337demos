@@ -1,11 +1,5 @@
 class DemosController < ApplicationController
 
-  # caching
-  caches_action :index, :list, :rss, :cache_path => :cache_path.to_proc
-  cache_sweeper :demo_sweeper, :only => [:update]
-  cache_sweeper :player_sweeper, :only => [:update]
-  cache_sweeper :comment_sweeper, :only => [:create_comment]
-
 
 
   def index

@@ -1,10 +1,5 @@
 class Admin::ShoutboxesController < Admin::ApplicationController
 
-  # caching
-  cache_sweeper :shoutbox_sweeper, :only => [:create, :update, :destroy]
-
-
-
   def index
     @shoutboxes = Comment.paginate(:page => page_param,
       :per_page => 10, :order => 'created_at DESC', :conditions => { :commentable_type => 'Welcome' })

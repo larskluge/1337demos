@@ -1,10 +1,5 @@
 class ShoutboxesController < ApplicationController
 
-	# caching
-	cache_sweeper :shoutbox_sweeper, :only => [:create]
-
-
-
 	def index
 		list
 		render :action => 'list'

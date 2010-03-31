@@ -1,10 +1,5 @@
 class Admin::DemosController < Admin::ApplicationController
 
-	# caching
-	cache_sweeper :demo_sweeper, :only => [:create, :update, :destroy]
-
-
-
 	def index
 		@demos = Demo.paginate(:page => page_param,
 			:per_page => 50, :order => 'updated_at DESC')

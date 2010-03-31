@@ -1,10 +1,5 @@
 class Admin::CommentsController < Admin::ApplicationController
 
-  # caching
-  cache_sweeper :comment_sweeper, :only => [:create, :update, :destroy]
-
-
-
   def index
     @comments = Comment.paginate(:page => page_param,
       :per_page => 50, :order => 'updated_at DESC', :conditions => { :commentable_type => 'Demo' })

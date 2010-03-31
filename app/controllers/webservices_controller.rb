@@ -3,9 +3,6 @@ class WebservicesController < ApplicationController
 
   before_filter :authorized?
 
-  # cache_sweeper :demo_sweeper, :only => [:update_demo]
-
-
 
   def render_request
     cnt = (params[:count] || 3).to_i
