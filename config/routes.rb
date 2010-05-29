@@ -1,7 +1,5 @@
 ActionController::Routing::Routes.draw do |map|
 
-
-
   # admin area ################################################################
 
   map.namespace :admin do |admin|
@@ -17,7 +15,6 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :shoutboxes, :only => :index
     admin.resources :stuffs, :active_scaffold => true
   end
-
 
 
   # normal ####################################################################
@@ -40,10 +37,8 @@ ActionController::Routing::Routes.draw do |map|
   map.resources :players
   map.resources :ratings, :member => {:rate => :post}
   map.resources :stuffs, :collection => {:thanks => :get}
-  map.resources :videos
 
   map.list_demos_test '/tests/list_demos', :controller => 'tests', :action => 'list_demos', :conditions => {:method => :get}
-
 
 
   # webservices ###############################################################
@@ -52,15 +47,12 @@ ActionController::Routing::Routes.draw do |map|
   map.update_demo '/webservices/update_demo/:id', :controller => 'webservices', :action => 'update_demo', :conditions => {:method => :get}
 
 
-
   # thumbnail generation route ################################################
 
   map.connect 'images/maps/thumbs/:size/:id.jpeg',
     :controller => 'maps',
     :action => 'thumb',
     :requirements => {:size => /[0-9]+x[0-9]+/}
-
-
 
 end
 
