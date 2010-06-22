@@ -2,39 +2,39 @@
 
 <html>
 <head>
-	<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-	<title>
-		<%=
-			if @title
+  <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+  <title>
+    <%=
+      if @title
         "#{@title}#{' - ' unless @title.empty?}1337demos.com"
-			else
+      else
         default_title
-			end
-		%>
-	</title>
+      end
+    %>
+  </title>
 
-	<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
 
   <%= stylesheet_link_tag 'lib/tipTip.css',
       'layout_2008-07/layout.css',
-			'layout_2008-07/colorcodes.css',
-			'layout_2008-07/content.css',
-			:cache => true %>
+      'layout_2008-07/colorcodes.css',
+      'layout_2008-07/content.css',
+      :cache => true %>
 
-	<%= javascript_include_tag 'lib/jquery-1.4.js',
-			'lib/jquery-ui-effects-1.7.2.min.js',
-			'lib/jquery.tipTip.minified.js',
-			'layout_2008-07/swfobject.js',
-			'layout_2008-07/json.js',
-			'layout_2008-07/cookie.js',
-			'layout_2008-07/flash.js',
-			'layout_2008-07/rating.js',
-			'layout_2008-07/application.js',
-			:cache => true %>
+  <%= javascript_include_tag 'lib/jquery-1.4.js',
+      'lib/jquery-ui-effects-1.7.2.min.js',
+      'lib/jquery.tipTip.minified.js',
+      'layout_2008-07/swfobject.js',
+      'layout_2008-07/json.js',
+      'layout_2008-07/cookie.js',
+      'layout_2008-07/flash.js',
+      'layout_2008-07/rating.js',
+      'layout_2008-07/application.js',
+      :cache => true %>
 
-	<% if @rss %>
-		<link rel="alternate" type="application/rss+xml" title="<%= @rss[:title] %>" href="<%= @rss[:url] %>" />
-	<% end %>
+  <% if @rss %>
+    <link rel="alternate" type="application/rss+xml" title="<%= @rss[:title] %>" href="<%= @rss[:url] %>" />
+  <% end %>
 
   <% if Rails.env == 'production' %>
   <script type="text/javascript">
@@ -55,54 +55,54 @@
 
 <div class="main">
 
-	<div class="header">
-		<div class="outer_left"></div>
-		<div class="outer_middle">
-			<div class="inner_left">
-				<div class="inner_right">
-					<div class="inner">
+  <div class="header">
+    <div class="outer_left"></div>
+    <div class="outer_middle">
+      <div class="inner_left">
+        <div class="inner_right">
+          <div class="inner">
             <%= render_mainmenu %>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
-	<div class="content">
-		<div class="outer">
-			<div class="outer_left"></div>
-			<div class="shaddow_left">
-				<div class="border"></div>
-			</div>
-			<div class="shaddow_right">
-				<div class="border"></div>
-			</div>
-			<div class="outer_right"></div>
-			<div class="outer_middle">
-				<div class="inner">
-					<div id="error_div_id" class="flash flash_error"></div>
-					<div id="notice_div_id" class="flash flash_notice"></div>
+  <div class="content">
+    <div class="outer">
+      <div class="outer_left"></div>
+      <div class="shaddow_left">
+        <div class="border"></div>
+      </div>
+      <div class="shaddow_right">
+        <div class="border"></div>
+      </div>
+      <div class="outer_right"></div>
+      <div class="outer_middle">
+        <div class="inner">
+          <div id="error_div_id" class="flash flash_error"></div>
+          <div id="notice_div_id" class="flash flash_notice"></div>
 
-					<%= yield  %>
-				</div>
-			</div>
-		</div>
-	</div>
+          <%= yield  %>
+        </div>
+      </div>
+    </div>
+  </div>
 
-	<div class="footer">
-		<div class="left">
-			&copy; <%= Date.today.year %> <%= link_to '1337demos.com', :only_path => false %>
-		</div>
-		<div class="right partner">
-			partner:
-			<a rel="external" href="http://www.warsow-race.net/">
-				<img src="/images/banner/partner/banner_racenet_80x15.gif" width="80" height="15" alt="warsow-race.net" />
-			</a>
-			<a rel="external" href="http://www.warsow-arena.de/forum/">
-				<img src="/images/banner/partner/banner_warsowarena_80x15.gif" width="80" height="15" alt="warsow-arena.de" />
-			</a>
-		</div>
-	</div>
+  <div class="footer">
+    <div class="left">
+      &copy; <%= Date.today.year %> <%= link_to '1337demos.com', :only_path => false %>
+    </div>
+    <div class="right partner">
+      partner:
+      <a rel="external" href="http://www.warsow-race.net/">
+        <img src="/images/banner/partner/banner_racenet_80x15.gif" width="80" height="15" alt="warsow-race.net" />
+      </a>
+      <a rel="external" href="http://www.warsow-arena.de/forum/">
+        <img src="/images/banner/partner/banner_warsowarena_80x15.gif" width="80" height="15" alt="warsow-arena.de" />
+      </a>
+    </div>
+  </div>
 
 </div>
 
