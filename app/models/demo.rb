@@ -27,6 +27,7 @@ class Demo < ActiveRecord::Base
 
   validates_presence_of :map_id
   validates_presence_of :demofile_id
+  validates_presence_of :game
   validates_presence_of :title, :on => :update, :if => Proc.new{|demo| demo.gamemode == 'freestyle'}
   validates_associated :players, :on => :update
 
@@ -119,6 +120,12 @@ class Demo < ActiveRecord::Base
   end
 
 
+  def human_version
+    case game
+    when "Warsow" then "wd#{version}"
+    when "Defrag" then "dm#{version}"
+    end
+  end
 
   def rerender
     self.status = :uploaded

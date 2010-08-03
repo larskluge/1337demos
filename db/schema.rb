@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100110190101) do
+ActiveRecord::Schema.define(:version => 20100803165156) do
 
   create_table "announcements", :force => true do |t|
     t.text     "message"
@@ -57,8 +57,10 @@ ActiveRecord::Schema.define(:version => 20100110190101) do
     t.boolean  "data_correct"
     t.enum     "status",       :limit => [:uploaded, :processing, :rendered], :default => :uploaded
     t.integer  "position"
+    t.string   "game",         :limit => 20
   end
 
+  add_index "demos", ["game"], :name => "index_demos_on_game"
   add_index "demos", ["map_id"], :name => "map_id"
 
   create_table "demos_players", :force => true do |t|
