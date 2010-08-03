@@ -47,5 +47,11 @@ task :after_update_code, :roles => :app do
   static_dirs.each do |dir|
     run "ln -nfs #{static_path}/#{dir} #{release_path}/#{dir}"
   end
+
+
+  # build native gems
+  #
+  rails_env = fetch(:rails_env, 'production')
+  invoke_rake_task "gems:build", rails_env
 end
 
