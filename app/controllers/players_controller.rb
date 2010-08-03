@@ -1,10 +1,5 @@
 class PlayersController < ApplicationController
 
-	# caching
-	caches_action :index, :cache_path => :cache_path.to_proc
-
-
-
 	def index
 		@players = Player.all(:include => ['main_nickname'])
     @demo_cnt = DemosPlayer.count(:group => :player_id)
@@ -25,5 +20,6 @@ class PlayersController < ApplicationController
 			:order => 'demos.created_at DESC'
 		@title = "demos of #{@player.main_nickname_plain}"
 	end
+
 end
 
