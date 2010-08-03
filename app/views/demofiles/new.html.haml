@@ -19,7 +19,7 @@
   %p
     = submit_tag :Upload
 
-  - if !@valid
+  - unless @valid
     %p.error
       If you have trouble with uploading demos and you want me to check it,
       %br

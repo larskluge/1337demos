@@ -14,15 +14,14 @@ class DemofilesController < ApplicationController
 	end
 
 	def create
-		demo, map, player, nickname = nil
 		@demofile = Demofile.instantiate_by_upload(params[:demofile])
-    @valid = @demofile.valid?
 
-		if @valid
+		if @demofile.valid?
 			dr = @demofile.read_demo
 
 			# new demo
 			demo = Demo.new :version => @demofile.version,
+        :game => @demofile.game,
 				:gamemode => @demofile.gametype,
 				:time => @demofile.time_in_msec
 
