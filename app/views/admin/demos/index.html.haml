@@ -1,0 +1,32 @@
+%h1 Listing demos
+%table
+  %tr
+    %th id
+    %th created
+    %th updated
+    %th gamemode
+    %th time/title
+    %th map
+    %th players
+  - for demo in @demos
+    %tr
+      %td= demo.id
+      %td= render_datetime demo.created_at
+      %td= render_datetime demo.updated_at
+      %td= h demo.gamemode
+      %td
+        = render_time_title demo
+      %td= render_linked_map demo.map
+      %td= demo.players.map{|player| render_linked_player(player)}.join(', ')
+      %td
+        %div{:class => "statusbox #{demo.status}", :title => "rendering status: #{demo.status}"}
+      %td= link_to 'Show', demo_path(demo)
+      %td= link_to 'Edit', edit_demo_path(demo)
+      %td{:id => "rerender#{demo.id}"}
+        = link_to_remote 'Rerender',                                                                                   |
+          :method => 'GET',                                                                                            |
+          :url => update_demo_path(demo, :appsec => '1CGBre7Rk36vjBfT8cVEhhXIjEGVaPpI', 'demo[status]' => 'uploaded'), |
+          :success => '$("rerender%d").update("Requested.");' % demo.id                                                |
+      %td= link_to 'Destroy', admin_demo_path(demo), :confirm => 'Are you sure?', :method => :delete
+%div{:style => "text-align: center; padding-top: 1em"}
+  = will_paginate @demos, :inner_window => 2, :outer_window => 0

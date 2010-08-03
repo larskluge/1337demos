@@ -1,0 +1,31 @@
+%h1 Upload any stuff.
+
+%p
+  Use this to upload any stuff that might be interessting for 1337demos.
+  %br
+  Upload demos of unsupported games, gamemodes or anything else you want to throw at me.
+
+- form_for @stuff, :url => stuffs_url, :html => { :multipart => true } do |f|
+  %p
+    = error_messages_for :stuff
+    = error_messages_for 'Comment', :object => @stuff.comments.first
+  - fields_for 'stuff[comment_attributes]', @stuff.comment do |cf|
+    %p
+      = cf.label :name, 'Your Name*'
+      %br
+      = cf.text_field :name, :size => 30
+    %p
+      = cf.label :mail, 'Mail*'
+      %br
+      = cf.text_field :mail, :size => 30
+    %p
+      = cf.label :message, 'Please tell me why you upload that file and what is it good for...*'
+      %br
+      = cf.text_area :message, :cols => 40, :rows => 5
+  %p
+    = f.label :uploaded_data, 'File to upload*'
+    %br
+    = f.file_field :uploaded_data, :size => 30
+
+  %p= submit_tag :Upload
+

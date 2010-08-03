@@ -1,0 +1,31 @@
+%h1 Welcome dude.
+%table{:style => "width: 100%"}
+  %tr
+    %td{:style => "vertical-align: top; padding: 0"}
+      %p
+        Welcome to the place of the best warsow demos -
+        = succeed "." do
+          %a{:href => "http://1337demos.com"} 1337demos.com
+        %br/
+        At this place you can share the demos you are proud of
+        and let everybody watch them online.
+        %br/
+        I hope you enjoy this place - let me know :-)
+      %p
+        = render_nickname '^7soh^8#^9die^1.^9viper'
+      %h2
+        News
+        \#{link_to image_tag('layout_2008-07/icons/rss.png', :size => '16x16', :alt => 'atom news feed'), announcements_path(:format => 'atom'), :style => "border-bottom:0"}
+      #news
+        = render :partial => '/announcements/simple_list'
+      %h2 Roadmap
+      %ol
+        %li Add support for more games/gamemodes
+        %li HOWTO record a demo and other HOWTOs, FAQ, about, contact, etc.
+        %li Make ratings game mode-dependent
+        %li Player registration with special features! =)
+        %li Sound support
+        %li (sticky) Improve rendering
+    %td{:style => "vertical-align: top; padding: 0 0 0 20px; width: 240px"}
+      = render :partial => '/shoutboxes/compact'
+      = will_paginate @shoutboxes, :inner_window => 0, :outer_window => 0

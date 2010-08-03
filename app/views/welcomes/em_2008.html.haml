@@ -1,0 +1,8 @@
+%table{:style => "width: 100%"}
+  %tr
+    %td{:style => "vertical-align: top; padding: 0; text-align: center"}
+      %img{:alt => "em final 2008", :height => "278", :src => "/images/final.gif", :width => "546"}/
+    %td{:style => "vertical-align: top; padding: 0 0 0 20px"}
+      = render :partial => '/shoutboxes/compact'
+      %p
+        = will_paginate @shoutboxes, :inner_window => 0, :outer_window => 0

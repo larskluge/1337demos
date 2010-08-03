@@ -1,0 +1,12 @@
+%h1 Listing nicknames
+%table
+  %tr
+    %th Nickname
+  - for nickname in @nicknames
+  %tr
+    %td= render_nickname nickname.nickname
+    %td= link_to 'Show', admin_nickname_path(nickname)
+    %td= link_to 'Edit', edit_admin_nickname_path(nickname)
+    %td= link_to 'Destroy', admin_nickname_path(nickname), :confirm => 'Are you sure?', :method => :delete
+%br/
+= link_to 'New nickname', new_admin_nickname_path

@@ -1,0 +1,28 @@
+%h1 Listing maps.
+
+- form_for :map, :url => { :action => 'search' } do |f|
+  %input{:name => "mapsearch", :size => "30", :type => "text", :value => @mapsearch}
+  = submit_tag 'Search'
+  %input{:onclick => "window.location.href='#{url_for :action => 'clearsearch'}'", :type => "button", :value => "Clear"}
+
+.map_list
+  - if @maps.length == 0
+    %p.error
+      No maps found.
+  - @maps.each_with_index do |map,i|
+    .map_image_thumb
+      %a{:href => url_for(:action => 'show', :id => map)}
+        %img{:alt => map.name, :height => "150", :src => "/images/maps/thumbs/200x150/#{map.id}.jpeg", :width => "200"}
+      .map_image_thumb_label
+        = map.name
+        %br
+        - if @players[i]
+          %span.no1 #1
+          = render_nickname(@players[i].main_nickname.nickname)
+        - else
+          \&nbsp;
+
+%div{:style => "clear: both"}
+%div{:style => "text-align: center"}
+  = will_paginate @maps, :inner_window => 2, :outer_window => 0
+

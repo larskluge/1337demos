@@ -1,0 +1,63 @@
+!!!
+
+%html
+  %head
+    %meta{:content => "text/html;charset=UTF-8", "http-equiv" => "content-type"}
+    %meta{:content => "chrome=1", "http-equiv" => "X-UA-Compatible"}
+    %title
+      = @title ? "#{@title}#{' - ' unless @title.empty?}1337demos.com" : default_title
+    %link{:href => "/images/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}
+    = stylesheet_link_tag 'lib/tipTip.css', 'layout_2008-07/layout.css', 'layout_2008-07/colorcodes.css', 'layout_2008-07/content.css', :cache => true
+    = javascript_include_tag 'lib/jquery-1.4.js', 'lib/jquery-ui-effects-1.7.2.min.js', 'lib/jquery.tipTip.minified.js', 'layout_2008-07/swfobject.js', 'layout_2008-07/json.js', 'layout_2008-07/cookie.js', 'layout_2008-07/flash.js', 'layout_2008-07/rating.js', 'layout_2008-07/application.js', :cache => true
+
+    - if @rss
+      %link{:href => @rss[:url], :rel => "alternate", :title => @rss[:title], :type => "application/rss+xml"}
+    - if Rails.env == 'production'
+      :javascript
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-2232412-7']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+          var ga = document.createElement('script');
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          ga.setAttribute('async', 'true');
+          document.getElementsByTagName("head")[0].appendChild(ga);
+        })();
+
+    %body{:class => classname_for_page}
+    .main
+      .header
+        .outer_left
+        .outer_middle
+          .inner_left
+            .inner_right
+              .inner
+                = render_mainmenu
+      .content
+        .outer
+          .outer_left
+          .shaddow_left
+            .border
+          .shaddow_right
+            .border
+          .outer_right
+          .outer_middle
+            .inner
+              #error_div_id.flash.flash_error
+              #notice_div_id.flash.flash_notice
+              = yield
+
+      .footer
+        .left
+          \&copy;
+          = Date.today.year
+          = link_to '1337demos.com', :only_path => false
+
+        .right.partner
+          partner:
+          %a{:href => "http://www.warsow-race.net/", :rel => "external"}
+            %img{:alt => "warsow-race.net", :height => "15", :src => "/images/banner/partner/banner_racenet_80x15.gif", :width => "80"}
+          %a{:href => "http://www.warsow-arena.de/forum/", :rel => "external"}
+            %img{:alt => "warsow-arena.de", :height => "15", :src => "/images/banner/partner/banner_warsowarena_80x15.gif", :width => "80"}
+

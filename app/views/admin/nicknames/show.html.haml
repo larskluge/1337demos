@@ -1,0 +1,6 @@
+%p
+  %b Nickname:
+  = render_nickname @nickname.nickname
+= link_to 'Edit', edit_admin_nickname_path(@nickname)
+|
+\#{link_to 'Back', admin_nicknames_path}

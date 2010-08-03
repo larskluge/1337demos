@@ -1,0 +1,18 @@
+%h1 Listing players
+
+%table
+  %tr
+    %th Nickname
+    %th Created at
+  - for player in @players
+    %tr
+      %td= render_nickname player.main_nickname.nickname
+      %td= render_datetime player.created_at
+      %td= link_to 'Merge', :action => 'merge', :id => player
+      %td= link_to 'Show', :action => 'show', :id => player
+      %td= link_to 'Edit', :action => 'edit', :id => player
+      %td= link_to 'Destroy', { :action => 'destroy', :id => player }, :confirm => 'Are you sure?', :method => :post
+
+%div{:style => "text-align: center; padding-top: 1em"}
+  = will_paginate @players, :inner_window => 2, :outer_window => 0
+

@@ -1,0 +1,6 @@
+- for announcement in @announcements do
+  .date
+    = render_datetime announcement.created_at
+  .message
+    = render :inline => announcement.message rescue nil
+

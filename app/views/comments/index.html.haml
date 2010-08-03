@@ -1,0 +1,23 @@
+%h1 Latest comments.
+
+%table
+  %tr
+    %th By
+    %th Comment
+    %th On
+  - for comment in @comments
+    %tr
+      %td.nowrap
+        = gravatar_tag comment, 20
+        = render_nickname comment.name
+      %td
+        = comment.message
+      %td.nowrap
+        = comment.demo.players.map{|player| render_linked_player(player)}.join(', ')
+        on #{render_linked_map comment.demo.map}
+      %td.nowrap
+        = link_to 'Play', :controller => 'demos', :action => 'show', :id => comment.demo
+
+%div{:style => "text-align: center; padding-top: 1em"}
+  = will_paginate @comments
+

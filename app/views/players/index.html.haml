@@ -1,0 +1,6 @@
+%h1 Listing players.
+.player_list
+  - for player in @players
+  - label = 'demo'
+  - label = label.pluralize if @demo_cnt[player.id] > 1
+    = '<nobr>%s <sup>%d %s</sup></nobr>' % [ render_linked_player(player), @demo_cnt[player.id], label ]

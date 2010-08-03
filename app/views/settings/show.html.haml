@@ -1,0 +1,17 @@
+%h1 Settings.
+%p
+  Note: To use this feature you need to enable cookies in your browser.
+- form_tag :action => 'update' do
+  %table
+    %tr
+      %td
+        Video player
+        %sup *
+      %td
+        = select_tag "video_player", options_for_select(@video_players.map {|u| [u.capitalize,u]}, @video_player)
+  %p
+    %sup *
+    %a{:href => "http://www.adobe.com/go/getflashplayer", :target => "_blank"} Adobe Flash Player 9 Update 3 (9,0,115,0)
+    or later is required for the flash option.
+  %p
+    = submit_tag :Update

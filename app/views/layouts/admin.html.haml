@@ -1,0 +1,29 @@
+!!!
+%html{:lang => "en", "xml:lang" => "en", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %meta{:content => "text/html;charset=UTF-8", "http-equiv" => "content-type"}/
+    %title
+      = @title ?                                                                                                                                      |
+          "#{@title} - 1337demos.com"                                                                                                                 |
+        :                                                                                                                                             |
+          ([controller.controller_name] << (" // " + controller.action_name if controller.action_name != 'index') << " - 1337demos.com").compact.join |
+
+    = stylesheet_link_tag 'scaffold.css'
+    = stylesheet_link_tag 'admin/main.css'
+    = javascript_include_tag 'admin/jquery-1.2.6.js'
+    = javascript_include_tag 'prototype.js'
+    = javascript_include_tag 'admin/scriptaculous.js'
+    = javascript_include_tag 'admin/admin.js'
+    = active_scaffold_includes
+  %body{:class => classname_for_page}
+    #main
+      #header_outer
+        %div{:style => "position: absolute; color: white; font-size: 16px; font-weight: bold; margin: 33px 0 0 20px"}
+          ADMIN AREA
+        #header_inner
+          #header_logo
+            = render_admin_mainmenu
+      #content
+        %p{:style => "color: green"}= flash[:notice]
+        = yield
+

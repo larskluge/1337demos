@@ -1,0 +1,9 @@
+- for column in Demo.content_columns
+  %p
+    %b
+      = column.human_name
+      \:
+    = h @demo.send(column.name)
+= link_to 'Edit', :action => 'edit', :id => @demo
+|
+\#{link_to 'Back', :action => 'list'}

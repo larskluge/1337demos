@@ -1,0 +1,3 @@
+= javascript_include_tag 'ac_quicktime'
+%script{:language => "JavaScript", :type => "text/javascript"}
+  QT_WriteOBJECT_XHTML('<haml:loud> @demo.video_url </haml:loud>','<haml:loud> @demo.video_width </haml:loud>','<haml:loud> @demo.video_height + 16 </haml:loud>','','controller','TRUE','AUTOPLAY', 'TRUE','target','myself','type','video/quicktime');

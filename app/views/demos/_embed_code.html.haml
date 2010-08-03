@@ -1,0 +1,10 @@
+- w = @demo.video_width
+- h = @demo.video_height + 20
+- base = request.protocol + request.host
+- swf = base + '/flashes/mediaplayer.swf'
+- flashvars = 'file=%s&amp;image=%s%s%d.jpeg' % [@demo.video_file, base, '/images/maps/thumbs/384x288/', @demo.map_id]
+- url = swf + '?' + flashvars
+%object{:height => h, :width => w}
+  %param{:name => "movie", :value => url}/
+  %param{:name => "allowfullscreen", :value => "true"}/
+  %embed{:height => h, :src => url, :type => "application/x-shockwave-flash", :width => w}

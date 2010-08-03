@@ -1,0 +1,7 @@
+%h1 News.
+%p
+  %strong
+    = render_datetime @ann.created_at
+%p
+  = render :inline => @ann.message
+

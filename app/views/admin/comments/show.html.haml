@@ -1,0 +1,9 @@
+- for column in Comment.content_columns
+  %p
+    %b
+      = column.human_name
+      \:
+    = h @comment.send(column.name)
+= link_to 'Edit', edit_admin_comment_path(@comment)
+|
+\#{link_to 'Back', admin_comments_path}
