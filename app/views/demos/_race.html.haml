@@ -1,0 +1,17 @@
+%tr
+  %td Player
+  %td
+    - if @fixed_nickname
+      = render_nickname(@fixed_nickname)
+      = hidden_field(:demo, :players, :value => @fixed_nickname)
+    - else
+      - if @playernames
+        %select{ :name => "demo[players]" }
+          %option{ :value => "" }
+            choose player
+          = @playernames.collect { |name| '<option value="%s">%s</option>' % [ name, render_nickname(name) ]}.join("\n")
+%tr
+  %td Time
+  %td
+    = render_race_time @demo.time
+

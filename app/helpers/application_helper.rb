@@ -196,10 +196,9 @@ module ApplicationHelper
     gameversion = case demo.version
                   when 10 then "0.4"
                   when 11 then "0.5"
-                  else "0.x"
                   end
 
-    "Warsow #{gameversion} #{demo.gamemode}"
+    [demo.game, gameversion, demo.gamemode].join(" ")
   end
 end
 

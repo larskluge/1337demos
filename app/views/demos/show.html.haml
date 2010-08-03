@@ -47,7 +47,7 @@
       %td= render_datetime @demo.created_at
     %tr
       %td{ :colspan => "2" }
-        = link_to "Download wd#{@demo.version} demo file", @demo.demofile.public_filename
+        = link_to "Download #{@demo.human_version} demo file", @demo.demofile.public_filename
 
 %div{ :style => "clear: both" }
 

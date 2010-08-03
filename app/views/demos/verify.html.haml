@@ -1,0 +1,43 @@
+%h1
+  Verify information.
+
+- form_tag demo_path(@demo), :method => :put do
+  = error_messages_for 'demo'
+  %table
+    %tr
+      %td Filename
+      %td
+        = @demo.demofile.filename
+    %tr
+      %td Version
+      %td
+        = @demo.human_version
+    %tr
+      %td Map
+      %td
+        = @demo.map.name
+    %tr
+      %td Game/Mode
+      %td
+        = @demo.game
+        = @demo.gamemode
+
+    = render :partial => @demo.gamemode
+
+    %tr
+      %td
+        All information correct?
+        %sup
+          *
+      %td
+        = radio_button 'demo', 'data_correct', true
+        = label 'demo', 'data_correct', 'yes', :value => true
+        = radio_button 'demo', 'data_correct', false
+        = label 'demo', 'data_correct', 'no', :value => false
+  %p
+    = submit_tag 'Submit'
+  %p
+    %sup
+      *
+    Informations are also correct if a nickname changed since recording this demo. Nicknames can be merged later.
+
