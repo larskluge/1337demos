@@ -9,6 +9,7 @@ class DemoTest < ActiveSupport::TestCase
       @demo_attributes = {
         :data_correct => true,
         :demofile_id => 1,
+        :game => "Warsow",
         :gamemode => 'race',
         :map => @map,
         :players => [@player],
