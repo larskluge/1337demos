@@ -47,7 +47,7 @@ class Demo < ActiveRecord::Base
 
 
 
-  named_scope :race, :conditions => {:gamemode => "race", :data_correct => true}, :order => "time"
+  named_scope :race, :conditions => {:gamemode => %w(race cpm vq3), :data_correct => true}, :order => "time"
   named_scope :freestyle, :conditions => {:gamemode => "freestyle", :data_correct => true}
 
 
