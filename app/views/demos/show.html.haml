@@ -39,7 +39,7 @@
       %td Game
       %td= h format_game_with_mode(@demo)
     %tr
-      %td Players
+      %td= pluralize_without_count @demo.players.size, "Player"
       %td= render_linked_players(@demo.players) if @demo.players
     %tr
       %td Uploaded
