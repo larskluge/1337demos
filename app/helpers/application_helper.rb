@@ -60,13 +60,12 @@ module ApplicationHelper
   end
 
   def render_time_title(demo)
-    case demo.gamemode
-      when 'freestyle'
-        demo.title.nil? ? 'n/a' : h(demo.title)
-      when 'race'
-        res = demo.position.nil? ? '' : "##{demo.position} &nbsp;"
-        res + self.render_race_time(demo.time)
-    end
+    return demo.title if demo.title.present?
+
+    res = "##{demo.position} &nbsp;" if demo.position.to_i > 0
+    return "#{res}#{render_race_time(demo.time)}" if demo.time.to_i > 0
+
+    "n/a"
   end
 
 
