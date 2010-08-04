@@ -3,8 +3,7 @@ require 'tempfile'
 class DemofilesController < ApplicationController
 
 	def index
-		new
-		render :action => 'new'
+    redirect_to :action => :new
 	end
 
 	def new
