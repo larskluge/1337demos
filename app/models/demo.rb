@@ -24,10 +24,9 @@ class Demo < ActiveRecord::Base
   after_save :update_positions
 
 
-
   validates_presence_of :map_id
   validates_presence_of :demofile_id
-  validates_presence_of :game
+  validates_inclusion_of :game, :in => %w(Warsow Defrag)
   validates_associated :players, :on => :update
   validates_presence_of :players, :on => :update
   validates_inclusion_of :gamemode, :in => %w(race freestyle), :if => Proc.new{|demo| demo.game == "Warsow"}
