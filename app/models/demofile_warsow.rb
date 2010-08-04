@@ -1,7 +1,12 @@
 class DemofileWarsow < Demofile
 
   validates_inclusion_of :version, :in => 9..11, :message => "must be a *.wd9, *.wd10, *.wd11 file"
+  validates_inclusion_of :gamemode, :in => %w(race freestyle)
   validate :validate_gamedir
+
+  def gamemode
+    time_in_msec.to_i > 0 ? "race" : "freestyle"
+  end
 
 
   protected

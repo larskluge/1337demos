@@ -30,6 +30,8 @@ class Demo < ActiveRecord::Base
   validates_presence_of :game
   validates_presence_of :title, :on => :update, :if => Proc.new{|demo| demo.gamemode == 'freestyle'}
   validates_associated :players, :on => :update
+  validates_inclusion_of :gamemode, :in => %w(race freestyle), :if => Proc.new{|demo| demo.game == "Warsow"}
+  validates_inclusion_of :gamemode, :in => %w(freestyle cpm vq3), :if => Proc.new{|demo| demo.game == "Defrag"}
 
   def validate
     #logger.info "status: #{self.status}"

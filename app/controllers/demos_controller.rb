@@ -4,7 +4,6 @@ class DemosController < ApplicationController
 
 
   def index
-    #gamemode = request.parameters[:action] if ['race', 'freestyle'].include?(request.parameters[:action])
     @title = "latest demos"
     @headline = 'Latest demos.'
     @feed_title = "1337demos.com - #{@title}"
@@ -87,6 +86,7 @@ class DemosController < ApplicationController
 
     @playernames, @fixed_nickname = nil
     dr = DemoReader.parse(@demo.demofile.full_filename)
+    @gamemode = dr.time_in_msec.to_i > 0 ? "race" : "freestyle"
     if dr.player
       @fixed_nickname = dr.player
     else

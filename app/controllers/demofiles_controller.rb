@@ -21,7 +21,7 @@ class DemofilesController < ApplicationController
 			# new demo
 			demo = Demo.new :version => @demofile.version,
         :game => @demofile.game,
-				:gamemode => @demofile.gametype,
+				:gamemode => @demofile.gamemode,
 				:time => @demofile.time_in_msec
 
 			# map

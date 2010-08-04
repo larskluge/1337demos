@@ -8,15 +8,6 @@
   %p
     = f.file_field :uploaded_data, :size => 50
   %p
-    Gametype:
-    = radio_button 'demofile', 'gametype', 'race', :checked => 'checked'
-    %label{ :for => "demofile_gametype_race" }
-      race
-    \&nbsp;
-    = radio_button 'demofile', 'gametype', 'freestyle'
-    %label{ :for => "demofile_gametype_freestyle" }
-      freestyle
-  %p
     = submit_tag :Upload
 
   - unless @valid

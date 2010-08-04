@@ -9,6 +9,11 @@
       %td
         = @demo.demofile.filename
     %tr
+      %td Game
+      %td
+        = @demo.game
+        = @demo.gamemode
+    %tr
       %td Version
       %td
         = @demo.human_version
@@ -16,13 +21,8 @@
       %td Map
       %td
         = @demo.map.name
-    %tr
-      %td Game/Mode
-      %td
-        = @demo.game
-        = @demo.gamemode
 
-    = render :partial => @demo.gamemode
+    = render :partial => @gamemode
 
     %tr
       %td

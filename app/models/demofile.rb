@@ -2,7 +2,7 @@ require 'digest/sha1'
 
 class Demofile < ActiveRecord::Base
 	has_one :demo
-	attr_accessor :game, :gametype, :gamemode, :version, :gamedir, :time_in_msec
+	attr_accessor :game, :gamemode, :version, :gamedir, :time_in_msec
 
 	has_attachment :storage => :file_system, :max_size => 2.megabytes
 	validates_as_attachment
@@ -13,7 +13,7 @@ class Demofile < ActiveRecord::Base
   validates_uniqueness_of :sha1, :message => "File was already uploaded."
 
   validates_presence_of :read_demo, :message => 'is not a valid demo file'
-  validates_presence_of :gametype, :gamemode
+  validates_presence_of :gamemode
 
 
   # Instantiates an object of Demofile or a concrete subclass of it.
