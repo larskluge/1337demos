@@ -9,8 +9,7 @@
 
 .demo_info
   %table
-    - case @demo.gamemode
-    - when 'race'
+    - if @demo.time.present?
       %tr
         %td Position
         %td= render_position @demo
@@ -21,7 +20,7 @@
       %tr
         %td Time
         %td= render_race_time @demo.time
-    - when 'freestyle'
+    - if @demo.title.present?
       %tr
         %td Title
         %td= render_time_title @demo

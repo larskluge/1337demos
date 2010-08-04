@@ -58,12 +58,7 @@ class Demo < ActiveRecord::Base
   def <=>(o)
     return 0 if o.class != Demo || self.gamemode != o.gamemode
 
-    case(self.gamemode)
-    when "race"
-      self.time <=> o.time
-    else
-      0
-    end
+    time.to_i > 0 ? time <=> o.time : 0
   end
 
 

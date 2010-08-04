@@ -35,9 +35,10 @@ class Demofile < ActiveRecord::Base
       class_parts.pop
     end
 
-    cls.new(params.merge(
-      %w(game gamemode version gamedir time_in_msec).inject(HashWithIndifferentAccess.new) { |h,attr| h[attr] = dr.send(attr); h }
-    ))
+    attrs_from_demo_reader = %w(game gamemode version gamedir time_in_msec)
+    attrs = attrs_from_demo_reader.inject(HashWithIndifferentAccess.new) { |h,attr| h[attr] = dr.send(attr); h }
+
+    cls.new(params.merge(attrs))
   end
 
 

@@ -76,15 +76,12 @@ class DemosController < ApplicationController
   end
 
   def verify
-    @demo = Demo.find params[:id]
+    @demo = Demo.find(params[:id])
 
     # prevent data being modified after upload process
-    if @demo.data_correct == true
-      redirect_to(:action => 'show', :id => @demo)
-      return
-    end
+    #
+    return redirect_to(:action => 'show', :id => @demo) if @demo.data_correct
 
-    @playernames, @fixed_nickname = nil
     dr = DemoReader.parse(@demo.demofile.full_filename)
     @gamemode = dr.time_in_msec.to_i > 0 ? "race" : "freestyle"
     if dr.player
@@ -100,34 +97,32 @@ class DemosController < ApplicationController
     if params[:demo][:players]
       begin
         params[:demo][:players] = [params[:demo][:players]] if params[:demo][:players].class != Array
-        Player.transaction do
-          Nickname.transaction do
-            nicknames = params[:demo][:players].map do |nickname|
-              Nickname.find_or_create_by_nickname nickname
+        ActiveRecord::Base.transaction do
+          nicknames = params[:demo][:players].map do |nickname|
+            Nickname.find_or_create_by_nickname nickname
+          end
+          players = nicknames.map do |nickname|
+            player = nil
+            unless player = nickname.player
+              player = Player.create!
+              player.nicknames << nickname
+              player.main_nickname = nickname
+              player.save!
+              nickname.player = player
+              nickname.save!
             end
-            players = nicknames.map do |nickname|
-              player = nil
-              unless player = nickname.player
-                player = Player.create!
-                player.nicknames << nickname
-                player.main_nickname = nickname
-                player.save!
-                nickname.player = player
-                nickname.save!
-              end
-              player
-            end.uniq
-            params[:demo][:players] = players
+            player
+          end.uniq
+          params[:demo][:players] = players
 
-            # notify me
-            begin
-              playernames = 'unknown'
-              playernames = players.map{|player| player.main_nickname_plain}.join(', ') if !players.nil? && players.length > 0
-              mail = MyMailer.create_send_demo_uploaded_notification(@demo, @demo.map.name, playernames)
-              MyMailer.deliver(mail)
-            rescue Exception => e
-              logger.info '=== Mail deliverty error: ' + e.message
-            end
+          # notify me
+          begin
+            playernames = 'unknown'
+            playernames = players.map{|player| player.main_nickname_plain}.join(', ') if !players.nil? && players.length > 0
+            mail = MyMailer.create_send_demo_uploaded_notification(@demo, @demo.map.name, playernames)
+            MyMailer.deliver(mail)
+          rescue Exception => e
+            logger.info '=== Mail deliverty error: ' + e.message
           end
         end
       rescue Exception => e
