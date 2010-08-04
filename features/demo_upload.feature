@@ -1,11 +1,11 @@
 Feature: Upload a demo
-  Anyone can upload a demo to the platform
+  Everyone can upload a demo to the platform
 
   Scenario: upload a demo
     Given I upload the demo "cmc02gead_16.4.wd10" for player "<acc/RiFo"
     Then I should see "Demo details"
     And I should see /Position.*1st of 1/
-    And I should see /Time.*16.460/
+    And I should see /Time.*00:16\.460/
     And I should see /Map.*cmc02_gead/
     And I should see /Game.*Warsow 0.4 race/
     And I should see /Player.*<acc\/RiFo/
@@ -28,11 +28,14 @@ Feature: Upload a demo
     Then I should see "Demo details"
     And I should see /Map.*cmc02_gead/
 
-  Scenario: upload a wd11 demo
+  Scenario: upload a wd11 race demo
     Given I upload the demo "wd11/race_killua-hykon.wd11"
     Then I should see "Demo details"
+    And I should see /Game.*Warsow 0.5 race/
     And I should see /Map.*killua-hykon/
     And I should see "-]DvR[-"
+    And I should see /Time.*00:16\.500/
+
   Scenario: upload a wd11 freestyle demo
     Given I upload the freestyle demo "wd11/freestyle.wd11" with title "laserboost + eb + airrocket = far landing ( using quad )" for players "trx:orb!tal, *korfi"
     Then I should see "Demo details"
@@ -46,4 +49,19 @@ Feature: Upload a demo
     Then I should not see "Demo details"
     And I should see "Players can't be blank"
 
+  Scenario: upload a dm68 cpm demo
+    Given I upload the demo "dm68/pornchronostar_mdf.cpm_00.49.216_tyaz.germany.dm_68"
+    Then I should see "Demo details"
+    And I should see "Defrag cpm"
+    And I should see /Map.*pornchronostar/
+    And I should see "tyaz"
+    And I should see /Time.*00:49\.216/
+
+  Scenario: upload a dm68 vq3 demo
+    Given I upload the demo "dm68/runkull2_df.vq3_01.05.904_XunderBIRD.Germany.dm_68"
+    Then I should see "Demo details"
+    And I should see "Defrag vq3"
+    And I should see /Map.*runkull2/
+    And I should see "XunderBIRD"
+    And I should see /Time.*01:05\.904/
 
