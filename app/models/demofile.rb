@@ -64,8 +64,11 @@ class Demofile < ActiveRecord::Base
 
 	def read_demo
     @read_demo ||= begin
-                     if File.exists?(temp_path)
-                       dr = DemoReader.parse(self.temp_path)
+                     path = temp_path if File.exists?(temp_path)
+                     path = full_filename if File.exists?(full_filename)
+
+                     if path
+                       dr = DemoReader.parse(path)
                        dr if dr.valid
                      end
                    end
