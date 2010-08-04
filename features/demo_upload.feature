@@ -33,4 +33,17 @@ Feature: Upload a demo
     Then I should see "Demo details"
     And I should see /Map.*killua-hykon/
     And I should see "-]DvR[-"
+  Scenario: upload a wd11 freestyle demo
+    Given I upload the freestyle demo "wd11/freestyle.wd11" with title "laserboost + eb + airrocket = far landing ( using quad )" for players "trx:orb!tal, *korfi"
+    Then I should see "Demo details"
+    And I should see /Game.*Warsow 0.5 freestyle/
+    And I should see /Map.*ganja-fs1/
+    And I should see /Players.*trx:orb!tal, \*korfi/
+    And I should see /Title.*laserboost \+ eb \+ airrocket = far landing \( using quad \)/
+
+  Scenario: upload a wd11 freestyle demo without choosing players should not be possible
+    Given I upload the freestyle demo "wd11/freestyle.wd11" with title "foo" for players ""
+    Then I should not see "Demo details"
+    And I should see "Players can't be blank"
+
 

@@ -7,14 +7,14 @@
     - else
       - i = 0
       - for nickname in @playernames
-      - id = "demo_players_#{i}"
-      - i += 1
+        - id = "demo_players_#{i}"
+        - i += 1
         = check_box_tag 'demo[players][]', nickname, false, :id => id
-    %label{:for => id}= render_nickname nickname
-    %br/
+        %label{:for => id}= render_nickname nickname
+        %br
 %tr
   %td
-    Title
+    = label 'demo', 'title', 'Title'
   %td
     Describe your trick jump here as
     %strong short
@@ -23,3 +23,4 @@
     E.g. '2xrj+nade boost' or '2x+inv3xw+lol' or 'jp+hole+2xrocketwj+platform'
     %br
     = text_field :demo, :title, :size => 30
+

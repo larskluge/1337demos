@@ -28,10 +28,11 @@ class Demo < ActiveRecord::Base
   validates_presence_of :map_id
   validates_presence_of :demofile_id
   validates_presence_of :game
-  validates_presence_of :title, :on => :update, :if => Proc.new{|demo| demo.gamemode == 'freestyle'}
   validates_associated :players, :on => :update
+  validates_presence_of :players, :on => :update
   validates_inclusion_of :gamemode, :in => %w(race freestyle), :if => Proc.new{|demo| demo.game == "Warsow"}
   validates_inclusion_of :gamemode, :in => %w(freestyle cpm vq3), :if => Proc.new{|demo| demo.game == "Defrag"}
+  validates_presence_of :title, :on => :update, :if => Proc.new{|demo| demo.gamemode == 'freestyle'}
 
   def validate
     #logger.info "status: #{self.status}"
