@@ -102,7 +102,7 @@ function common_content()
   });
 
   // open external links in new window
-  $('a[rel=external]').attr('target', '_blank');
+  $('a[rel~="external"]').attr('target', '_blank');
 
   // enable tip-tip tooltips
   $(".content [title]").tipTip({edgeOffset: 5});
