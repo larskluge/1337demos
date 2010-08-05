@@ -1,7 +1,10 @@
 .map_image
-  %img{:alt => @map.name, :src => "/images/maps/thumbs/384x288/#{@map.id}.jpeg", :width => "384"}/
-  .map_image_label= @map.name
+  %img{:alt => @map.name, :src => "/images/maps/thumbs/384x288/#{@map.id}.jpeg", :width => "384"}
+  .map_image_label
+    = @map.name
+
 = render :partial => '/ratings/stars_editable', :locals => { :rateable => @map }
+
 %table.highscores
   %tr
     %th
@@ -10,10 +13,11 @@
     %th Uploaded
     %th
   - for demo in @demos
-  %tr{:class => "no#{demo.position}"}
-    %td
-      = render_rating_static(demo.rating(:default)) if demo.gamemode != 'race'
-    <td#{' class="time"' if demo.gamemode == 'race'}>#{render_time_title demo}
-    %td.player= render_linked_players demo.players
-    %td= render_datetime demo.created_at
-    %td= link_to 'Play', :controller => 'demos', :action => 'show', :id => demo
+    %tr{:class => "no#{demo.position}"}
+      %td
+        = render_rating_static(demo.rating(:default)) if demo.gamemode != 'race'
+      <td#{' class="time"' if demo.gamemode == 'race'}>#{render_time_title demo}
+      %td.player= render_linked_players demo.players
+      %td= render_datetime demo.created_at
+      %td= link_to 'Play', :controller => 'demos', :action => 'show', :id => demo
+
