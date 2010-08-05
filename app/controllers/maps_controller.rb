@@ -8,7 +8,7 @@ class MapsController < ApplicationController
 		@maps = Map.paginate(:page => page_param,
 			:per_page => 12,
 			:include => :demos,
-			:conditions => ["demos.data_correct AND maps.name LIKE ?", searchstr],
+			:conditions => ["demos.data_correct = 't' AND maps.name LIKE ?", searchstr],
 			:order => 'name')
 
     @players = @maps.map do |m|
@@ -20,7 +20,7 @@ class MapsController < ApplicationController
 	def listall
 		@maps = Map.all(
 			:include => { :demos => :players },
-			:conditions => 'demos.data_correct',
+			:conditions => "demos.data_correct = 't'",
 			:order => 'name')
 	end
 
@@ -42,9 +42,9 @@ class MapsController < ApplicationController
 		@map = Map.find(params[:id])
 		@title = "demos on #{@map.name}"
 
-		all_demos = Demo.all :conditions => ["data_correct AND map_id = ?", @map.id],
+		all_demos = Demo.all(:conditions => {:data_correct => true, :map_id => @map.id},
 			:order => 'time, ratings.average DESC, demos.created_at DESC',
-			:include => 'ratings'
+			:include => 'ratings')
 
 		# just show best time of each player
 		known_players = []
@@ -137,3 +137,4 @@ class MapsController < ApplicationController
 				:binary => img.to_blob }
 		end
 end
+
