@@ -46,7 +46,7 @@ class Demo < ActiveRecord::Base
   end
 
 
-  default_scope :order => "created_at DESC"
+  default_scope :order => "demos.created_at DESC"
 
   named_scope :race, :conditions => {:gamemode => %w(race cpm vq3), :data_correct => true}, :order => "time"
   named_scope :freestyle, :conditions => {:gamemode => "freestyle", :data_correct => true}
