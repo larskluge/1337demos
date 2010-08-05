@@ -1,7 +1,7 @@
 class DemofileDefrag < Demofile
 
   validates_format_of :game, :with => /^Defrag$/
-  validates_numericality_of :version, :equal_to => 68, :message => "must be a *.dm68 file"
+  validates_numericality_of :version, :equal_to => 68, :message => "must be a *.dm_68 file"
   validates_inclusion_of :gamemode, :in => %w(cpm vq3)
 
   # avoid bug that is triggered by calling validates_numericality_of on

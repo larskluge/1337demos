@@ -120,7 +120,7 @@ class Demo < ActiveRecord::Base
   def human_version
     case game
     when "Warsow" then "wd#{version}"
-    when "Defrag" then "dm#{version}"
+    when "Defrag" then "dm_#{version}"
     end
   end
 
