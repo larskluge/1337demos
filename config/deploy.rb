@@ -1,6 +1,3 @@
-load "lib/recipes/servers/passenger.rb"
-
-
 set :application, '1337demos'
 
 
