@@ -6,55 +6,24 @@ class DemosController < ApplicationController
   def index
     @title = "latest demos"
     @headline = 'Latest demos.'
-    @feed_title = "1337demos.com - #{@title}"
-    @rss = { :title => @feed_title, :url => demos_url(:format => 'atom') }
 
-    @demos = Demo.paginate(:page => page_param,
-      :per_page => 20,
-      :conditions => 'data_correct' + (params[:format] == 'atom' ? ' AND status = "rendered"' : ''),
-      :include => :map,
-      :order => 'demos.created_at DESC')
-
-    respond_to do |format|
-      format.html
-      format.atom { render :action => 'rss', :layout => false }
-    end
+    render_demos(Demo.scoped)
   end
+
+
 
   def race
     @title = 'latest race demos'
     @headline = 'Latest race demos.'
-    @feed_title = "1337demos.com - #{@title}"
-    @rss = { :title => @feed_title, :url => url_for(:format => 'atom') }
 
-    @demos = Demo.race.paginate(:page => page_param,
-      :per_page => 20,
-      :conditions => (params[:format] == 'atom' ? 'status = "rendered"' : ''),
-      :include => :map,
-      :order => 'demos.created_at DESC')
-
-    respond_to do |format|
-      format.html { render :action => 'index' }
-      format.atom { render :action => 'rss', :layout => false }
-    end
+    render_demos(Demo.race)
   end
 
   def freestyle
     @title = 'latest freestyle demos'
     @headline = 'Latest freestyle demos.'
-    @feed_title = "1337demos.com - #{@title}"
-    @rss = { :title => @feed_title, :url => url_for(:format => 'atom') }
 
-    @demos = Demo.freestyle.paginate(:page => page_param,
-      :per_page => 20,
-      :conditions => (params[:format] == 'atom' ? 'status = "rendered"' : ''),
-      :include => :map,
-      :order => 'demos.created_at DESC')
-
-    respond_to do |format|
-      format.html { render :action => 'index' }
-      format.atom { render :action => 'rss', :layout => false }
-    end
+    render_demos(Demo.freestyle)
   end
 
 
@@ -156,6 +125,28 @@ class DemosController < ApplicationController
       redirect_to :action => 'show', :id => @demo
     else
       render :action => 'show'
+    end
+  end
+
+
+  protected
+
+  def render_demos(scoped_demos)
+    @feed_title = "1337demos.com - #{@title}"
+
+    # publish only rendered demos in feed
+    #
+    scoped_demos = scoped_demos.rendered if params[:format] == "atom"
+
+    @demos = scoped_demos.data_correct.paginate(
+      :page => page_param,
+      :per_page => 20,
+      :include => :map
+    )
+
+    respond_to do |format|
+      format.html { render :action => 'index' }
+      format.atom { render :action => 'index', :layout => false }
     end
   end
 

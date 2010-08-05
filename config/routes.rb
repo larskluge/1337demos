@@ -21,10 +21,6 @@ ActionController::Routing::Routes.draw do |map|
 
   map.root :controller => "welcomes"
 
-  # support old demos feed url
-  # TODO: remove this old route
-  map.connect 'demos/rss.xml', :controller => 'demos', :action => 'index', :format => 'atom'
-
   map.resource :check, :member => {:fail => :get}
   map.resource :welcomes, :only => :index, :collection => {:create_comment => :post}
 
