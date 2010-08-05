@@ -6,6 +6,7 @@
 
 require 'rubygems'
 require 'spork'
+require 'ruby-debug'
 
 Spork.prefork do
   ENV["RAILS_ENV"] ||= "cucumber"
@@ -60,3 +61,4 @@ Spork.each_run do
   DatabaseCleaner.strategy = :truncation
 
 end
+
