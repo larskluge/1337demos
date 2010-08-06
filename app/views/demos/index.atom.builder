@@ -1,4 +1,4 @@
-atom_feed(:"xmlns:media" => "http://search.yahoo.com/mrss/") do |feed|
+atom_feed do |feed|
   feed.title @feed_title
   feed.updated(@demos.first ? @demos.first.created_at : Time.new.utc)
 
@@ -12,9 +12,7 @@ atom_feed(:"xmlns:media" => "http://search.yahoo.com/mrss/") do |feed|
       entry.author do |author|
         author.name players
       end
-
-      entry.tag!("media:content", :url => video_url(demo, :format => "mp4"), :type => "video/mp4")
-      entry.tag!("media:thumbnail", :url => map_thumbnail_url(demo.map_id, "200x150"), :width => 200, :height => 150)
+      entry.link :rel => "enclosure", :type => "video/mpeg4", :href => video_url(demo, :format => "mp4")
     end
   end
 end
