@@ -207,5 +207,9 @@ module ApplicationHelper
     end
   end
 
+  def map_thumbnail_url(map, size = "200x150")
+    File.join(root_url, "images/maps/thumbs", size, "#{map}.jpeg")
+  end
+
 end
 

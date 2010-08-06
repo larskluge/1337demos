@@ -36,6 +36,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.list_demos_test '/tests/list_demos', :controller => 'tests', :action => 'list_demos', :conditions => {:method => :get}
 
+  map.resources :videos, :only => :show, :defaults => {:format => "mp4"}
 
   # webservices ###############################################################
 
