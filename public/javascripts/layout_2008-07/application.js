@@ -171,7 +171,7 @@ function home()
   hidden_entries.hide();
 
   // append show all news-button
-  var showallbtn = $('<p><a href="#">Show all</a></p>').appendTo('#news');
+  var showallbtn = $('<p><a href="#">more</a></p>').appendTo('#news');
   showallbtn.click(function() {
     hidden_entries.fadeIn('slow');
     showallbtn.hide();
