@@ -34,15 +34,13 @@ class Demo < ActiveRecord::Base
   validates_presence_of :title, :on => :update, :if => Proc.new{|demo| demo.gamemode == 'freestyle'}
 
   def validate
-    #logger.info "status: #{self.status}"
     if Rails.env == 'production' # ignore if demo file is not available in dev-mode
-      errors.add(:status, 'can not be "rendered" without an existing video file') if self.status == :rendered && !File.exists?(self.video_filename)
+      errors.add(:status, 'can not be "rendered" without an existing video file') if status == :rendered && !File.exists?(video_filename)
     end
-    #logger.info "error cnt: #{errors.count}"
   end
 
   def validate_on_update
-    errors.add(:data_correct, "can't be empty") if self.data_correct.nil?
+    errors.add(:data_correct, "can't be empty") if data_correct.nil?
   end
 
 
@@ -59,20 +57,20 @@ class Demo < ActiveRecord::Base
 
 
   def <=>(o)
-    return 0 if o.class != Demo || self.gamemode != o.gamemode
+    return 0 if o.class != Demo || gamemode != o.gamemode
 
     time.to_i > 0 ? time <=> o.time : 0
   end
 
 
   def toplist
-    Demo.race.by_map(self.map_id).all :conditions => "position IS NOT NULL", :order => 'position'
+    Demo.race.by_map(map_id).all :conditions => "position IS NOT NULL", :order => 'position'
   end
 
   def calc_position
-    return nil if self.gamemode != 'race'
+    return nil if gamemode != 'race'
 
-    demos = Demo.race.by_map(self.map_id)
+    demos = Demo.race.by_map(map_id)
 
     # short cut for one demo
     return 1 if demos.size == 1
@@ -98,7 +96,7 @@ class Demo < ActiveRecord::Base
 
 
     times = concider_demos.map(&:time).sort
-    return times.index(self.time) + 1
+    return times.index(time) + 1
   end
 
   def check_if_positions_need_update
@@ -109,7 +107,7 @@ class Demo < ActiveRecord::Base
 
   def update_positions(force = false)
     if @trigger_update_demos_after_save || force
-      demos = Demo.race.by_map(self.map_id)
+      demos = Demo.race.by_map(map_id)
       demos.each do |d|
         pos = d.calc_position
         d.update_attribute(:position, pos)
@@ -128,24 +126,25 @@ class Demo < ActiveRecord::Base
   end
 
   def rerender
-    self.status = :uploaded
+    status = :uploaded
     save!
   end
 
   def video_exists?
-    self.status == :rendered && File.exists?(self.video_filename)
+    status == :rendered && File.exists?(video_filename)
   end
 
   def video_filename
-    "#{SYS_VIDEOS}#{self.id}.mp4"
+    "#{SYS_VIDEOS}#{id}.mp4"
   end
 
   def video_url
-    return "#{WEB_VIDEOS}#{self.id}.mp4" if self.video_exists?
+    "#{WEB_VIDEOS}#{id}.mp4" if video_exists?
   end
 
   def video_file
-    self.id.to_s + ".mp4"
+    "#{id}.mp4"
   end
+
 end
 
