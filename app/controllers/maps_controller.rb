@@ -17,13 +17,6 @@ class MapsController < ApplicationController
     end
   end
 
-	def listall
-		@maps = Map.all(
-			:include => { :demos => :players },
-			:conditions => "demos.data_correct = 't'",
-			:order => 'name')
-	end
-
 	def search
 		if params[:mapsearch] =~ /^[a-z0-9\-\#_]+$/i
 			session[:mapsearch] = params[:mapsearch]
