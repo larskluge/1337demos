@@ -15,9 +15,11 @@ development:
 # re-generated from your development database when you run 'rake'.
 # Do not set this db to the same as development or production.
 test: &TEST
-  adapter: sqlite3
-  database: db/test.sqlite3
-  timeout: 5000
+  <<: *common
+  host: localhost
+  database: 1337demos_test
+  username: '1337demos'
+  password: '1337demos'
 
 production:
   <<: *common
@@ -26,6 +28,6 @@ production:
   username: 1337prod
   password: '!j4s7xJ?Hq4R'
 
-
 cucumber:
   <<: *TEST
+
