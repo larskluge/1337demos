@@ -29,6 +29,7 @@ Rails::Initializer.run do |config|
   config.gem 'gravtastic', :version => '>= 2.1.0'
   config.gem 'haml', :version => '>= 3'
   config.gem 'demo-reader', :version => '>= 0.1.2'
+  config.gem 'will_paginate'
 
   SYS_MAP_IMAGES = RAILS_ROOT + '/data/maps/images/'
   SYS_MAP_IMAGE_THUMBS = RAILS_ROOT + '/public/images/maps/thumbs/'
