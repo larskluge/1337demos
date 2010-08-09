@@ -9,9 +9,6 @@ class Map < ActiveRecord::Base
 	validates_presence_of :name
 	validates_uniqueness_of :name
 
-  named_scope :data_correct, :joins => :demos, :conditions => {:"demos.data_correct" => true}, :group => "maps.id"
-
-
 
 	def get_first_player
 		demos = self.demos.map { |d| d if d.gamemode == 'race' }.compact
@@ -21,3 +18,4 @@ class Map < ActiveRecord::Base
 	end
 
 end
+

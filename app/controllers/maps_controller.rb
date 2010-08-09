@@ -5,7 +5,7 @@ class MapsController < ApplicationController
 	def index
 		@mapsearch = session[:mapsearch]
 		searchstr = '%%%s%%' % session[:mapsearch] || '%'
-		@maps = Map.data_correct.paginate(:page => page_param,
+		@maps = Map.paginate(:page => page_param,
 			:per_page => 12,
 			:conditions => ["maps.name LIKE ?", searchstr],
 			:order => 'name')
