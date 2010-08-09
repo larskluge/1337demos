@@ -15,7 +15,7 @@ xml.rss('version' => '2.0') do
 				xml.description "" # "##{demo.position} #{demo.player.main_nickname_plain} on #{demo.map.name}"
 				xml.enclosure "", { :url => request.protocol + request.host + demo.demofile.public_filename,
 					:length => demo.demofile.size,
-					:type => "1337demos/warsow/#{demo.gamemode}/wd#{demo.version}"
+					:type => "1337demos/#{demo.game.downcase}/#{demo.gamemode}/#{demo.human_version}"
 				}
 				xml.guid request.protocol + request.host + url_for(:controller => 'demos', :action => 'show', :id => demo)
 			end
