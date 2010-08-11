@@ -56,6 +56,30 @@ class Demo < ActiveRecord::Base
 
 
 
+
+  def self.demos_for_map(map)
+		all_demos = Demo.data_correct.find_all_by_map_id(map,
+			:order => 'time, ratings.average DESC, demos.created_at DESC',
+			:include => 'ratings')
+
+		# just show best time of each player
+		known_players = []
+		all_demos.inject([]) do |list, demo|
+			case demo.gamemode
+			when 'race'
+				if !known_players.include?(demo.players.first)
+					known_players << demo.players.first
+					list << demo
+				end
+			else
+				list << demo
+			end
+			list
+		end
+  end
+
+
+
   def <=>(o)
     return 0 if o.class != Demo || gamemode != o.gamemode
 

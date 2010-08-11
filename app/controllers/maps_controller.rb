@@ -33,25 +33,7 @@ class MapsController < ApplicationController
 	def show
 		@map = Map.find(params[:id])
 		@title = "demos on #{@map.name}"
-
-		all_demos = Demo.all(:conditions => {:data_correct => true, :map_id => @map.id},
-			:order => 'time, ratings.average DESC, demos.created_at DESC',
-			:include => 'ratings')
-
-		# just show best time of each player
-		known_players = []
-		@demos = all_demos.inject([]) do |list, demo|
-			case demo.gamemode
-			when 'race'
-				if !known_players.include?(demo.players.first)
-					known_players << demo.players.first
-					list << demo
-				end
-			else
-				list << demo
-			end
-			list
-		end
+    @demos = Demo.demos_for_map(@map)
 	end
 
 	def thumb
