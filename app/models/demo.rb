@@ -46,7 +46,7 @@ class Demo < ActiveRecord::Base
 
   default_scope :order => "demos.created_at DESC"
 
-  named_scope :race, :conditions => {:gamemode => %w(race cpm vq3), :data_correct => true}, :order => "time"
+  named_scope :race, :conditions => {:gamemode => %w(race cpm vq3), :data_correct => true}
   named_scope :freestyle, :conditions => {:gamemode => "freestyle", :data_correct => true}
 
   named_scope :by_map, proc {|map_id| {:conditions => {:map_id => map_id, :gamemode => "race"}}}
