@@ -38,82 +38,61 @@ class MapsController < ApplicationController
 
   def thumb
     # allow only predefined sizes
-    return unless ['200x150', '384x288'].include? params[:size]
+    #
+    size = params[:size]
+    raise ActiveRecord::RecordNotFound unless ['200x150', '384x288'].include?(size)
+
+    width, height = size.split('x').map(&:to_i)
 
     map = Map.find(params[:id])
 
-    filename = find_levelshot_file(map)
-    levelshot_found = !filename.nil?
+    levelshot_file = map.find_levelshot_file
+    levelshot_thumb_file = File.expand_path(File.join(SYS_MAP_IMAGE_THUMBS, size, "#{map.id}.jpeg")) # does not exist, will be generated
 
-    nopreview_file = File.join(SYS_MAP_IMAGE_THUMBS, params[:size], ".nopreview.jpeg")
+    no_preview_file = File.expand_path("#{SYS_MAP_IMAGES}../unknownmap.jpg")
+    no_preview_thumb_file = File.expand_path(File.join(SYS_MAP_IMAGE_THUMBS, size, ".nopreview.jpg"))
 
-    if !levelshot_found
-      # generate common nopreview-file if not already exists
+
+    if levelshot_file
+      # levelshot is available, so generate thumb
       #
-      filename = File.expand_path("#{SYS_MAP_IMAGES}../unknownmap.jpg") unless File.exists?(nopreview_file)
-
-      # symlink to nopreview
-      system "cd #{SYS_MAP_IMAGE_THUMBS}#{params[:size]} && ln -s \".nopreview.jpeg\" #{map.id}.jpeg"
-    end
-
-    thumbnail_path = "#{SYS_MAP_IMAGE_THUMBS}#{params[:size]}/#{map.id}.jpeg"
-
-    # generate thumb
-    if filename
-      width, height = params[:size].split('x').collect {|x| x.to_i}
-      thumb = generate_thumbnail filename, width, height
-
-      if thumb
-        # write to file alias "cache" ;-)
-        cachefile = levelshot_found ? thumbnail_path : nopreview_file
-        write_to_file cachefile, thumb[:binary]
-      end
+      generate_thumb(levelshot_file, levelshot_thumb_file, width, height)
     else
-      raise "Could not generate a thumbnail"
+      # levelshot is unavailable, so generate thumb from no-preview file
+      #
+      unless File.exists?(no_preview_thumb_file)
+        generate_thumb(no_preview_file, no_preview_thumb_file, width, height)
+      end
+
+      # link requested file to no-preview thumb (cache for future requests)
+      #
+      File.symlink(no_preview_thumb_file, levelshot_thumb_file)
     end
 
-    send_file thumbnail_path, :type => 'image/jpeg', :disposition => 'inline'
+    send_file levelshot_thumb_file, :type => 'image/jpeg', :disposition => 'inline'
   end
-
 
 
   protected
 
-  def write_to_file(filename, binary)
-    # ensure directory path exists
-    #
-    FileUtils.mkdir_p(File.dirname(filename))
+  def generate_thumb(src_file, dest_file, width, height)
+    src_img = Magick::Image.read(src_file).first
 
-    # write thumb to filesys
-    File.open(filename, "w") do |f|
-      f << binary
-    end
-  end
-
-  def find_levelshot_file(map)
-    filename = nil
-    ['jpg', 'tga', 'gif'].each { |ext|
-      f = SYS_MAP_IMAGES + map.name + '.' + ext
-      if File.exists? f
-        filename = f
-        break
-      end
-    }
-    return filename
-  end
-
-  def generate_thumbnail(filename, width, height)
-    return nil unless File.exists?(filename)
-
-    img_orig = Magick::Image.read(filename).first
-    #img = img_orig.resize_to_fit(width, height)
-    img = img_orig.change_geometry('%dx%d!' % [width, height]) do |ncols, nrows, img|
+    dest_img = src_img.change_geometry('%dx%d!' % [width, height]) do |ncols, nrows, img|
       img.resize(ncols, nrows)
     end
-    img.format = 'JPEG'
+    dest_img.format = 'JPEG'
 
-    { :mime_type => img.mime_type,
-      :binary => img.to_blob }
+    # ensure directory path exists
+    #
+    FileUtils.mkdir_p(File.dirname(dest_file))
+
+    dest_img.write(dest_file)
+
+    # ensure image resize worked properly
+    #
+    raise "Generate thumbnail failed!" unless File.readable?(dest_file)
   end
+
 end
 

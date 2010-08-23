@@ -4,8 +4,6 @@ class Map < ActiveRecord::Base
 
   has_many :demos
 
-  #acts_as_rated :no_rater => true
-
   validates_presence_of :name
   validates_uniqueness_of :name
 
@@ -15,6 +13,18 @@ class Map < ActiveRecord::Base
     return if demos.empty?
 
     demos.sort { |x,y| x.time <=> y.time }.first.players.first
+  end
+
+  def find_levelshot_file
+    filename = nil
+    ['jpg', 'tga', 'gif'].each { |ext|
+      f = SYS_MAP_IMAGES + name + '.' + ext
+      if File.exists? f
+        filename = f
+        break
+      end
+    }
+    filename
   end
 
 end
