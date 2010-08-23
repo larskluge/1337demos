@@ -8,6 +8,7 @@ log/*.log
 Makefile
 mkmf.log
 public/demofiles/**/*
+public/images/maps/thumbs/**/*
 public/stuffs/**/*
 rerun.txt
 tmp/*
