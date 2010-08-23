@@ -30,5 +30,10 @@ class MapsControllerTest < ActionController::TestCase
     assert_valid_thumb_for(Map.create!(:name => "#pgrun"))
   end
 
+  test "#thumbs: ask for unavailable size" do
+    get :thumb, :id => 1, :size => "1x1"
+    assert_response :not_found
+  end
+
 end
 

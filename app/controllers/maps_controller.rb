@@ -40,7 +40,7 @@ class MapsController < ApplicationController
     # allow only predefined sizes
     #
     size = params[:size]
-    raise ActiveRecord::RecordNotFound unless ['200x150', '384x288'].include?(size)
+    return render :nothing => true, :status => :not_found unless ['200x150', '384x288'].include?(size)
 
     width, height = size.split('x').map(&:to_i)
 
