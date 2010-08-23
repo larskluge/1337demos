@@ -23,3 +23,8 @@ config.action_mailer.delivery_method = :test
 
 
 config.gem 'thoughtbot-shoulda', :lib => 'shoulda', :source => 'http://gems.github.com'
+
+
+SYS_MAP_IMAGES.replace(File.join(RAILS_ROOT, 'test/assets/data/maps/images/'))
+SYS_MAP_IMAGE_THUMBS.replace(File.join(RAILS_ROOT, 'tmp/functional_tests', rand(36**8).to_s(36), 'images/maps/thumbs/'))
+

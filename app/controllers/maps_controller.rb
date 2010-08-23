@@ -40,49 +40,53 @@ class MapsController < ApplicationController
 		# allow only predefined sizes
 		return unless ['200x150', '384x288'].include? params[:size]
 
-		map = Map.find params[:id]
+		map = Map.find(params[:id])
 
-		filename = self.find_levelshot_file(map)
+		filename = find_levelshot_file(map)
 		levelshot_found = !filename.nil?
 
-		nopreview_file = "#{SYS_MAP_IMAGE_THUMBS}#{params[:size]}/.nopreview.jpeg"
+		nopreview_file = File.join(SYS_MAP_IMAGE_THUMBS, params[:size], ".nopreview.jpeg")
 
 		if !levelshot_found
-			if File.exists? nopreview_file
-				# symlink to nopreview
-				system "cd #{SYS_MAP_IMAGE_THUMBS}#{params[:size]} && ln -s \".nopreview.jpeg\" #{map.id}.jpeg"
-			else
-				# generate common nopreview-file
-				filename = "#{SYS_MAP_IMAGES}../unknownmap.jpg" unless filename
-			end
+      # generate common nopreview-file if not already exists
+      #
+      filename = File.expand_path("#{SYS_MAP_IMAGES}../unknownmap.jpg") unless File.exists?(nopreview_file)
+
+      # symlink to nopreview
+      system "cd #{SYS_MAP_IMAGE_THUMBS}#{params[:size]} && ln -s \".nopreview.jpeg\" #{map.id}.jpeg"
 		end
 
-		#return render :text => filename
+    thumbnail_path = "#{SYS_MAP_IMAGE_THUMBS}#{params[:size]}/#{map.id}.jpeg"
 
 		# generate thumb
 		if filename
 			width, height = params[:size].split('x').collect {|x| x.to_i}
-			thumb = self.generate_thumbnail filename, width, height
+			thumb = generate_thumbnail filename, width, height
 
 			if thumb
 				# write to file alias "cache" ;-)
-				cachefile = levelshot_found ? "#{SYS_MAP_IMAGE_THUMBS}#{params[:size]}/#{map.id}.jpeg" : nopreview_file
-				self.write_to_file cachefile, thumb[:binary]
+				cachefile = levelshot_found ? thumbnail_path : nopreview_file
+				write_to_file cachefile, thumb[:binary]
 			end
+    else
+      raise "Could not generate a thumbnail"
 		end
 
-		# redirect to same uri, because now the requested file exists
-		redirect_to request.request_uri
+    send_file thumbnail_path, :type => 'image/jpeg', :disposition => 'inline'
 	end
 
 
 
 	protected
 		def write_to_file(filename, binary)
+      # ensure directory path exists
+      #
+      FileUtils.mkdir_p(File.dirname(filename))
+
 			# write thumb to filesys
-			out = File.new filename, 'w'
-			out << binary
-			out.close
+      File.open(filename, "w") do |f|
+        f << binary
+      end
 		end
 
 		def find_levelshot_file(map)
