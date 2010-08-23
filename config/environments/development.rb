@@ -11,18 +11,16 @@ config.whiny_nils = true
 # Show full error reports and disable caching
 config.action_controller.consider_all_requests_local = true
 config.action_view.debug_rjs                         = true
+config.action_controller.perform_caching             = false
 
 # Don't care if the mailer can't send
 config.action_mailer.raise_delivery_errors = false
 
-# caching
-config.action_controller.perform_caching = false
+# cache store
 config.cache_store = :file_store, File.join(Rails.root, 'tmp/cache')
 
-# Disable request forgery protection
-config.action_controller.allow_forgery_protection = false
-
-
+# ruby debug
+#
 if File.exists?(File.join(RAILS_ROOT,'tmp', 'debug.txt'))
   require 'ruby-debug'
   Debugger.wait_connection = true

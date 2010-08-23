@@ -2,17 +2,14 @@
 # Likewise, all the methods added will be available for all controllers.
 
 class ApplicationController < ActionController::Base
-	# make flash messages cachable via cookie + js
-	include CacheableFlash
+  helper :all # include all helpers, all the time
+  protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-	helper :all # include all helpers, all the time
+  # Scrub sensitive parameters from your log
+  # filter_parameter_logging :password
 
-	# See ActionController::RequestForgeryProtection for details
-	# Uncomment the :secret if you're not using the cookie session store
-	#protect_from_forgery # :secret => 'c111bea13c2f699f239e338712b24a4f'
 
-	layout 'layout_2008-07'
-
+  layout "layout_2008-07"
 
   # exception_notification
   #
@@ -23,7 +20,7 @@ class ApplicationController < ActionController::Base
   end
 
 
-	protected
+  protected
 
   def page_param
     page = params[:page].to_i
