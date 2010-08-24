@@ -9,22 +9,26 @@ dependencies:
     group: 
     - :cucumber
     version: ">= 0"
-  gravtastic: 
-    group: 
-    - :default
-    version: ">= 2.1.0"
   rails: 
     group: 
     - :default
     version: = 2.3.8
-  mysql: 
+  gravtastic: 
     group: 
     - :default
-    version: ">= 0"
+    version: ">= 2.1.0"
   haml: 
     group: 
     - :default
     version: ">= 3"
+  mysql: 
+    group: 
+    - :default
+    version: ">= 0"
+  newrelic_rpm: 
+    group: 
+    - :default
+    version: ">= 0"
   shoulda: 
     group: 
     - :test
@@ -112,6 +116,8 @@ specs:
     version: "0.43"
 - mysql: 
     version: 2.8.1
+- newrelic_rpm: 
+    version: 2.12.3
 - nokogiri: 
     version: 1.4.3.1
 - rack-test: 
@@ -132,7 +138,7 @@ specs:
     version: 0.7.1
 - will_paginate: 
     version: 2.3.14
-hash: d9cd2f15eea8c440a6c0b05d8d07d0c66a99efcb
+hash: f25afa37ab021bf0659f6b19bcfecc4fb57a651e
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
