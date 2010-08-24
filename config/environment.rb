@@ -15,13 +15,6 @@ Rails::Initializer.run do |config|
   # config.load_paths += %W( #{RAILS_ROOT}/extras )
   config.load_paths << Rails.root + "app/controllers/lib"
 
-  # Specify gems that this application depends on and have them installed with rake gems:install
-  config.gem 'rack'
-  config.gem 'gravtastic', :version => '>= 2.1.0'
-  config.gem 'haml', :version => '>= 3'
-  config.gem 'demo-reader', :version => '>= 0.1.2'
-  config.gem 'will_paginate'
-
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
   # config.plugins = [ :exception_notification, :ssl_requirement, :all ]
