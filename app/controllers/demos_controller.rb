@@ -1,6 +1,5 @@
 class DemosController < ApplicationController
-
-  include PlayerInfo
+  include Lib::PlayerInfo
 
 
   def index

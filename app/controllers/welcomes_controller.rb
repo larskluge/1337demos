@@ -1,5 +1,5 @@
 class WelcomesController < ApplicationController
-  include PlayerInfo
+  include Lib::PlayerInfo
 
 
   def index

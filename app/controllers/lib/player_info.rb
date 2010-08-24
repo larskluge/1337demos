@@ -1,4 +1,4 @@
-module PlayerInfo
+module Lib::PlayerInfo
 
   protected
 
