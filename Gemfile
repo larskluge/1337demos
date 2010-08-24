@@ -7,7 +7,7 @@ gem 'gravtastic', '>= 2.1.0'
 gem 'haml', '>= 3'
 gem 'mysql'
 gem 'rack'
-gem 'rmagick', '>= 2'
+gem 'rmagick', '>= 2', :require => 'RMagick'
 gem 'will_paginate'
 
 gem 'ruby-debug', :group => [:test, :cucumber]

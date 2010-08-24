@@ -57,6 +57,8 @@ dependencies:
     group: 
     - :default
     version: ">= 2"
+    require: 
+    - RMagick
   launchy: 
     group: 
     - :cucumber
@@ -130,7 +132,7 @@ specs:
     version: 0.7.1
 - will_paginate: 
     version: 2.3.14
-hash: 2a4dea471c639e967831ffd5b63522d6811f8f7c
+hash: d9cd2f15eea8c440a6c0b05d8d07d0c66a99efcb
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
