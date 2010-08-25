@@ -11,7 +11,7 @@ gem 'rack'
 gem 'rmagick', '>= 2', :require => 'RMagick'
 gem 'will_paginate'
 
-gem 'ruby-debug', :group => [:test, :cucumber]
+gem "ruby-debug#{"19" if RUBY_VERSION >= "1.9"}", :group => [:test, :cucumber]
 
 group :test do
   gem 'shoulda'

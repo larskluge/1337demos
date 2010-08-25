@@ -11,6 +11,7 @@ GEM
     activeresource (2.3.8)
       activesupport (= 2.3.8)
     activesupport (2.3.8)
+    archive-tar-minitar (0.5.2)
     builder (2.1.2)
     columnize (0.3.1)
     configuration (1.1.0)
@@ -33,7 +34,8 @@ GEM
     launchy (0.3.7)
       configuration (>= 0.0.5)
       rake (>= 0.8.1)
-    linecache (0.43)
+    linecache19 (0.5.11)
+      ruby_core_source (>= 0.1.4)
     mysql (2.8.1)
     newrelic_rpm (2.12.3)
     nokogiri (1.4.3.1)
@@ -49,11 +51,16 @@ GEM
       rake (>= 0.8.3)
     rake (0.8.7)
     rmagick (2.13.1)
-    ruby-debug (0.10.3)
-      columnize (>= 0.1)
-      ruby-debug-base (~> 0.10.3.0)
-    ruby-debug-base (0.10.3)
-      linecache (>= 0.3)
+    ruby-debug-base19 (0.11.24)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby_core_source (>= 0.1.4)
+    ruby-debug19 (0.11.6)
+      columnize (>= 0.3.1)
+      linecache19 (>= 0.5.11)
+      ruby-debug-base19 (>= 0.11.19)
+    ruby_core_source (0.1.4)
+      archive-tar-minitar (>= 0.5.2)
     shoulda (2.11.3)
     spork (0.8.4)
     term-ansicolor (1.0.5)
@@ -79,7 +86,7 @@ DEPENDENCIES
   rack
   rails (= 2.3.8)
   rmagick (>= 2)
-  ruby-debug
+  ruby-debug19
   shoulda
   spork
   webrat
