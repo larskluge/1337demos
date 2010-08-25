@@ -1,144 +1,86 @@
---- 
-dependencies: 
-  ruby-debug: 
-    group: 
-    - :test
-    - :cucumber
-    version: ">= 0"
-  spork: 
-    group: 
-    - :cucumber
-    version: ">= 0"
-  rails: 
-    group: 
-    - :default
-    version: = 2.3.8
-  gravtastic: 
-    group: 
-    - :default
-    version: ">= 2.1.0"
-  haml: 
-    group: 
-    - :default
-    version: ">= 3"
-  mysql: 
-    group: 
-    - :default
-    version: ">= 0"
-  newrelic_rpm: 
-    group: 
-    - :default
-    version: ">= 0"
-  shoulda: 
-    group: 
-    - :test
-    version: ">= 0"
-  rack: 
-    group: 
-    - :default
-    version: ">= 0"
-  database_cleaner: 
-    group: 
-    - :cucumber
-    version: ">= 0"
-  webrat: 
-    group: 
-    - :cucumber
-    version: ">= 0"
-  cucumber-rails: 
-    group: 
-    - :cucumber
-    version: ">= 0"
-  demo-reader: 
-    group: 
-    - :default
-    version: ">= 0.1.2"
-  will_paginate: 
-    group: 
-    - :default
-    version: ">= 0"
-  rmagick: 
-    group: 
-    - :default
-    version: ">= 2"
-    require: 
-    - RMagick
-  launchy: 
-    group: 
-    - :cucumber
-    version: ">= 0"
-specs: 
-- rake: 
-    version: 0.8.7
-- activesupport: 
-    version: 2.3.8
-- rack: 
-    version: 1.1.0
-- actionpack: 
-    version: 2.3.8
-- actionmailer: 
-    version: 2.3.8
-- activerecord: 
-    version: 2.3.8
-- activeresource: 
-    version: 2.3.8
-- builder: 
-    version: 2.1.2
-- columnize: 
-    version: 0.3.1
-- configuration: 
-    version: 1.1.0
-- diff-lcs: 
-    version: 1.1.2
-- trollop: 
-    version: 1.16.2
-- gherkin: 
-    version: 2.1.5
-- json_pure: 
-    version: 1.4.6
-- term-ansicolor: 
-    version: 1.0.5
-- cucumber: 
-    version: 0.8.5
-- cucumber-rails: 
-    version: 0.3.2
-- database_cleaner: 
-    version: 0.5.2
-- demo-reader: 
-    version: 0.2.0
-- gravtastic: 
-    version: 2.2.0
-- haml: 
-    version: 3.0.17
-- launchy: 
-    version: 0.3.7
-- linecache: 
-    version: "0.43"
-- mysql: 
-    version: 2.8.1
-- newrelic_rpm: 
-    version: 2.12.3
-- nokogiri: 
-    version: 1.4.3.1
-- rack-test: 
-    version: 0.5.4
-- rails: 
-    version: 2.3.8
-- rmagick: 
-    version: 2.13.1
-- ruby-debug-base: 
-    version: 0.10.3
-- ruby-debug: 
-    version: 0.10.3
-- shoulda: 
-    version: 2.11.3
-- spork: 
-    version: 0.8.4
-- webrat: 
-    version: 0.7.1
-- will_paginate: 
-    version: 2.3.14
-hash: f25afa37ab021bf0659f6b19bcfecc4fb57a651e
-sources: 
-- Rubygems: 
-    uri: http://gemcutter.org
+GEM
+  remote: http://rubygems.org/
+  specs:
+    actionmailer (2.3.8)
+      actionpack (= 2.3.8)
+    actionpack (2.3.8)
+      activesupport (= 2.3.8)
+      rack (~> 1.1.0)
+    activerecord (2.3.8)
+      activesupport (= 2.3.8)
+    activeresource (2.3.8)
+      activesupport (= 2.3.8)
+    activesupport (2.3.8)
+    builder (2.1.2)
+    columnize (0.3.1)
+    configuration (1.1.0)
+    cucumber (0.8.5)
+      builder (~> 2.1.2)
+      diff-lcs (~> 1.1.2)
+      gherkin (~> 2.1.4)
+      json_pure (~> 1.4.3)
+      term-ansicolor (~> 1.0.4)
+    cucumber-rails (0.3.2)
+      cucumber (>= 0.8.0)
+    database_cleaner (0.5.2)
+    demo-reader (0.2.0)
+    diff-lcs (1.1.2)
+    gherkin (2.1.5)
+      trollop (~> 1.16.2)
+    gravtastic (2.2.0)
+    haml (3.0.17)
+    json_pure (1.4.6)
+    launchy (0.3.7)
+      configuration (>= 0.0.5)
+      rake (>= 0.8.1)
+    linecache (0.43)
+    mysql (2.8.1)
+    newrelic_rpm (2.12.3)
+    nokogiri (1.4.3.1)
+    rack (1.1.0)
+    rack-test (0.5.4)
+      rack (>= 1.0)
+    rails (2.3.8)
+      actionmailer (= 2.3.8)
+      actionpack (= 2.3.8)
+      activerecord (= 2.3.8)
+      activeresource (= 2.3.8)
+      activesupport (= 2.3.8)
+      rake (>= 0.8.3)
+    rake (0.8.7)
+    rmagick (2.13.1)
+    ruby-debug (0.10.3)
+      columnize (>= 0.1)
+      ruby-debug-base (~> 0.10.3.0)
+    ruby-debug-base (0.10.3)
+      linecache (>= 0.3)
+    shoulda (2.11.3)
+    spork (0.8.4)
+    term-ansicolor (1.0.5)
+    trollop (1.16.2)
+    webrat (0.7.1)
+      nokogiri (>= 1.2.0)
+      rack (>= 1.0)
+      rack-test (>= 0.5.3)
+    will_paginate (2.3.14)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  cucumber-rails
+  database_cleaner
+  demo-reader (>= 0.1.2)
+  gravtastic (>= 2.1.0)
+  haml (>= 3)
+  launchy
+  mysql
+  newrelic_rpm
+  rack
+  rails (= 2.3.8)
+  rmagick (>= 2)
+  ruby-debug
+  shoulda
+  spork
+  webrat
+  will_paginate
