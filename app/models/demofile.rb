@@ -7,13 +7,17 @@ class Demofile < ActiveRecord::Base
 	has_attachment :storage => :file_system, :max_size => 2.megabytes
 	validates_as_attachment
 
+  has_attached_file :file
+  validates_attachment_presence :file
+  validates_attachment_size :file, :in => 1..2.megabytes
+
   before_validation_on_create :generate_sha1
 
   validates_presence_of :sha1
   validates_uniqueness_of :sha1, :message => "File was already uploaded."
 
   validates_presence_of :read_demo, :message => 'is not a valid demo file'
-  validates_presence_of :gamemode
+  validates_presence_of :gamemode, :on => :create
 
 
   # Instantiates an object of Demofile or a concrete subclass of it.
