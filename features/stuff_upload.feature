@@ -6,7 +6,7 @@ Feature: Upload stuff
     And I fill in "stuff[comment_attributes][name]" with "die.viper"
     And I fill in "stuff[comment_attributes][mail]" with "foo@bar.com"
     And I fill in "stuff[comment_attributes][message]" with "important message"
-    And I attach "stuffs/viper.png" to the "stuff[uploaded_data]" file field
+    And I attach "stuffs/viper.png" to the "stuff[stuff_file]" file field
     And I press "Upload"
     Then I should see "Thanks"
 
@@ -16,5 +16,5 @@ Feature: Upload stuff
     And I fill in "stuff[comment_attributes][mail]" with "foo@bar.com"
     And I fill in "stuff[comment_attributes][message]" with "important message"
     And I press "Upload"
-    Then I should see "Filename can't be blank"
+    Then I should see "file name must be set"
 

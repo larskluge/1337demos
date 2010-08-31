@@ -10,7 +10,7 @@ module Admin::StuffHelper
   end
 
   def filename_column(record)
-    link_to record.filename, record.public_filename
+    link_to record.filename, record.stuff_file.url
   end
 
   def size_column(record)

@@ -53,7 +53,7 @@ class DemosController < ApplicationController
     #
     return redirect_to(:action => 'show', :id => @demo) if @demo.data_correct
 
-    dr = DemoReader.parse(@demo.demofile.full_filename)
+    dr = DemoReader.parse(@demo.demofile.file.to_file.path)
     @gamemode = dr.time_in_msec.to_i > 0 ? "race" : "freestyle"
     if dr.player
       @fixed_nickname = dr.player

@@ -1,7 +1,7 @@
 Given /^I upload the demo "([^\"]*)" for player "([^\"]*)"$/ do |demo, player|
   steps %Q{
     When I go to demo upload
-    And I attach "demofiles/#{demo}" to the "demofile[uploaded_data]" file field
+    And I attach "demofiles/#{demo}" to the "demofile[file]" file field
     And I press "Upload"
     Then I should see "Verify information"
     When I select "#{player}" from "demo[players]"
@@ -13,7 +13,7 @@ end
 Given /^I upload the demo "([^\"]*)"$/ do |demo|
   steps %Q{
     When I go to demo upload
-    And I attach "demofiles/#{demo}" to the "demofile[uploaded_data]" file field
+    And I attach "demofiles/#{demo}" to the "demofile[file]" file field
     And I press "Upload"
     Then I should see "Verify information"
     And I choose "yes"
@@ -24,7 +24,7 @@ end
 Given /^I upload the freestyle demo "([^\"]*)" with title "([^\"]*)" for players "([^\"]*)"$/ do |demo, title, players|
   steps %Q{
     When I go to demo upload
-    And I attach "demofiles/#{demo}" to the "demofile[uploaded_data]" file field
+    And I attach "demofiles/#{demo}" to the "demofile[file]" file field
     And I press "Upload"
     Then I should see "Verify information"
     And I fill in "Title" with "#{title}"

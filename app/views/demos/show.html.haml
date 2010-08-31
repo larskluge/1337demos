@@ -46,7 +46,7 @@
       %td= render_datetime @demo.created_at
     %tr
       %td{ :colspan => "2" }
-        = link_to "Download #{@demo.human_version} demo file", @demo.demofile.public_filename
+        = link_to "Download #{@demo.human_version} demo file", @demo.demofile.file.url
     %tr
       %td{:colspan => "2"}
         %iframe{:src => "http://www.facebook.com/plugins/like.php?href=#{CGI.escape(demo_url(@demo))}&amp;layout=button_count&amp;show_faces=false&amp;width=450&amp;action=like&amp;colorscheme=light&amp;height=21", :scrolling => "no", :frameborder => "0", :style => "border:none; overflow:hidden; width:350px; height:40px;", :allowTransparency => "true"}
