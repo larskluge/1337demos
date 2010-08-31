@@ -9,7 +9,6 @@ gem 'mysql'
 gem 'newrelic_rpm'
 gem 'paperclip'
 gem 'rack'
-gem 'rmagick', '>= 2', :require => 'RMagick'
 gem 'will_paginate'
 
 gem "ruby-debug#{"19" if RUBY_VERSION >= "1.9"}", :group => [:test, :cucumber]
