@@ -28,7 +28,7 @@ GEM
     gherkin (2.1.5)
       trollop (~> 1.16.2)
     gravtastic (2.2.0)
-    haml (3.0.17)
+    haml (3.0.18)
     json_pure (1.4.6)
     launchy (0.3.7)
       configuration (>= 0.0.5)
@@ -51,6 +51,7 @@ GEM
       activesupport (= 2.3.8)
       rake (>= 0.8.3)
     rake (0.8.7)
+    rmagick (2.13.1)
     ruby-debug (0.10.3)
       columnize (>= 0.1)
       ruby-debug-base (~> 0.10.3.0)
@@ -81,6 +82,7 @@ DEPENDENCIES
   paperclip
   rack
   rails (= 2.3.8)
+  rmagick (>= 2)
   ruby-debug
   shoulda
   spork

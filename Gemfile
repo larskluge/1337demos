@@ -11,6 +11,8 @@ gem 'paperclip'
 gem 'rack'
 gem 'will_paginate'
 
+gem 'rmagick', '>= 2', :require => 'RMagick', :group => :development
+
 gem "ruby-debug#{"19" if RUBY_VERSION >= "1.9"}", :group => [:test, :cucumber]
 
 group :test do
