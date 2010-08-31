@@ -45,10 +45,8 @@ task :after_update_code, :roles => :app do
     run "ln -nfs #{static_path}/#{dir} #{release_path}/#{dir}"
   end
 
-
-  # build native gems
+  # use bundler to install depending gems
   #
-  rails_env = fetch(:rails_env, 'production')
-  invoke_rake_task "gems:build", rails_env
+  bundler.bundle_new_release
 end
 
