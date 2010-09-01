@@ -23,7 +23,7 @@ GEM
     cucumber-rails (0.3.2)
       cucumber (>= 0.8.0)
     database_cleaner (0.5.2)
-    demo-reader (0.2.0)
+    demo-reader (0.2.1)
     diff-lcs (1.1.2)
     gherkin (2.1.5)
       trollop (~> 1.16.2)
