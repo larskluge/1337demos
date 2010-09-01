@@ -1,4 +1,5 @@
-require File.dirname(__FILE__) + '/../test_helper'
+$LOAD_PATH << File.dirname(__FILE__) + '/..'
+require "test_helper"
 
 class ChecksControllerTest < ActionController::TestCase
 

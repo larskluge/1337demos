@@ -14,9 +14,9 @@ class DemofileWarsow < Demofile
 
   def validate_gamedir
     case gamedir
-    when 'basewsw': true
-    when 'racesow': true
-    when /^racesow_local_0\.\w+$/: true
+    when 'basewsw' then true
+    when 'racesow' then true
+    when /^racesow_local_0\.\w+$/ then true
     else
       errors.add_to_base 'This mod of warsow is not supported. If you want request to support this mod with uploading it to Upload > Stuff upload'
     end
