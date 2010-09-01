@@ -7,7 +7,7 @@ class DemosController < ApplicationController
     @headline = 'Latest demos.'
     @feed_url = 'http://feeds.feedburner.com/1337demos-latest-demos'
 
-    render_demos(Demo.scoped)
+    render_demos(Demo.scoped(nil))
   end
 
 
