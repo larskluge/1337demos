@@ -3,6 +3,7 @@ source :gemcutter
 gem 'rails', '2.3.8'
 
 gem 'demo-reader', '>= 0.1.2'
+gem 'exception_notification'
 gem 'gravtastic', '>= 2.1.0'
 gem 'haml', '>= 3'
 gem 'mysql'
