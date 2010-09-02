@@ -1,16 +1,21 @@
-source :gemcutter
+source 'http://rubygems.org'
 
-gem 'rails', '2.3.8'
+gem 'rails', '3.0.0'
+
+# Use unicorn as the web server
+# gem 'unicorn'
+
+# Deploy with Capistrano
+# gem 'capistrano'
 
 gem 'demo-reader', '>= 0.1.2'
-gem 'exception_notification'
+gem 'exception_notification', :git => "http://github.com/rails/exception_notification.git"
 gem 'gravtastic', '>= 2.1.0'
 gem 'haml', '>= 3'
-gem 'mysql'
-gem 'newrelic_rpm'
+gem 'mysql2'
 gem 'paperclip'
 gem 'rack'
-gem 'will_paginate'
+gem 'will_paginate', '>= 3.0.pre2'
 
 gem 'rmagick', '>= 2', :require => 'RMagick', :group => :development
 
