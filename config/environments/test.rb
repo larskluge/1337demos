@@ -35,7 +35,7 @@ LeetdemosPlatform::Application.configure do
 
   # overwrite consts for testing
   #
-  SYS_MAP_IMAGES.replace(File.join(RAILS_ROOT, 'test/assets/data/maps/images/'))
-  SYS_MAP_IMAGE_THUMBS.replace(File.join(RAILS_ROOT, 'tmp/functional_tests', rand(36**8).to_s(36), 'images/maps/thumbs/'))
+  ::SYS_MAP_IMAGES.replace(File.join(Rails.root, 'test/assets/data/maps/images/'))
+  ::SYS_MAP_IMAGE_THUMBS.replace(File.join(Rails.root, 'tmp/functional_tests', rand(36**8).to_s(36), 'images/maps/thumbs/'))
 end
 

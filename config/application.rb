@@ -41,13 +41,13 @@ module LeetdemosPlatform
     config.filter_parameters += [:password]
 
     # setup constants
-    SYS_MAP_IMAGES = "#{Rails.root}/data/maps/images/"
-    SYS_MAP_IMAGE_THUMBS = "#{Rails.root}/public/images/maps/thumbs/"
-    SYS_VIDEOS = "#{Rails.root}/public/videos/"
+    ::SYS_MAP_IMAGES = "#{Rails.root}/data/maps/images/"
+    ::SYS_MAP_IMAGE_THUMBS = "#{Rails.root}/public/images/maps/thumbs/"
+    ::SYS_VIDEOS = "#{Rails.root}/public/videos/"
 
-    WEB_DEFAULT_HOST = '1337demos.com'
-    WEB_MAP_IMAGE_THUMBS = '/images/maps/thumbs/'
-    WEB_VIDEOS = '/videos/'
+    ::WEB_DEFAULT_HOST = '1337demos.com'
+    ::WEB_MAP_IMAGE_THUMBS = '/images/maps/thumbs/'
+    ::WEB_VIDEOS = '/videos/'
 
     # configure action mailer
     # config.action_mailer.delivery_method = :sendmail
