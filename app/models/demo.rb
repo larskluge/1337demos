@@ -1,6 +1,7 @@
 class Demo < ActiveRecord::Base
   include FlexRating
 
+  enum_attr :status, %w(^uploaded processing rendered)
 
   @@video_width = 384
   @@video_height = 288

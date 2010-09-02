@@ -50,6 +50,8 @@ GEM
     database_cleaner (0.5.2)
     demo-reader (0.2.1)
     diff-lcs (1.1.2)
+    enumerated_attribute (0.2.16)
+      meta_programming (>= 0.2.1)
     erubis (2.6.6)
       abstract (>= 1.0.0)
     gherkin (2.1.5)
@@ -66,6 +68,7 @@ GEM
       activesupport (>= 2.3.6)
       mime-types
       treetop (>= 1.4.5)
+    meta_programming (0.2.2)
     mime-types (1.16)
     mysql2 (0.2.3)
     nokogiri (1.4.3.1)
@@ -119,6 +122,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   demo-reader (>= 0.1.2)
+  enumerated_attribute
   exception_notification!
   gravtastic (>= 2.1.0)
   haml (>= 3)
