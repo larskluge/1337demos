@@ -10,7 +10,7 @@ class Stuff < ActiveRecord::Base
 
 
 
-  before_validation_on_create :generate_sha1
+  before_validation :generate_sha1, :on => :create
 
   validates_presence_of :sha1
   validates_uniqueness_of :sha1, :message => "File was already uploaded."

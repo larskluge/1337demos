@@ -8,7 +8,7 @@ class Demofile < ActiveRecord::Base
   validates_attachment_presence :file
   validates_attachment_size :file, :in => 1..2.megabytes
 
-  before_validation_on_create :generate_sha1
+  before_validation :generate_sha1, :on => :create
 
   validates_presence_of :sha1
   validates_uniqueness_of :sha1, :message => "File was already uploaded."
