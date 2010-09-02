@@ -4,7 +4,8 @@
   Known since #{render_datetime @player.created_at}
 - if @aliases.length > 0
   %p
-    Aliases: #{@aliases.map{ |name| render_nickname(name.nickname) }.join(', ')}
+    Aliases:
+    = render_nicknames(@aliases)
 
 %h2 Demos
 %table
@@ -17,7 +18,7 @@
     %tr
       %td= render_time_title demo
       %td= render_linked_map demo.map
-      %td= h demo.gamemode
+      %td= demo.gamemode
       %td= render_datetime demo.created_at
       %td= link_to 'Play', :controller => 'demos', :action => 'show', :id => demo
   %tr

@@ -13,8 +13,9 @@
       %td
         = comment.message
       %td.nowrap
-        = comment.demo.players.map{|player| render_linked_player(player)}.join(', ')
-        on #{render_linked_map comment.demo.map}
+        = render_linked_players(comment.demo.players)
+        on
+        = render_linked_map comment.demo.map
       %td.nowrap
         = link_to 'Play', :controller => 'demos', :action => 'show', :id => comment.demo
 

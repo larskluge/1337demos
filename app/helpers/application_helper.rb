@@ -1,5 +1,3 @@
-# Methods added to this helper will be available to all templates in the application.
-
 module ApplicationHelper
 
   # generates a classname for the active page
@@ -56,7 +54,7 @@ module ApplicationHelper
   end
 
   def render_linked_players(players)
-    players.map{|player| render_linked_player(player)}.join(', ')
+    players.map{|player| render_linked_player(player)}.join(', ').html_safe
   end
 
   def render_time_title(demo)
@@ -96,12 +94,18 @@ module ApplicationHelper
 
 
   def render_nickname(name)
-    return nil if name.nil? || name.empty?
+    return nil if name.blank?
 
     html = h(name).gsub(/\^([^\^])/){"</span><span class=\"c#{self.color_index($1)}\">"}
     html = "<span class=\"c7\">#{html}</span>"
 
-    html.gsub /\^\^/, '^'
+    html.gsub(/\^\^/, '^').html_safe
+  end
+
+  def render_nicknames(names)
+    Array(names).map { |name|
+      render_nickname(name)
+    }.join(", ").html_safe
   end
 
   def render_nickname_plain(name)

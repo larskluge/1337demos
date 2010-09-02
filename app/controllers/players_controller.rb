@@ -10,7 +10,7 @@ class PlayersController < ApplicationController
 
 	def show
 		@player = Player.find(params[:id], :include => 'nicknames')
-		@aliases = @player.nicknames - [@player.main_nickname]
+		@aliases = (@player.nicknames - [@player.main_nickname]).map(&:nickname)
 		@demos = Demo.paginate :page => page_param,
 			:per_page => 10,
 			:include => :map,
