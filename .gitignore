@@ -3,7 +3,7 @@
 *.swp
 .DS_Store
 .idea
-db/test.sqlite3
+db/*.sqlite3
 log/*.log
 Makefile
 mkmf.log
