@@ -16,6 +16,10 @@ class Demofile < ActiveRecord::Base
   validates_presence_of :read_demo, :message => 'is not a valid demo file'
   validates_presence_of :gamemode, :on => :create
 
+  validate :validate_map, :on => :create
+  validate :validate_players, :on => :create
+  validate :validate_gamemode, :on => :create
+
 
   # Instantiates an object of Demofile or a concrete subclass of it.
   # This is detected by the uploaded file.
@@ -43,14 +47,6 @@ class Demofile < ActiveRecord::Base
   end
 
 
-	def validate_on_create
-    return if errors.count > 0
-
-    errors.add_to_base 'Could not detect a mapname!!' if read_demo.mapname.nil? || read_demo.mapname.empty?
-    errors.add_to_base 'Could not find any players in this demofile!!' if read_demo.playernames.nil? || read_demo.playernames.compact.empty?
-    errors.add_to_base 'Could not detect the gamemode!!' if read_demo.gamemode.nil?
-	end
-
 	def attachment_data
 		self.temp_data
 	end
@@ -70,6 +66,27 @@ class Demofile < ActiveRecord::Base
                        dr if dr.valid
                      end
                    end
+	end
+
+
+  protected
+
+  def validate_map
+    if errors.count.zero?
+      errors.add_to_base 'Could not detect a mapname!!' if read_demo.mapname.nil? || read_demo.mapname.empty?
+    end
+  end
+
+  def validate_players
+    if errors.count.zero?
+      errors.add_to_base 'Could not find any players in this demofile!!' if read_demo.playernames.nil? || read_demo.playernames.compact.empty?
+    end
+  end
+
+	def validate_gamemode
+    if errors.count.zero?
+      errors.add_to_base 'Could not detect the gamemode!!' if read_demo.gamemode.nil?
+    end
 	end
 
 end

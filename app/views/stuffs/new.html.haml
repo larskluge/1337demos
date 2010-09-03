@@ -5,11 +5,11 @@
   %br
   Upload demos of unsupported games, gamemodes or anything else you want to throw at me.
 
-- form_for @stuff, :url => stuffs_url, :html => { :multipart => true } do |f|
+= form_for @stuff, :url => stuffs_url, :html => { :multipart => true } do |f|
   %p
     = error_messages_for :stuff
     = error_messages_for 'Comment', :object => @stuff.comments.first
-  - fields_for 'stuff[comment_attributes]', @stuff.comment do |cf|
+  = fields_for 'stuff[comment_attributes]', @stuff.comment do |cf|
     %p
       = cf.label :name, 'Your Name*'
       %br
