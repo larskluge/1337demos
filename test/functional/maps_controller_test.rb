@@ -8,15 +8,10 @@ class MapsControllerTest < ActionController::TestCase
     assert_response :success
     assert_equal @response.content_type, 'image/jpeg'
 
-    assert(@response.body.is_a? Proc)
+    body = @response.body # it's only readable once!
+    assert(body.is_a? String)
 
-    output = StringIO.new
-    output.binmode
-    assert_nothing_raised do
-      @response.body.call(@response, output)
-    end
-
-    img = Magick::Image.from_blob(output.string).first
+    img = Magick::Image.from_blob(body).first
     assert_equal "JPEG", img.format
     assert_equal 200, img.columns
     assert_equal 150, img.rows
