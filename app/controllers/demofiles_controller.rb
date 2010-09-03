@@ -28,12 +28,12 @@ class DemofilesController < ApplicationController
 			map = Map.find_by_name(dr.mapname) || Map.new(:name => dr.mapname)
 
       ActiveRecord::Base.transaction do
-        @demofile.save_with_validation!
-        map.save_with_validation!
+        @demofile.save!
+        map.save!
 
         demo.map = map
         demo.demofile = @demofile
-        demo.save_with_validation!
+        demo.save!
 
         redirect_to :controller => 'demos', :action => 'verify', :id => demo
       end
