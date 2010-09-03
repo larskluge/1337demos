@@ -14,7 +14,7 @@ class MenuItem
   end
 
   def add(title, link, link_opts={}, &block)
-    returning(MenuItem.new(title, link, @level +1, link_opts)) do |adding|
+    MenuItem.new(title, link, @level +1, link_opts).tap do |adding|
       @children << adding
       yield adding if block_given?
     end
@@ -74,7 +74,7 @@ module ActionView
         if url_string =~ /^\w+:\/\//
           url_string == "#{request.protocol}#{request.host_with_port}#{request.request_uri}"
         else
-          url_string == request.request_uri
+          url_string == request.fullpath
         end
       end
     end
