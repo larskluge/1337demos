@@ -26,11 +26,13 @@ group :test do
   gem 'shoulda'
 end
 
-group :cucumber do
-  gem 'cucumber-rails'
+group :cucumber, :development, :test do
+  gem 'capybara'
   gem 'database_cleaner'
-  gem 'webrat'
+  gem 'cucumber-rails'
+  gem 'cucumber'
+  # gem 'rspec-rails'
   gem 'spork'
-  gem 'launchy'
+  gem 'launchy'    # So you can do Then show me the page
 end
 
