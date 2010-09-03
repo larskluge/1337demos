@@ -1,5 +1,5 @@
 .rating
-  - form_for :rating, nil, :url => { :controller => 'ratings', :action => 'rate' } do |f|
+  = form_for :rating, nil, :url => { :controller => 'ratings', :action => 'rate' } do |f|
     = f.hidden_field :key, :value => :default
     = f.hidden_field :id, :value => rateable.id
     = f.hidden_field :model, :value => rateable.class.to_s

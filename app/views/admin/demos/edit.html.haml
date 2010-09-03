@@ -1,5 +1,5 @@
 %h1 Editing demo
-- form_tag :action => 'update', :id => @demo do
+= form_tag :action => 'update', :id => @demo do
   = render :partial => 'form'
   = submit_tag 'Edit'
 = link_to 'Show', :action => 'show', :id => @demo
