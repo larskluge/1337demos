@@ -29,9 +29,9 @@
       %td ID
       %td
         - img = '<img src="/images/layout_2008-07/icons/arrow_%s.png" width="16" height="16" alt="%s demos" />'
-        = link_to(img % ['left', 'Previous'], demo_path(@prev)) if @prev
+        = link_to(raw(img % ['left', 'Previous']), demo_path(@prev)) if @prev
         = @demo.id
-        = link_to(img % ['right', 'Next'], demo_path(@next)) if @next
+        = link_to(raw(img % ['right', 'Next']), demo_path(@next)) if @next
     %tr
       %td Map
       %td= render_linked_map @demo.map
