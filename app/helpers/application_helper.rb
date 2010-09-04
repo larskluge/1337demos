@@ -61,7 +61,7 @@ module ApplicationHelper
     return demo.title if demo.title.present?
 
     res = "##{demo.position} &nbsp;" if demo.position.to_i > 0
-    return "#{res}#{render_race_time(demo.time)}" if demo.time.to_i > 0
+    return "#{res}#{render_race_time(demo.time)}".html_safe if demo.time.to_i > 0
 
     "n/a"
   end
@@ -123,7 +123,7 @@ module ApplicationHelper
     min = sec / 60
     sec = sec % 60
 
-    '%02d:%02d.%03d' % [ min, sec, msec ]
+    ('%02d:%02d.%03d' % [ min, sec, msec ]).html_safe
   end
 
   def render_race_time_difference(from_msec, to_msec)
