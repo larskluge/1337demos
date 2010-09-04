@@ -21,5 +21,5 @@ Feature: Map browser
     And I press "Search"
     Then I should see "cmc02_gead"
     And I follow "cmc02_gead"
-    And I should see /#1.*RiFo.*Play/
+    And I should see /#1.*RiFo.*Play/m
 

@@ -16,7 +16,8 @@
     %tr{:class => "no#{demo.position}"}
       %td
         = render_rating_static(demo.rating(:default)) if demo.gamemode != 'race'
-      <td#{' class="time"' if demo.gamemode == 'race'}>#{render_time_title demo}
+      %td{:class => (demo.gamemode == 'race' ? 'time' : '')}
+        = render_time_title(demo)
       %td.player= render_linked_players demo.players
       %td= render_datetime demo.created_at
       %td= link_to 'Play', :controller => 'demos', :action => 'show', :id => demo

@@ -9,7 +9,9 @@
         %select{ :name => "demo[players]" }
           %option{ :value => "" }
             choose player
-          = @playernames.collect { |name| '<option value="%s">%s</option>' % [ name, render_nickname(name) ]}.join("\n")
+          - for name in @playernames
+            %option{:value => name}
+              = render_nickname(name)
 %tr
   %td Time
   %td

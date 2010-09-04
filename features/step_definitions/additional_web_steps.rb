@@ -8,3 +8,14 @@ Then /^I debug$/ do
   0
 end
 
+Then /^(?:|I )should see \/([^\/]*)\/m(?: within "([^"]*)")?$/ do |regexp, selector|
+  regexp = Regexp.new(regexp, Regexp::MULTILINE)
+  with_scope(selector) do
+    if page.respond_to? :should
+      page.should have_xpath('//*', :text => regexp)
+    else
+      assert page.has_xpath?('//*', :text => regexp)
+    end
+  end
+end
+
