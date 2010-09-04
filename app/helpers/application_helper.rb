@@ -69,7 +69,7 @@ module ApplicationHelper
 
   def render_position(demo)
     pos = demo.position
-    return '<i>improved by player</i>' if pos.nil?
+    return '<i>improved by player</i>'.html_safe if pos.nil?
     sprintf('%s of %d',
       pos.ordinalize,
       demo.map.demos.select{|d| !d.position.nil? && d.position > 0}.length)
