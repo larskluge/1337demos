@@ -41,11 +41,6 @@ class DemosController < ApplicationController
     @next = Demo.last(:conditions => ['id > ? AND data_correct', @demo.id])
   end
 
-  def file
-    @demos = [Demo.find(params[:id])]
-    render :layout => false
-  end
-
   def verify
     @demo = Demo.find(params[:id])
 
