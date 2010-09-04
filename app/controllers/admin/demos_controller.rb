@@ -42,3 +42,4 @@ class Admin::DemosController < Admin::ApplicationController
 		redirect_to :action => 'index'
 	end
 end
+

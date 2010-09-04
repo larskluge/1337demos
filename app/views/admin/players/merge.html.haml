@@ -4,47 +4,52 @@
   	overflow: visible;
   	padding: 0 20px;
   }
-  
+
   #all_players div
   {
   	float: left;
   	margin: 0.5em;
   	cursor: move;
   }
-  
+
   #aliases
   {
   	overflow: hidden;
   	border: 1px dashed #999;
   	padding: 0.5em;
   }
-  
+
   #aliases div
   {
   	float: left;
   	margin: 0.5em;
   }
-  
+
 %p
   %b Nickname:
   = render_nickname @player.main_nickname.nickname
   (#{h @player.main_nickname.nickname})
+
 %p
   %b Aliases:
 #aliases
   = render :partial => 'merge_players'
 %div{:style => "clear: both"}
+
 %p
   %strong Available players to merge with:
 #all_players
   - for player in @players
-  %div{:id => "player_#{player.id}"}
-    = render_nickname player.main_nickname.nickname
+    %div{:id => "player_#{player.id}"}
+      = render_nickname player.main_nickname.nickname
   = draggable_element "player_#{player.id}", :revert => false
 %div{:style => "clear: both"}
+
 %p
   = link_to 'Back', :action => 'index'
+
 = drop_receiving_element('aliases',                                     |
   :update => 'aliases',                                                 |
   :method => :put,                                                      |
   :url => { :action => 'merge_players', :source_player => @player.id }) |
+
