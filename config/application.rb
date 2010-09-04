@@ -61,6 +61,9 @@ module LeetdemosPlatform
     #   :sender_address => %("1337demos exception notifier" <exception-notifier@1337demos.com>),
     #   :exception_recipients => %w(1337demos@freshthinking.de)
 
+    # use jquery by default
+    config.action_view.javascript_expansions[:defaults] = ['lib/jquery-1.4.2', 'jquery-ujs/src/rails']
+
   end
 end
 
