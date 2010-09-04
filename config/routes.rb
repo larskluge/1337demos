@@ -11,12 +11,21 @@ LeetdemosPlatform::Application.routes.draw do
       end
     end
 
-    resources :announcements, :active_scaffold => true
+    resources :announcements do
+      as_routes
+    end
+
+    resources :nicknames do
+      as_routes
+    end
+
+    resources :stuffs do
+      as_routes
+    end
+
     resources :comments
     resources :demos
-    resources :nicknames, :active_scaffold => true
     resources :shoutboxes, :only => :index
-    resources :stuffs, :active_scaffold => true
 
     resources :players do
       member do

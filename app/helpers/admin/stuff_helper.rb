@@ -9,8 +9,8 @@ module Admin::StuffHelper
     end
   end
 
-  def filename_column(record)
-    link_to record.filename, record.stuff_file.url
+  def stuff_file_file_name_column(record)
+    link_to record.stuff_file_file_name, record.stuff_file.url
   end
 
   def size_column(record)
@@ -18,7 +18,7 @@ module Admin::StuffHelper
   end
 
   def comment_column(record)
-    h record.comment.message
+    record.comment.try(:message)
   end
 
 end
