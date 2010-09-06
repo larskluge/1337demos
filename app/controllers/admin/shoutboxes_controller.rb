@@ -28,7 +28,7 @@ class Admin::ShoutboxesController < Admin::ApplicationController
 
     respond_to do |format|
       format.html { redirect_to :action => 'index' }
-      format.json { render :text => '{success: true}', :status => 200 }
+      format.json { render :text => {:success => true}.to_json, :status => 200 }
     end
   end
 end
