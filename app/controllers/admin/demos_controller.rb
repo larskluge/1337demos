@@ -27,6 +27,11 @@ class Admin::DemosController < Admin::ApplicationController
 		@demo = Demo.find(params[:id])
 	end
 
+  def rerender
+    Demo.find(params[:id]).update_attributes(:status => "uploaded")
+    render :nothing => true
+  end
+
 	def update
 		@demo = Demo.find(params[:id])
 		if @demo.update_attributes(params[:demo])

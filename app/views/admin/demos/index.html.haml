@@ -23,10 +23,10 @@
       %td= link_to 'Show', demo_path(demo)
       %td= link_to 'Edit', edit_admin_demo_path(demo)
       %td
-        = link_to 'Rerender',                                                                                          |
-          update_demo_path(demo, :appsec => '1CGBre7Rk36vjBfT8cVEhhXIjEGVaPpI', 'demo[status]' => 'uploaded'),         |
-          :remote => true,                                                                                             |
-          :method => 'GET',                                                                                            |
+        = link_to 'Rerender',              |
+          rerender_admin_demo_path(demo),  |
+          :remote => true,                 |
+          :method => :put,                 |
           :"data-rerender" => true
       %td= link_to 'Destroy', admin_demo_path(demo), :confirm => 'Are you sure?', :method => :delete
 %div{:style => "text-align: center; padding-top: 1em"}

@@ -24,8 +24,13 @@ LeetdemosPlatform::Application.routes.draw do
     end
 
     resources :comments
-    resources :demos
     resources :shoutboxes, :only => :index
+
+    resources :demos do
+      member do
+        put :rerender
+      end
+    end
 
     resources :players do
       member do
