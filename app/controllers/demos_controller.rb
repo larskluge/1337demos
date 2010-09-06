@@ -88,7 +88,7 @@ class DemosController < ApplicationController
             mail = MyMailer.create_send_demo_uploaded_notification(@demo, @demo.map.name, playernames)
             MyMailer.deliver(mail)
           rescue Exception => e
-            logger.info '=== Mail deliverty error: ' + e.message
+            logger.info '=== Mail delivery error: ' + e.message
           end
         end
       rescue Exception => e
