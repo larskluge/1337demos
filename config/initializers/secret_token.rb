@@ -4,4 +4,4 @@
 # If you change this key, all old signed cookies will become invalid!
 # Make sure the secret is at least 30 characters and all random,
 # no regular words or you'll be exposed to dictionary attacks.
-LeetdemosPlatform::Application.config.secret_token = '57e831268343b0e083ff5a38782aff78c0ae4bf3f330b372f1e256238b67c190a25bb85c4d1783131263321411e4e35ca55a247a987c4c541288bdb5f19a90fc'
+LeetdemosPlatform::Application.config.secret_token = '37ef6b401a243335c113c53e8b7bcd552361827d8719a3ed29483520a70e11be28321ffe9eee8811b31cc4ebaeb3b20ae2be0f8d653a12b961797d1de2384438';
