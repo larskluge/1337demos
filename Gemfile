@@ -10,7 +10,7 @@ gem 'rails', '3.0.0'
 
 gem 'demo-reader', '>= 0.1.2'
 gem 'enumerated_attribute'
-gem 'exception_notification', :git => "http://github.com/rails/exception_notification.git"
+gem 'exception_notification', :require => "exception_notifier", :git => "git://github.com/der-flo/exception_notification.git"
 gem 'gravtastic', '>= 2.1.0'
 gem 'haml', '>= 3'
 gem 'mysql2'

@@ -1,6 +1,6 @@
 GIT
-  remote: http://github.com/rails/exception_notification.git
-  revision: 48cf43322841537a039ff13930c7316956230561
+  remote: git://github.com/der-flo/exception_notification.git
+  revision: 4026111bbb32474caca3f904c59996bba2e4113f
   specs:
     exception_notification (1.0.0)
 
