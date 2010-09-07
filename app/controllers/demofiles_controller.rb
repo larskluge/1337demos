@@ -38,7 +38,7 @@ class DemofilesController < ApplicationController
         redirect_to :controller => 'demos', :action => 'verify', :id => demo
       end
     else
-      if @demofile.errors.on(:sha1) && (same_demo = @demofile.find_same_demo)
+      if @demofile.errors[:sha1].present? && (same_demo = @demofile.find_same_demo)
         flash[:notice] = 'You tried to upload this already uploaded demo :)'
         redirect_to(demo_path(same_demo))
       else
