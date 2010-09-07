@@ -11,5 +11,10 @@ class Player < ActiveRecord::Base
 	def main_nickname_plain
 		self.main_nickname.nickname.gsub(/\^([^\^])/){''}.gsub(/\^\^/, '^')
 	end
+  deprecate :main_nickname_plain
+
+  def to_s(format = nil)
+    main_nickname.to_s(format)
+  end
 end
 
