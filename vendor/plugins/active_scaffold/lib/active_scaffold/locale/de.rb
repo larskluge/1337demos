@@ -58,12 +58,34 @@
       :'<' => '<',
       :'!=' => '!=',
       :between => 'Zwischen',
-      :optional_attributes => 'Further Options',
+      :today => 'Heute',
+      :yesterday => 'Gestern',
+      :tomorrow => 'Morgen',
+      :this_week => 'Diese Woche',
+      :prev_week => 'Letzte Woche',
+      :next_week => 'Nächste Woche',
+      :this_month => 'Diesen Monat',
+      :prev_month => 'Letzten Monat',
+      :next_month => 'Nächsten Monat',
+      :this_year => 'Dieses Jahr',
+      :prev_year => 'Letztes Jahr',
+      :next_year => 'Nächstes Jahr',
+      :past => 'Letzten..', 
+      :future => 'Nächsten..',
+      :range => 'Spanne',
+      :days => 'Tage',
+      :weeks => 'Wochen',
+      :months => 'Monate',
+      :years => 'Jahre',
+      :optional_attributes => 'Weitere',
+      :null => 'Definiert',
+      :not_null => 'Undefiniert',
 
       # error_messages
       :cant_destroy_record => "%{record} kann nicht gelöscht werden",
       :internal_error => 'Fehler bei der Verarbeitung (code 500, Interner Fehler)',
-      :version_inconsistency => 'Inkonsistente Versionen - dieser Eintrag wurde verändert nachdem Sie mit der Bearbeitung begonnen haben.'
+      :version_inconsistency => 'Inkonsistente Versionen - dieser Eintrag wurde verändert nachdem Sie mit der Bearbeitung begonnen haben.',
+      :record_not_saved => 'Eintrag kann nicht gespeichert werden. Ursache unbekannt.'
     }
   }
 }

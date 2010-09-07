@@ -61,14 +61,9 @@ module ActiveScaffold
       end
 
       def form_remote_upload_tag(url_for_options = {}, options = {})
-        onsubmits = options[:onsubmit] ? [ options[:onsubmit] ] : [ ]
-        # simulate a "loading". the setTimeout prevents the Form.disable from being called before the submit, so that data actually posts.
-        onsubmits << "setTimeout(function() { #{options[:loading]} }, 10); "
-        onsubmits << "return true" # make sure the form still submits
-
-        options[:onsubmit] = onsubmits * ';'
         options[:target] = action_iframe_id(url_for_options)
         options[:multipart] ||= true
+        options[:class] = "#{options[:class]} as_remote_upload".strip 
         output=""
         output << form_tag(url_for_options, options)
         (output << "<iframe id='#{action_iframe_id(url_for_options)}' name='#{action_iframe_id(url_for_options)}' style='display:none'></iframe>").html_safe
@@ -168,7 +163,11 @@ module ActiveScaffold
       def get_action_link_id(url_options, record = nil, column = nil)
         id = url_options[:id] || url_options[:parent_id]
         id = "#{column.association.name}-#{record.id}" if column && column.plural_association?
-        id = "#{column.association.name}-#{record.send(column.association.name).id}" if column && column.singular_association?
+        if record.try(column.association.name.to_sym).present?
+          id = "#{column.association.name}-#{record.send(column.association.name).id}"
+        else
+          id = "#{column.association.name}-#{record.id}" unless record.nil?
+        end if column && column.singular_association?
         action_id = "#{id_from_controller(url_options[:controller]) + '-' if url_options[:parent_controller]}#{url_options[:action].to_s}"
         action_link_id(action_id, id)
       end
@@ -189,16 +188,22 @@ module ActiveScaffold
       def url_options_for_nested_link(column, record, link, url_options, options = {})
         if column.association
           url_options[:assoc_id] = url_options.delete(:id)
-          url_options[:id] = record.send(column.association.name).id if column.singular_association?
-          link.eid = "#{params[:controller]}_#{ActiveSupport::SecureRandom.hex(10)}" unless options.has_key?(:reuse_eid)
+          url_options[:id] = record.send(column.association.name).id if column.singular_association? && record.send(column.association.name).present?
+          link.eid = "#{controller_id.from(3)}_#{record.id}_#{column.association.name}" unless options.has_key?(:reuse_eid)
           url_options[:eid] = link.eid
         end
       end
 
-      def column_class(column, column_value)
+      def column_class(column, column_value, record)
         classes = []
         classes << "#{column.name}-column"
-        classes << column.css_class unless column.css_class.nil?
+        if column.css_class.is_a?(Proc)
+          css_class = column.css_class.call(column_value, record)
+          classes << css_class unless css_class.nil?
+        else
+          classes << column.css_class
+        end unless column.css_class.nil?
+         
         classes << 'empty' if column_empty? column_value
         classes << 'sorted' if active_scaffold_config.list.user.sorting.sorts_on?(column)
         classes << 'numeric' if column.column and [:decimal, :float, :integer].include?(column.column.type)

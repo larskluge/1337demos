@@ -59,26 +59,15 @@ module ActiveScaffold
         associated = options.delete :value
         associated = [associated].compact unless associated.is_a? Array
         associated.collect!(&:to_i)
-        select_options = options_for_association(column.association, true)
+        
+        if column.association
+          select_options = options_for_association(column.association, false)
+        else
+          select_options = Array(column.options[:options])
+        end
         return as_(:no_options) if select_options.empty?
 
-        html = "<ul class=\"checkbox-list\" id=\"#{options[:id]}\">"
-
-        options[:name] += '[]'
-        select_options.each_with_index do |option, i|
-          label, id = option
-          this_id = "#{options[:id]}_#{i}_id"
-          html << "<li>"
-          html << check_box_tag(options[:name], id, associated.include?(id), :id => this_id)
-          html << "<label for='#{this_id}'>"
-          html << label
-          html << "</label>"
-          html << "</li>"
-        end
-
-        html << '</ul>'
-        html << javascript_tag("new DraggableLists('#{options[:id]}')") if column.options[:draggable_lists]
-        html
+        active_scaffold_checkbox_list(column, select_options, associated, options)
       end
 
       def active_scaffold_search_select(column, html_options)
@@ -86,10 +75,10 @@ module ActiveScaffold
         if column.association
           associated = associated.is_a?(Array) ? associated.map(&:to_i) : associated.to_i unless associated.nil?
           method = column.association.macro == :belongs_to ? column.association.primary_key_name : column.name
-          select_options = options_for_association(column.association, true)
+          select_options = options_for_association(column.association, false)
         else
           method = column.name
-          select_options = column.options[:options]
+          select_options = Array(column.options[:options])
         end
 
         options = { :selected => associated }.merge! column.options
@@ -118,6 +107,14 @@ module ActiveScaffold
       end
       # we can't use checkbox ui because it's not possible to decide whether search for this field or not
       alias_method :active_scaffold_search_checkbox, :active_scaffold_search_boolean
+      
+      def active_scaffold_search_null(column, options)
+        select_options = []
+        select_options << [as_(:_select_), nil]
+        select_options << [as_(:null), true]
+        select_options << [as_(:not_null), false]
+        select_tag(options[:name], options_for_select(select_options, ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES.include?(field_search_params[column.name])))
+      end
 
       def field_search_params_range_values(column)
         values = field_search_params[column.name]
