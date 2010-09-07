@@ -5,13 +5,8 @@ class Nickname < ActiveRecord::Base
 	validates_uniqueness_of :nickname
 	validates_presence_of :player
 
-  def to_s(format = nil)
-    case format
-    when :plain
-      nickname_plain
-    else
-      nickname
-    end
+  def to_s
+    nickname_plain
   end
 
 

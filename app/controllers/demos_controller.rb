@@ -32,7 +32,7 @@ class DemosController < ApplicationController
 
   def show
     @demo = Demo.find(params[:id])
-    @title = "#{@demo.players.map{|player| player.main_nickname_plain}.join(', ')} on #{@demo.map.name}"
+    @title = "#{@demo.players} on #{@demo.map}"
     @comment = Comment.new(:name => player_info[:name], :mail_pass => player_info[:mail_pass])
     @video_player = (['flash', 'quicktime'].include?(session[:video_player])) ? session[:video_player] : 'flash'
     @top3 = @demo.toplist

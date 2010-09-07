@@ -9,7 +9,11 @@ class Demo < ActiveRecord::Base
 
 
 
-  has_many :players, :through => :demos_players, :autosave => true
+  has_many :players, :through => :demos_players, :autosave => true do
+    def to_s
+      self.join(", ")
+    end
+  end
   has_many :demos_players, :autosave => true, :dependent => :destroy
 
   belongs_to :map
