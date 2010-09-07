@@ -4,8 +4,10 @@
 
 .player_list
   - for player in @players
-    %nobr
+    %div
       = render_linked_player(player)
       %sup
         = pluralize(@demo_cnt[player.id], "demo")
+
+  %div(style = "clear: both")
 

@@ -358,6 +358,13 @@ form
 {
 	line-height: 3em;
 	font-size: 16px;
+  overflow: hidden;
+}
+
+.player_list div
+{
+  float: left;
+  white-space: nowrap;
 }
 
 .player_list sup
