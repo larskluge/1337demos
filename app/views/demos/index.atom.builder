@@ -4,7 +4,7 @@ atom_feed do |feed|
 
   @demos.each do |demo|
     feed.entry(demo) do |entry|
-      players = demo.players.map{|player| player.main_nickname_plain}.join(', ')
+      players = demo.players.join(', ')
       title = (demo.position.nil? ? "#{demo.title}" : "##{demo.position} ") + "#{players} on #{demo.map.name}"
 
       entry.title truncate(title)
