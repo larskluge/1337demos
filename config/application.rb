@@ -50,7 +50,7 @@ module LeetdemosPlatform
     ::WEB_VIDEOS = '/videos/'
 
     # configure action mailer
-    # config.action_mailer.delivery_method = :sendmail
+    config.action_mailer.delivery_method = :sendmail
 
     # exception_notifier
     #
