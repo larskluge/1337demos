@@ -45,6 +45,11 @@ task :after_update_code, :roles => :app do
     run "ln -nfs #{static_path}/#{dir} #{release_path}/#{dir}"
   end
 
+  # fix active_scaffold issue
+  # FIXME: remove this when issue is fixed by a newer version of active_scaffold (2010-09-08)
+  #
+  run "chmod -R a+w #{release_path}/public/javascripts/active_scaffold/default"
+
   # use bundler to install depending gems
   #
   bundler.bundle_new_release
