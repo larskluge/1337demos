@@ -1,8 +1,9 @@
 %table.toplist
   - for demo in toplist
-    <tr #{'class="active-demo"' if demo == active_demo}>
-    %td= demo.position.ordinalize if demo.position
-    %td= render_race_time demo.time
-    %td= render_race_time_difference active_demo.time, demo.time
-    %td= render_linked_player demo.players.first
-    %td= link_to 'Play', demo_path(demo)
+    %tr{:class => (demo == active_demo ? "active-demo" : "")}
+      %td= demo.position.ordinalize if demo.position
+      %td= render_race_time demo.time
+      %td= render_race_time_difference active_demo.time, demo.time
+      %td= render_linked_player demo.players.first
+      %td= link_to 'Play', demo_path(demo)
+

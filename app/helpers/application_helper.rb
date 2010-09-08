@@ -1,5 +1,3 @@
-# Methods added to this helper will be available to all templates in the application.
-
 module ApplicationHelper
 
   # generates a classname for the active page
@@ -56,14 +54,14 @@ module ApplicationHelper
   end
 
   def render_linked_players(players)
-    players.map{|player| render_linked_player(player)}.join(', ')
+    players.map{|player| render_linked_player(player)}.join(', ').html_safe
   end
 
   def render_time_title(demo)
     return demo.title if demo.title.present?
 
     res = "##{demo.position} &nbsp;" if demo.position.to_i > 0
-    return "#{res}#{render_race_time(demo.time)}" if demo.time.to_i > 0
+    return "#{res}#{render_race_time(demo.time)}".html_safe if demo.time.to_i > 0
 
     "n/a"
   end
@@ -71,7 +69,7 @@ module ApplicationHelper
 
   def render_position(demo)
     pos = demo.position
-    return '<i>improved by player</i>' if pos.nil?
+    return '<i>improved by player</i>'.html_safe if pos.nil?
     sprintf('%s of %d',
       pos.ordinalize,
       demo.map.demos.select{|d| !d.position.nil? && d.position > 0}.length)
@@ -96,12 +94,18 @@ module ApplicationHelper
 
 
   def render_nickname(name)
-    return nil if name.nil? || name.empty?
+    return nil if name.blank?
 
     html = h(name).gsub(/\^([^\^])/){"</span><span class=\"c#{self.color_index($1)}\">"}
     html = "<span class=\"c7\">#{html}</span>"
 
-    html.gsub /\^\^/, '^'
+    html.gsub(/\^\^/, '^').html_safe
+  end
+
+  def render_nicknames(names)
+    Array(names).map { |name|
+      render_nickname(name)
+    }.join(", ").html_safe
   end
 
   def render_nickname_plain(name)
@@ -119,7 +123,7 @@ module ApplicationHelper
     min = sec / 60
     sec = sec % 60
 
-    '%02d:%02d.%03d' % [ min, sec, msec ]
+    ('%02d:%02d.%03d' % [ min, sec, msec ]).html_safe
   end
 
   def render_race_time_difference(from_msec, to_msec)
@@ -186,7 +190,7 @@ module ApplicationHelper
     if record.respond_to?(:has_gravatar?) && record.has_gravatar?
       alt = 'identified by ' + record.token_short if record.token_short
       url = record.gravatar_url(:size => size, :default => 'identicon')
-      image_tag url, :class => 'gravatar', :alt => alt, :title => alt, size => [size,size].join('x')
+      image_tag url, :class => 'gravatar', :alt => alt, :title => alt, :size => [size,size].join('x')
     end
   end
 

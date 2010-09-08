@@ -1,15 +1,16 @@
-# This file is auto-generated from the current state of the database. Instead of editing this file, 
-# please use the migrations feature of Active Record to incrementally modify your database, and
-# then regenerate this schema definition.
+# This file is auto-generated from the current state of the database. Instead
+# of editing this file, please use the migrations feature of Active Record to
+# incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your database schema. If you need
-# to create the application database on another system, you should be using db:schema:load, not running
-# all the migrations from scratch. The latter is a flawed and unsustainable approach (the more migrations
+# Note that this schema.rb definition is the authoritative source for your
+# database schema. If you need to create the application database on another
+# system, you should be using db:schema:load, not running all the migrations
+# from scratch. The latter is a flawed and unsustainable approach (the more migrations
 # you'll amass, the slower it'll run and the greater likelihood for issues).
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100831145500) do
+ActiveRecord::Schema.define(:version => 20100906170840) do
 
   create_table "announcements", :force => true do |t|
     t.text     "message"
@@ -59,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20100831145500) do
     t.datetime "updated_at"
     t.integer  "demofile_id"
     t.boolean  "data_correct"
-    t.enum     "status",       :limit => [:uploaded, :processing, :rendered], :default => :uploaded
+    t.string   "status",                     :default => "uploaded"
     t.integer  "position"
     t.string   "game",         :limit => 20
   end
@@ -67,11 +68,10 @@ ActiveRecord::Schema.define(:version => 20100831145500) do
   add_index "demos", ["game"], :name => "index_demos_on_game"
   add_index "demos", ["map_id"], :name => "map_id"
 
-  create_table "demos_players", :id => false, :force => true do |t|
+  create_table "demos_players", :force => true do |t|
     t.integer "demo_id"
     t.integer "player_id"
-    t.enum    "label",     :limit => [:alpha, :beta, :gamma, :delta]
-    t.integer "id"
+    t.string  "label"
   end
 
   add_index "demos_players", ["demo_id"], :name => "demo_id"
@@ -81,8 +81,8 @@ ActiveRecord::Schema.define(:version => 20100831145500) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "rating_count"
-    t.integer  "rating_total", :limit => 10, :precision => 10, :scale => 0
-    t.decimal  "rating_avg",                 :precision => 10, :scale => 2
+    t.decimal  "rating_total", :precision => 10, :scale => 0
+    t.decimal  "rating_avg",   :precision => 10, :scale => 2
   end
 
   create_table "nicknames", :force => true do |t|

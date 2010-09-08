@@ -1,55 +1,113 @@
-ActionController::Routing::Routes.draw do |map|
+LeetdemosPlatform::Application.routes.draw do
 
   # admin area ################################################################
 
-  map.namespace :admin do |admin|
-    admin.root :controller => 'welcomes'
+  namespace :admin do
+    root :to => 'welcomes#index'
 
-    admin.resource :welcomes, :only => :index, :member => {:delete_cache => :delete}
+    resource :welcomes, :only => :index do
+      member do
+        delete :delete_cache
+      end
+    end
 
-    admin.resources :announcements, :active_scaffold => true
-    admin.resources :comments
-    admin.resources :demos
-    admin.resources :nicknames, :active_scaffold => true
-    admin.resources :players, :member => {:merge => :get}, :collection => {:merge_players => :put}
-    admin.resources :shoutboxes, :only => :index
-    admin.resources :stuffs, :active_scaffold => true
+    resources :announcements do
+      as_routes
+    end
+
+    resources :nicknames do
+      as_routes
+    end
+
+    resources :stuffs do
+      as_routes
+    end
+
+    resources :comments
+    resources :shoutboxes, :only => :index
+
+    resources :demos do
+      member do
+        put :rerender
+      end
+    end
+
+    resources :players do
+      member do
+        get :merge
+      end
+
+      collection do
+        put :merge_players
+      end
+    end
   end
 
 
   # normal ####################################################################
 
-  map.root :controller => "welcomes"
+  root :to => "welcomes#index"
 
-  map.resource :check, :member => {:fail => :get}
-  map.resource :welcomes, :only => :index, :collection => {:create_comment => :post}
+  resource :check, :only => [] do
+    member do
+      get :fail
+    end
+  end
 
-  map.resources :announcements, :only => [:index, :show]
-  map.resources :categories
-  map.resources :comments
-  map.resources :demofiles
-  map.resources :demos, :collection => {:race => :get, :freestyle => :get}, :member => {:verify => :get, :create_comment => :post}
-  map.resources :maps, :collection => {:clearsearch => :get, :search => :post}
-  map.resources :players
-  map.resources :ratings, :member => {:rate => :post}
-  map.resources :stuffs, :collection => {:thanks => :get}
+  resources :welcomes, :only => :index do
+    collection do
+      post :create_comment
+    end
+  end
 
-  map.list_demos_test '/tests/list_demos', :controller => 'tests', :action => 'list_demos', :conditions => {:method => :get}
+  resources :announcements, :only => [:index, :show]
+  resources :comments, :only => :index
+  resources :demofiles, :only => [:index, :new, :create]
 
-  map.resources :videos, :only => :show, :defaults => {:format => "mp4"}
+  resources :demos, :only => [:index, :show, :update] do
+    member do
+      get :verify
+      post :create_comment
+    end
+
+    collection do
+      get :race
+      get :freestyle
+    end
+  end
+
+  resources :maps do
+    collection do
+      get :clearsearch
+      post :search
+    end
+  end
+
+  resources :players
+  resources :ratings do
+    member do
+      post :rate
+    end
+  end
+
+  resources :stuffs do
+    collection do
+      get :thanks
+    end
+  end
+
+  resources :videos, :only => :show, :defaults => {:format => "mp4"}
+
 
   # webservices ###############################################################
 
-  map.render_request '/webservices/render_request.:format', :controller => 'webservices', :action => 'render_request', :conditions => {:method => :get}
-  map.update_demo '/webservices/update_demo/:id', :controller => 'webservices', :action => 'update_demo', :conditions => {:method => :get}
+  match '/webservices/render_request.:format' => 'webservices#render_request', :as => :render_request
+  match '/webservices/update_demo/:id' => 'webservices#update_demo', :as => :update_demo
 
 
   # thumbnail generation route ################################################
 
-  map.connect 'images/maps/thumbs/:size/:id.jpeg',
-    :controller => 'maps',
-    :action => 'thumb',
-    :requirements => {:size => /[0-9]+x[0-9]+/}
+  match 'images/maps/thumbs/:size/:id.jpeg' => 'maps#thumb', :constraints => {:size => /[0-9]+x[0-9]+/}
 
 end
 

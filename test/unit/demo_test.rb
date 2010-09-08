@@ -71,6 +71,24 @@ class DemoTest < ActiveSupport::TestCase
       assert_nil @d1.position
       assert_equal 1, @d2.position
     end
+
+    should "not remove player when demo is removed" do
+      @d1 = Demo.create!(@demo_attributes)
+      @d2 = Demo.create!(@demo_attributes)
+
+      player_id = @d1.players.first.id
+
+      assert_equal 1, Player.count
+
+      cnt = "DemosPlayer.where(:player_id => player_id).count"
+      assert_equal 2, eval(cnt)
+
+      assert_no_difference "Player.count" do
+        assert_difference cnt, -1 do
+          @d2.destroy
+        end
+      end
+    end
   end
 end
 

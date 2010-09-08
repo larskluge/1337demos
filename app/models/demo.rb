@@ -1,6 +1,7 @@
 class Demo < ActiveRecord::Base
   include FlexRating
 
+  enum_attr :status, %w(^uploaded processing rendered)
 
   @@video_width = 384
   @@video_height = 288
@@ -8,8 +9,12 @@ class Demo < ActiveRecord::Base
 
 
 
-  has_many :players, :through => :demos_player, :autosave => true
-  has_many :demos_player, :autosave => true, :dependent => :destroy
+  has_many :players, :through => :demos_players, :autosave => true do
+    def to_s
+      self.join(", ")
+    end
+  end
+  has_many :demos_players, :autosave => true, :dependent => :destroy
 
   belongs_to :map
   belongs_to :demofile, :dependent => :destroy
@@ -32,27 +37,21 @@ class Demo < ActiveRecord::Base
   validates_inclusion_of :gamemode, :in => %w(race freestyle), :if => Proc.new{|demo| demo.game == "Warsow"}
   validates_inclusion_of :gamemode, :in => %w(freestyle cpm vq3), :if => Proc.new{|demo| demo.game == "Defrag"}
   validates_presence_of :title, :on => :update, :if => Proc.new{|demo| demo.gamemode == 'freestyle'}
+  validate :validate_presence_of_video_on_status_update
+  validate :validate_data_correct, :on => :update
 
-  def validate
-    if Rails.env == 'production' # ignore if demo file is not available in dev-mode
-      errors.add(:status, 'can not be "rendered" without an existing video file') if status == :rendered && !File.exists?(video_filename)
-    end
-  end
-
-  def validate_on_update
-    errors.add(:data_correct, "can't be empty") if data_correct.nil?
-  end
 
 
   default_scope :order => "demos.created_at DESC"
 
-  named_scope :race, :conditions => {:gamemode => %w(race cpm vq3), :data_correct => true}
-  named_scope :freestyle, :conditions => {:gamemode => "freestyle", :data_correct => true}
+  scope :data_correct, where(:data_correct => true)
+  scope :rendered, where(:status => :rendered)
 
-  named_scope :by_map, proc {|map_id| {:conditions => {:map_id => map_id, :gamemode => "race"}}}
+  scope :race, data_correct.where(:gamemode => %w(race cpm vq3))
+  scope :freestyle, data_correct.where(:gamemode => "freestyle")
+  scope :warsow_race, where(:gamemode => "race")
 
-  named_scope :data_correct, :conditions => {:data_correct => true}
-  named_scope :rendered, :conditions => {:status => "rendered"}
+  scope :by_map, proc {|map_id| warsow_race.where(:map_id => map_id)}
 
 
 
@@ -168,6 +167,19 @@ class Demo < ActiveRecord::Base
 
   def video_file
     "#{id}.mp4"
+  end
+
+
+  protected
+
+  def validate_presence_of_video_on_status_update
+    if Rails.env == 'production' # ignore if demo file is not available in dev-mode
+      errors.add(:status, 'can not be "rendered" without an existing video file') if status == :rendered && !File.exists?(video_filename)
+    end
+  end
+
+  def validate_data_correct
+    errors.add(:data_correct, "can't be empty") if data_correct.nil?
   end
 
 end

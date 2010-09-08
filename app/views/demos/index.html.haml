@@ -16,7 +16,7 @@
       %td
         = render_time_title demo
       %td= render_linked_map demo.map
-      %td= demo.players.map{|player| render_linked_player(player)}.join(', ')
+      %td= render_linked_players(demo.players)
       %td
         %div{:class => "statusbox #{demo.status}", :title => "rendering status: #{demo.status}"}
       %td= link_to 'Play', :action => 'show', :id => demo

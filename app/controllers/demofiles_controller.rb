@@ -28,17 +28,17 @@ class DemofilesController < ApplicationController
 			map = Map.find_by_name(dr.mapname) || Map.new(:name => dr.mapname)
 
       ActiveRecord::Base.transaction do
-        @demofile.save_with_validation!
-        map.save_with_validation!
+        @demofile.save!
+        map.save!
 
         demo.map = map
         demo.demofile = @demofile
-        demo.save_with_validation!
+        demo.save!
 
         redirect_to :controller => 'demos', :action => 'verify', :id => demo
       end
     else
-      if @demofile.errors.on(:sha1) && (same_demo = @demofile.find_same_demo)
+      if @demofile.errors[:sha1].present? && (same_demo = @demofile.find_same_demo)
         flash[:notice] = 'You tried to upload this already uploaded demo :)'
         redirect_to(demo_path(same_demo))
       else

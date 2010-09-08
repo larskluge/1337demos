@@ -4,23 +4,36 @@ module ActiveScaffold::Actions
       base.class_eval do
         after_filter :clear_flashes
       end
+      base.helper_method :nested?
     end
     def render_field
-      @record = active_scaffold_config.model.new
-      column = active_scaffold_config.columns[params[:column]]
-      value = if column.association
-        params[:value].blank? ? nil : column.association.klass.find(params[:value])
+      @record ||= if params[:in_place_editing]
+        active_scaffold_config.model.find params[:id]
       else
-        params[:value]
+        active_scaffold_config.model.new
       end
-      @record.send "#{column.name}=", value
-      @update_column = active_scaffold_config.columns[column.options[:update_column]]
+      column = active_scaffold_config.columns[params[:column]]
+      if params[:in_place_editing]
+        render :inline => "<%= active_scaffold_input_for(active_scaffold_config.columns[params[:update_column].to_sym]) %>"
+      elsif !column.nil?
+        value = column_value_from_param_value(@record, column, params[:value])
+        @record.send "#{column.name}=", value
+        after_render_field(@record, column)
+        render :partial => "render_field", :collection => Array(params[:update_columns]), :content_type => 'text/javascript' 
+      end
     end
-
+    
     protected
 
-    def authorized_for?(*args)
-      active_scaffold_config.model.authorized_for?(*args)
+    def nested?
+      false
+    end
+    
+    # override this method if you want to do something after render_field
+    def after_render_field(record, column); end
+
+    def authorized_for?(options = {})
+      active_scaffold_config.model.authorized_for?(options)
     end
 
     def clear_flashes
@@ -51,7 +64,11 @@ module ActiveScaffold::Actions
     end
 
     def response_status
-      successful? ? 200 : 500
+      if successful?
+        action_name == 'create' ? 201 : 200
+      else
+        422
+      end
     end
 
     # API response object that will be converted to XML/YAML/JSON using to_xxx
@@ -75,14 +92,7 @@ module ActiveScaffold::Actions
 
     # Redirect to the main page (override if the ActiveScaffold is used as a component on another controllers page) for Javascript degradation
     def return_to_main
-      unless params[:parent_controller].nil?
-        params[:controller] = params[:parent_controller]
-        params[:eid] = nil
-        params[:parent_model] = nil
-        params[:parent_column] = nil
-        params[:parent_id] = nil
-      end
-      redirect_to params_for(:action => "index", :id => nil)
+      redirect_to main_path_to_return
     end
 
     # Override this method on your controller to define conditions to be used when querying a recordset (e.g. for List). The return of this method should be any format compatible with the :conditions clause of ActiveRecord::Base's find.
@@ -98,11 +108,15 @@ module ActiveScaffold::Actions
       {}
     end
   
-
+    #Overide this method on your controller to provide model with named scopes
+    def beginning_of_chain
+      active_scaffold_config.model
+    end
+        
     # Builds search conditions by search params for column names. This allows urls like "contacts/list?company_id=5".
     def conditions_from_params
       conditions = nil
-      params.reject {|key, value| [:controller, :action, :id].include?(key.to_sym)}.each do |key, value|
+      params.reject {|key, value| [:controller, :action, :id, :page, :sort, :sort_direction].include?(key.to_sym)}.each do |key, value|
         next unless active_scaffold_config.model.column_names.include?(key)
         if value.is_a?(Array)
           conditions = merge_conditions(conditions, ["#{active_scaffold_config.model.table_name}.#{key.to_s} in (?)", value])

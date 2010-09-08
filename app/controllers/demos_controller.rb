@@ -32,18 +32,13 @@ class DemosController < ApplicationController
 
   def show
     @demo = Demo.find(params[:id])
-    @title = "#{@demo.players.map{|player| player.main_nickname_plain}.join(', ')} on #{@demo.map.name}"
+    @title = "#{@demo.players} on #{@demo.map}"
     @comment = Comment.new(:name => player_info[:name], :mail_pass => player_info[:mail_pass])
     @video_player = (['flash', 'quicktime'].include?(session[:video_player])) ? session[:video_player] : 'flash'
     @top3 = @demo.toplist
 
     @prev = Demo.first(:conditions => ['id < ? AND data_correct', @demo.id])
     @next = Demo.last(:conditions => ['id > ? AND data_correct', @demo.id])
-  end
-
-  def file
-    @demos = [Demo.find(params[:id])]
-    render :layout => false
   end
 
   def verify
@@ -85,16 +80,6 @@ class DemosController < ApplicationController
             player
           end.uniq
           params[:demo][:players] = players
-
-          # notify me
-          begin
-            playernames = 'unknown'
-            playernames = players.map{|player| player.main_nickname_plain}.join(', ') if !players.nil? && players.length > 0
-            mail = MyMailer.create_send_demo_uploaded_notification(@demo, @demo.map.name, playernames)
-            MyMailer.deliver(mail)
-          rescue Exception => e
-            logger.info '=== Mail deliverty error: ' + e.message
-          end
         end
       rescue Exception => e
         @demo.errors.add_to_base e.message
@@ -104,6 +89,9 @@ class DemosController < ApplicationController
     end
 
     if @demo.update_attributes(params[:demo])
+      # notify me
+      DemoMailer.uploaded_info(@demo).deliver
+
       flash[:notice] = 'Demo was successfully uploaded.'
       redirect_to :action => 'show', :id => @demo
     else

@@ -1,7 +1,8 @@
 %h1 Editing demo
-- form_tag :action => 'update', :id => @demo do
+= form_for @demo, :url => admin_demo_path(@demo) do
   = render :partial => 'form'
   = submit_tag 'Edit'
 = link_to 'Show', :action => 'show', :id => @demo
 |
-\#{link_to 'Back', :action => 'list'}
+= link_to 'Back', :action => 'index'
+

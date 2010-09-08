@@ -14,8 +14,9 @@
       %td= h comment.message
       %td= render_nickname comment.name
       %td
-        = comment.demo.players.map{|player| render_linked_player(player)}.join(', ')
-        on #{render_linked_map comment.demo.map}
+        = render_linked_players(comment.demo.players)
+        on
+        = render_linked_map(comment.demo.map)
       %td= link_to 'Watch demo', :controller => '/demos', :action => 'show', :id => comment.demo
       %td= link_to 'Show', admin_comment_path(comment)
       %td= link_to 'Edit', edit_admin_comment_path(comment)

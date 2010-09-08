@@ -6,3 +6,4 @@ class ChecksController < ApplicationController
     raise Exception, "You asked for it!"
   end
 end
+

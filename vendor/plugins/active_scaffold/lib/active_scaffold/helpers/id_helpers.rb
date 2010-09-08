@@ -2,8 +2,12 @@ module ActiveScaffold
   module Helpers
     # A bunch of helper methods to produce the common view ids
     module IdHelpers
+      def id_from_controller(controller)
+        controller.to_s.gsub("/", "__")
+      end
+
       def controller_id
-        @controller_id ||= 'as_' + (params[:eid] || params[:parent_controller] || params[:controller]).gsub("/", "__")
+        controller_id ||= 'as_' + id_from_controller(params[:eid] || params[:parent_controller] || params[:controller])
       end
 
       def active_scaffold_id
@@ -22,8 +26,8 @@ module ActiveScaffold
         "#{controller_id}-messages"
       end
 
-      def active_scaffold_calculations_id
-        "#{controller_id}-calculations"
+      def active_scaffold_calculations_id(column = nil)
+        "#{controller_id}-calculations#{'-' + column.name.to_s if column}"
       end
 
       def empty_message_id
@@ -84,11 +88,13 @@ module ActiveScaffold
 
       def loading_indicator_id(options = {})
         options[:action] ||= params[:action]
-        unless options[:id]
-          clean_id "#{controller_id}-#{options[:action]}-loading-indicator"
-        else
-          clean_id "#{controller_id}-#{options[:action]}-#{options[:id]}-loading-indicator"
-        end
+        clean_id "#{controller_id}-#{options[:action]}-#{options[:id]}-loading-indicator"
+      end
+      
+      def sub_section_id(options = {})
+        options[:id] ||= params[:id]
+        options[:id] ||= params[:parent_id]
+        clean_id "#{controller_id}-#{options[:id]}-#{options[:sub_section]}-subsection"
       end
 
       def sub_form_id(options = {})
@@ -96,7 +102,7 @@ module ActiveScaffold
         options[:id] ||= params[:parent_id]
         clean_id "#{controller_id}-#{options[:id]}-#{options[:association]}-subform"
       end
-
+      
       def sub_form_list_id(options = {})
         options[:id] ||= params[:id]
         options[:id] ||= params[:parent_id]

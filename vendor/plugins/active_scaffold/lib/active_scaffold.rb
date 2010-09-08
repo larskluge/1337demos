@@ -17,7 +17,7 @@ module ActiveScaffold
   def self.set_defaults(&block)
     ActiveScaffold::Config::Core.configure &block
   end
-
+  
   def active_scaffold_config
     self.class.active_scaffold_config
   end
@@ -44,30 +44,34 @@ module ActiveScaffold
       end
     end
   end
+  
+  def self.js_framework=(framework)
+    @@js_framework = framework
+  end
+  
+  def self.js_framework
+    @@js_framework ||= :prototype
+  end
 
   module ClassMethods
     def active_scaffold(model_id = nil, &block)
       # initialize bridges here
-      ActiveScaffold::Bridge.run_all
+      ActiveScaffold::Bridges::Bridge.run_all
 
       # converts Foo::BarController to 'bar' and FooBarsController to 'foo_bar' and AddressController to 'address'
       model_id = self.to_s.split('::').last.sub(/Controller$/, '').pluralize.singularize.underscore unless model_id
 
       # run the configuration
       @active_scaffold_config = ActiveScaffold::Config::Core.new(model_id)
-      self.active_scaffold_config.configure &block if block_given?
-      self.active_scaffold_config._load_action_columns
+      @active_scaffold_config_block = block
       self.links_for_associations
-
-      # defines the attribute read methods on the model, so record.send() doesn't find protected/private methods instead
-      klass = self.active_scaffold_config.model
-      klass.define_attribute_methods unless klass.generated_methods?
 
       @active_scaffold_overrides = []
       ActionController::Base.view_paths.each do |dir|
-        active_scaffold_overrides_dir = File.join(dir,"active_scaffold_overrides")
+        active_scaffold_overrides_dir = File.join(dir.to_s,"active_scaffold_overrides")
         @active_scaffold_overrides << active_scaffold_overrides_dir if File.exists?(active_scaffold_overrides_dir)
       end
+      @active_scaffold_overrides.uniq! # Fix rails duplicating some view_paths
       @active_scaffold_frontends = []
       if active_scaffold_config.frontend.to_sym != :default
         active_scaffold_custom_frontend_path = File.join(Rails.root, 'vendor', 'plugins', ActiveScaffold::Config::Core.plugin_directory, 'frontends', active_scaffold_config.frontend.to_s , 'views')
@@ -77,6 +81,14 @@ module ActiveScaffold
       @active_scaffold_frontends << active_scaffold_default_frontend_path
       @active_scaffold_custom_paths = []
 
+      self.active_scaffold_superclasses_blocks.each {|superblock| self.active_scaffold_config.configure &superblock}
+      self.active_scaffold_config.configure &block if block_given?
+      self.active_scaffold_config._configure_sti unless self.active_scaffold_config.sti_children.nil?
+      self.active_scaffold_config._load_action_columns
+
+      # defines the attribute read methods on the model, so record.send() doesn't find protected/private methods instead
+      klass = self.active_scaffold_config.model
+      klass.define_attribute_methods unless klass.attribute_methods_generated?
       # include the rest of the code into the controller: the action core and the included actions
       module_eval do
         include ActiveScaffold::Finder
@@ -93,33 +105,45 @@ module ActiveScaffold
           end
         end
       end
+      active_scaffold_paths.each do |path|
+        self.append_view_path(ActionView::ActiveScaffoldResolver.new(path))
+      end
+      self.active_scaffold_config._add_sti_create_links if self.active_scaffold_config.add_sti_create_links?
     end
 
     # Create the automatic column links. Note that this has to happen when configuration is *done*, because otherwise the Nested module could be disabled. Actually, it could still be disabled later, couldn't it?
     def links_for_associations
       return unless active_scaffold_config.actions.include? :list and active_scaffold_config.actions.include? :nested
-      active_scaffold_config.list.columns.each do |column|
-        next unless column.link.nil? and column.autolink
+      active_scaffold_config.columns.each do |column|
+        next unless column.link.nil? and column.autolink?
+        action_link = link_for_association(column)
+        column.set_link(action_link) unless action_link.nil?
+      end
+    end
+    
+    def link_for_association(column, options = {})
+      begin
+        controller = column.polymorphic_association? ? :polymorph : active_scaffold_controller_for(column.association.klass) 
+      rescue ActiveScaffold::ControllerNotFound
+        controller = nil        
+      end
+      
+      unless controller.nil?
+        options.reverse_merge! :label => column.label, :position => :after, :type => :member, :controller => (controller == :polymorph ? controller : controller.controller_path), :column => column
+        options[:parameters] ||= {}
+        options[:parameters].reverse_merge! :parent_model => column.active_record_class.to_s, :association => column.association.name
         if column.plural_association?
           # note: we can't create nested scaffolds on :through associations because there's no reverse association.
-          column.set_link('nested', :parameters => {:associations => column.name.to_sym}) #unless column.through_association?
-        elsif column.polymorphic_association?
-          # note: we can't create inline forms on singular polymorphic associations
-          column.clear_link
+          
+          ActiveScaffold::DataStructures::ActionLink.new('index', options) #unless column.through_association?
         else
-          model = column.association.klass
-          begin
-            controller = active_scaffold_controller_for(model)
-          rescue ActiveScaffold::ControllerNotFound
-            next
-          end
-
-          actions = controller.active_scaffold_config.actions
+          actions = [:create, :update, :show] 
+          actions = controller.active_scaffold_config.actions unless controller == :polymorph
           column.actions_for_association_links.delete :new unless actions.include? :create
           column.actions_for_association_links.delete :edit unless actions.include? :update
           column.actions_for_association_links.delete :show unless actions.include? :show
-          column.set_link(:none, :controller => controller.controller_path, :crud_type => nil)
-        end
+          ActiveScaffold::DataStructures::ActionLink.new(:none, options.merge({:crud_type => nil, :html_options => {:class => column.name}}))
+        end 
       end
     end
 
@@ -136,7 +160,8 @@ module ActiveScaffold
     def active_scaffold_paths
       return @active_scaffold_paths unless @active_scaffold_paths.nil?
 
-      @active_scaffold_paths = ActionView::PathSet.new
+      #@active_scaffold_paths = ActionView::PathSet.new
+      @active_scaffold_paths = []
       @active_scaffold_paths.concat @active_scaffold_overrides unless @active_scaffold_overrides.nil?
       @active_scaffold_paths.concat @active_scaffold_custom_paths unless @active_scaffold_custom_paths.nil?
       @active_scaffold_paths.concat @active_scaffold_frontends unless @active_scaffold_frontends.nil?
@@ -144,7 +169,25 @@ module ActiveScaffold
     end
 
     def active_scaffold_config
-       @active_scaffold_config || self.superclass.instance_variable_get('@active_scaffold_config')
+      if @active_scaffold_config.nil?
+        self.superclass.active_scaffold_config if self.superclass.respond_to? :active_scaffold_config
+      else
+        @active_scaffold_config
+      end
+    end
+
+    def active_scaffold_config_block
+      @active_scaffold_config_block
+    end
+
+    def active_scaffold_superclasses_blocks
+      blocks = []
+      klass = self.superclass
+      while klass.respond_to? :active_scaffold_superclasses_blocks
+        blocks << klass.active_scaffold_config_block
+        klass = klass.superclass
+      end
+      blocks.compact.reverse
     end
 
     def active_scaffold_config_for(klass)
@@ -163,23 +206,25 @@ module ActiveScaffold
     # Searches in the namespace of the current controller for singular and plural versions of the conventional "#{model}Controller" syntax.
     # You may override this method to customize the search routine.
     def active_scaffold_controller_for(klass)
-      namespace = self.to_s.split('::')[0...-1].join('::') + '::'
+      controller_namespace = self.to_s.split('::')[0...-1].join('::') + '::'
       error_message = []
-      ["#{klass.to_s.underscore.pluralize}", "#{klass.to_s.underscore.pluralize.singularize}"].each do |controller_name|
-        begin
-          controller = "#{namespace}#{controller_name.camelize}Controller".constantize
-        rescue NameError => error
-          # Only rescue NameError associated with the controller constant not existing - not other compile errors
-          if error.message["uninitialized constant #{controller}"]
-            error_message << "#{namespace}#{controller_name.camelize}Controller"
-            next
-          else
-            raise
+      [controller_namespace, ''].each do |namespace|
+        ["#{klass.to_s.underscore.pluralize}", "#{klass.to_s.underscore.pluralize.singularize}"].each do |controller_name|
+          begin
+            controller = "#{namespace}#{controller_name.camelize}Controller".constantize
+          rescue NameError => error
+            # Only rescue NameError associated with the controller constant not existing - not other compile errors
+            if error.message["uninitialized constant #{controller}"]
+              error_message << "#{namespace}#{controller_name.camelize}Controller"
+              next
+            else
+              raise
+            end
           end
+          raise ActiveScaffold::ControllerNotFound, "#{controller} missing ActiveScaffold", caller unless controller.uses_active_scaffold?
+          raise ActiveScaffold::ControllerNotFound, "ActiveScaffold on #{controller} is not for #{klass} model.", caller unless controller.active_scaffold_config.model == klass
+          return controller
         end
-        raise ActiveScaffold::ControllerNotFound, "#{controller} missing ActiveScaffold", caller unless controller.uses_active_scaffold?
-        raise ActiveScaffold::ControllerNotFound, "ActiveScaffold on #{controller} is not for #{klass} model.", caller unless controller.active_scaffold_config.model == klass
-        return controller
       end
       raise ActiveScaffold::ControllerNotFound, "Could not find " + error_message.join(" or "), caller
     end
