@@ -146,7 +146,7 @@ module ApplicationHelper
                ['-', 'green']
              end
 
-    '<span style="color:%s">%s %02d:%02d.%03d</span>' % [ color, prefix, min, sec, msec ]
+    ('<span style="color:%s">%s %02d:%02d.%03d</span>' % [ color, prefix, min, sec, msec ]).html_safe
   end
 
 
