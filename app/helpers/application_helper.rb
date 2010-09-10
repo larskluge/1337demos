@@ -45,12 +45,11 @@ module ApplicationHelper
 
 
   def render_linked_map(map)
-    link_to(map.name, map_path(map), {:class => "map_link map_link_#{map.id}"}) if map.kind_of? Map
+    link_to(map.name, map_path(map), {:class => "map_link map_link_#{map.id}"})
   end
 
-
   def render_linked_player(player)
-    link_to(render_nickname(player.main_nickname.nickname), :controller => 'players', :action => 'show', :id => player) if player.kind_of? Player
+    link_to(render_nickname(player.main_nickname.nickname), :controller => 'players', :action => 'show', :id => player)
   end
 
   def render_linked_players(players)
@@ -66,7 +65,6 @@ module ApplicationHelper
     "n/a"
   end
 
-
   def render_position(demo)
     pos = demo.position
     return '<i>improved by player</i>'.html_safe if pos.nil?
@@ -74,7 +72,6 @@ module ApplicationHelper
       pos.ordinalize,
       demo.map.demos.select{|d| !d.position.nil? && d.position > 0}.length)
   end
-
 
   def render_toplist(demos, active_demo = nil)
     render :partial => '/demos/toplist', :locals => { :toplist => demos, :active_demo => active_demo }
@@ -84,12 +81,7 @@ module ApplicationHelper
 
 
   def color_index(color_code)
-    #if color_code =~ /^([0-9])$/ && $1 > '0'
-    if color_code > '0'
-      return color_code.to_i
-    else
-      return 0
-    end
+    color_code > '0' ? color_code.to_i : 0
   end
 
 
@@ -152,11 +144,11 @@ module ApplicationHelper
 
 
   def render_datetime(datetime)
-    h(datetime.strftime('%Y/%m/%d %H:%M'))
+    datetime.strftime('%Y/%m/%d %H:%M')
   end
 
   def render_date(datetime)
-    h(datetime.strftime('%Y/%m/%d'))
+    datetime.strftime('%Y/%m/%d')
   end
 
 
