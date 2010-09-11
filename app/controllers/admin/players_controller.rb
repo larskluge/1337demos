@@ -12,7 +12,7 @@ class Admin::PlayersController < Admin::ApplicationController
 	def merge
 		@player = Player.find(params[:id])
 		@aliases = @player.nicknames
-		@players = Player.find(:all) - [@player]
+		@players = Player.all - [@player]
 	end
 
 	def merge_players
@@ -80,3 +80,4 @@ class Admin::PlayersController < Admin::ApplicationController
 		redirect_to :action => 'index'
 	end
 end
+
