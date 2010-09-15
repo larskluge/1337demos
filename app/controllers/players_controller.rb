@@ -13,7 +13,11 @@ class PlayersController < ApplicationController
 		@title = "demos of #{@player}"
 		@aliases = (@player.nicknames - [@player.main_nickname]).map(&:nickname)
 
-    @demos = Demo.includes(:map).where(:data_correct => true).joins("JOIN demos_players AS dp ON dp.player_id = #{@player.id} AND dp.demo_id = demos.id").order('demos.created_at DESC').paginate(:page => page_param, :per_page => 10)
+    @demos = Demo.includes(:map).
+      data_correct.
+      joins("JOIN demos_players AS dp ON dp.player_id = #{@player.id} AND dp.demo_id = demos.id").
+      order('demos.created_at DESC').
+      paginate(:page => page_param, :per_page => 10)
 	end
 
 end
