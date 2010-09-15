@@ -11,6 +11,7 @@ ssh_options[:forward_agent] = true
 set :scm, 'git'
 set :branch, 'master'
 set :scm_verbose, true # to support older git versions on server
+set :git_enable_submodules, 1
 
 
 # remote server
