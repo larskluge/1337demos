@@ -14,6 +14,7 @@ gem 'exception_notification', :require => "exception_notifier", :git => "git://g
 gem 'gravtastic', '>= 2.1.0'
 gem 'haml', '>= 3'
 gem 'mysql2'
+gem 'newrelic_rpm'
 gem 'paperclip'
 gem 'rack'
 gem 'will_paginate', '>= 3.0.pre2'
