@@ -31,9 +31,8 @@ class MapsController < ApplicationController
   end
 
   def show
-    @map = Map.find(params[:id])
-    @title = "demos on #{@map.name}"
-    @demos = Demo.demos_for_map(@map)
+    @title = "demos on #{current_map.name}"
+    @demos = Demo.demos_for_map(current_map)
   end
 
   def thumb
@@ -44,10 +43,8 @@ class MapsController < ApplicationController
 
     width, height = size.split('x').map(&:to_i)
 
-    map = Map.find(params[:id])
-
-    levelshot_file = map.find_levelshot_file
-    levelshot_thumb_file = File.expand_path(File.join(SYS_MAP_IMAGE_THUMBS, size, "#{map.id}.jpeg")) # does not exist, will be generated
+    levelshot_file = current_map.find_levelshot_file
+    levelshot_thumb_file = File.expand_path(File.join(SYS_MAP_IMAGE_THUMBS, size, "#{current_map.id}.jpeg")) # does not exist, will be generated
 
     no_preview_file = File.expand_path("#{SYS_MAP_IMAGES}../unknownmap.jpg")
     no_preview_thumb_file = File.expand_path(File.join(SYS_MAP_IMAGE_THUMBS, size, ".nopreview.jpg"))
@@ -92,6 +89,14 @@ class MapsController < ApplicationController
     # ensure image resize worked properly
     #
     raise "Generate thumbnail failed!" unless File.readable?(dest_file)
+  end
+
+  def current_map
+    @map ||= if params[:id].to_s =~ /^\d+$/
+               @map = Map.find(params[:id])
+             else
+               Map.find_by_name!(params[:id])
+             end
   end
 
 end
