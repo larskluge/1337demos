@@ -81,6 +81,10 @@ LeetdemosPlatform::Application.routes.draw do
       get :clearsearch
       post :search
     end
+
+    member do
+      get :best_demo
+    end
   end
 
   resources :players

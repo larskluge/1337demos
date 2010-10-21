@@ -35,6 +35,11 @@ class MapsController < ApplicationController
     @demos = Demo.demos_for_map(current_map)
   end
 
+  def best_demo
+    @demo = Demo.demos_for_map(current_map).first
+    render :partial => "demos/embed_code", :layout => false
+  end
+
   def thumb
     # allow only predefined sizes
     #
