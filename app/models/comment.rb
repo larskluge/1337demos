@@ -20,6 +20,7 @@ class Comment < ActiveRecord::Base
 
 
 
+  include Gravtastic
   is_gravtastic :mail_pass
 
   def has_gravatar?
