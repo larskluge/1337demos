@@ -36,7 +36,8 @@ class MapsController < ApplicationController
   end
 
   def best_demo
-    @demo = Demo.demos_for_map(current_map).first
+    @demo = Demo.demos_for_map(current_map).first or
+      raise ActiveRecord::RecordNotFound
     render :partial => "demos/embed_code", :layout => false
   end
 
