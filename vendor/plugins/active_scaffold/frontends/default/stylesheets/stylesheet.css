@@ -644,6 +644,10 @@ padding: 6px 0;
 float: left;
 }
 
+.active-scaffold li.form-element dd input[type="checkbox"] {
+margin-top: 6px;
+}
+
 .active-scaffold .form dd {
 margin: 0;
 }
@@ -776,7 +780,7 @@ padding: 0 5px 0 1px;
 background: none;
 }
 
-.active-scaffold .horizontal-sub-form td label {
+.active-scaffold .horizontal-sub-form td dt label {
 display: none;
 }
 

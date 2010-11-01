@@ -75,7 +75,7 @@ module ActiveScaffold
         if column.association
           associated = associated.is_a?(Array) ? associated.map(&:to_i) : associated.to_i unless associated.nil?
           method = column.association.macro == :belongs_to ? column.association.primary_key_name : column.name
-          select_options = options_for_association(column.association, false)
+          select_options = options_for_association(column.association, true)
         else
           method = column.name
           select_options = Array(column.options[:options])
@@ -111,9 +111,8 @@ module ActiveScaffold
       def active_scaffold_search_null(column, options)
         select_options = []
         select_options << [as_(:_select_), nil]
-        select_options << [as_(:null), true]
-        select_options << [as_(:not_null), false]
-        select_tag(options[:name], options_for_select(select_options, ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES.include?(field_search_params[column.name])))
+        select_options.concat ActiveScaffold::Finder::NullComparators.collect {|comp| [as_(comp), comp]}
+        select_tag(options[:name], options_for_select(select_options, field_search_params[column.name]))
       end
 
       def field_search_params_range_values(column)
@@ -126,7 +125,10 @@ module ActiveScaffold
         opt_value, from_value, to_value = field_search_params_range_values(column)
         select_options = ActiveScaffold::Finder::NumericComparators.collect {|comp| [as_(comp.downcase.to_sym), comp]}
         select_options.unshift *ActiveScaffold::Finder::StringComparators.collect {|title, comp| [as_(title), comp]} if column.column && column.column.text?
-
+        from_value = controller.class.condition_value_for_numeric(column, from_value)
+        to_value = controller.class.condition_value_for_numeric(column, to_value)
+        from_value = format_number_value(from_value, column.options) if from_value.is_a?(Numeric)
+        to_value = format_number_value(to_value, column.options) if to_value.is_a?(Numeric)
         html = select_tag("#{options[:name]}[opt]",
               options_for_select(select_options, opt_value),
               :id => "#{options[:id]}_opt",
@@ -134,7 +136,7 @@ module ActiveScaffold
         html << ' ' << text_field_tag("#{options[:name]}[from]", from_value, active_scaffold_input_text_options(:id => options[:id], :size => 10))
         html << ' ' << content_tag(:span, (' - ' + text_field_tag("#{options[:name]}[to]", to_value,
               active_scaffold_input_text_options(:id => "#{options[:id]}_to", :size => 10))).html_safe,
-          :id => "#{options[:id]}_between", :class => "as_search_range_between", :style => "display:none")
+              :id => "#{options[:id]}_between", :class => "as_search_range_between", :style => "display:#{(opt_value == 'BETWEEN') ? '' : 'none'}")
         html
       end
       alias_method :active_scaffold_search_integer, :active_scaffold_search_range
@@ -143,9 +145,14 @@ module ActiveScaffold
       alias_method :active_scaffold_search_string, :active_scaffold_search_range
 
       def active_scaffold_search_record_select(column, options)
-        begin
+        value = field_search_record_select_value(column)
+        active_scaffold_record_select(column, options, value, column.options[:multiple])
+      end
+      
+      def field_search_record_select_value(column)
+        begin 
           value = field_search_params[column.name]
-          value = unless value.blank?
+          unless value.blank?
             if column.options[:multiple]
               column.association.klass.find value.collect!(&:to_i)
             else
@@ -156,8 +163,6 @@ module ActiveScaffold
           logger.error Time.now.to_s + "Sorry, we are not that smart yet. Attempted to restore search values to search fields but instead got -- #{e.inspect} -- on the ActiveScaffold column = :#{column.name} in #{controller.class}"
           raise e
         end
-
-        active_scaffold_record_select(column, options, value, column.options[:multiple])
       end
 
       def field_search_datetime_value(value)

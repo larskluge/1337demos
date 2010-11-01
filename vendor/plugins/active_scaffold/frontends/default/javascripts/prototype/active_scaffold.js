@@ -12,7 +12,7 @@ if (!Element.Methods.highlight) Element.addMethods({highlight: Prototype.emptyFu
 
 
 document.observe("dom:loaded", function() {
-  document.on('ajax:loading', 'form.as_form', function(event) {
+  document.on('ajax:create', 'form.as_form', function(event) {
     var source = event.findElement();
     var as_form = event.findElement('form');
     if (source.nodeName.toUpperCase() == 'INPUT' && source.readAttribute('type') == 'button') {
@@ -65,10 +65,10 @@ document.observe("dom:loaded", function() {
     var action_link = ActiveScaffold.ActionLink.get(event.findElement());
     if (action_link && event.memo && event.memo.request) {
       if (action_link.position) {
-        action_link.insert(event.memo.request.responseText);
+        action_link.insert(event.memo.request.transport.responseText);
         if (action_link.hide_target) action_link.target.hide();
       } else {
-        event.memo.request.evalResponse();
+        //event.memo.request.evalResponse(); // (clyfe) prototype evals the response by itself checking headers, this would eval twice
         action_link.enable();
       }
       event.stop();
@@ -225,7 +225,7 @@ document.observe("dom:loaded", function() {
     event.memo.url = url;
     return true;
   });
-  document.on('change', 'input.update_form', function(event) {
+  document.on('change', 'input.update_form, select.update_form', function(event) {
     var element = event.findElement();
     var as_form = element.up('form.as_form');
     
@@ -299,8 +299,8 @@ var ActiveScaffold = {
   },
   hide_empty_message: function(tbody) {
     if (this.records_for(tbody).length != 0) {
-      var empty_message_node = $(tbody).up().down('tbody.messages p.empty-message')
-      if (empty_message_node) empty_message_node.hide();
+      var empty_message_nodes = $(tbody).up().select('tbody.messages p.empty-message')
+      empty_message_nodes.invoke('hide');
     }
   },
   reload_if_empty: function(tbody, url) {
@@ -389,11 +389,23 @@ var ActiveScaffold = {
     Form.focusFirstElement(form_element);
   },  
   
-  create_record_row: function(tbody, html) {
+  create_record_row: function(tbody, html, options) {
     tbody = $(tbody);
-    tbody.insert({top: html});
-
-    var new_row = tbody.firstDescendant();
+    var new_row = null;
+    
+    if (options.insert_at == 'top') {
+      tbody.insert({top: html});
+      new_row = tbody.firstDescendant();
+    } else if (options.insert_at == 'bottom') {
+      var last_row = tbody.childElements().reverse().detect(function(node) { return node.hasClassName('record') || node.hasClassName('inline-adapter')});
+      if (last_row) {
+        last_row.insert({after: html});
+      } else {
+        tbody.insert({bottom: html});
+      }
+      new_row = Selector.findChildElements(tbody, ['tr.record']).last();
+    }
+    
     this.stripe(tbody);
     this.hide_empty_message(tbody);
     this.increment_record_count(tbody.up('div.active-scaffold'));
@@ -490,7 +502,7 @@ var ActiveScaffold = {
         element.insert(content);
       }
     } else {
-      if (current = $$('#' + element.id + '.association-record')[0]) {
+      if (current = $$('#' + element.id + ' tr.association-record')[0]) {
         this.replace(current, content);
       } else {
         element.insert({top: content});
@@ -505,8 +517,19 @@ var ActiveScaffold = {
     } else {
       this.replace_html(element, content);
     }
+  },
+
+  record_select_onselect: function(edit_associated_url, active_scaffold_id, id){
+    new Ajax.Request(
+      edit_associated_url.sub('--ID--', id), {
+        asynchronous: true,
+        evalScripts: true,
+        onFailure: function(){
+          ActiveScaffold.report_500_response(active_scaffold_id.to_json)
+        }
+      }
+    );
   }
-  
 }
 
 /*
@@ -705,7 +728,7 @@ ActiveScaffold.ActionLink.Abstract = Class.create({
     this.adapter = element;
     this.adapter.addClassName('as_adapter');
     this.adapter.store('action_link', this);
-  },
+  }
 });
 
 /**
@@ -781,6 +804,16 @@ ActiveScaffold.ActionLink.Record = Class.create(ActiveScaffold.ActionLink.Abstra
       if (item.url != this.url) return;
       item.tag.addClassName('disabled');
     }.bind(this));
+  },
+
+  set_opened: function() {
+    if (this.position == 'after') {
+      this.set_adapter(this.target.next());
+    }
+    else if (this.position == 'before') {
+      this.set_adapter(this.target.previous());
+    }
+    this.disable();
   }
 });
 

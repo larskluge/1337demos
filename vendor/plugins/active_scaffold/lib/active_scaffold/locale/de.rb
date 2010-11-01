@@ -8,6 +8,8 @@
       :cancel => 'Abbrechen',
       :click_to_edit => 'Zum Editieren anklicken',
       :close => 'Schliessen',
+      :config_list => 'Konfigurieren',
+      :config_list_model => 'Konfiguriere Spalten für %{model}',
       :create => 'Anlegen',
       :create_model => 'Lege %{model} an',
       :create_another => 'Weitere anlegen',
@@ -70,9 +72,12 @@
       :this_year => 'Dieses Jahr',
       :prev_year => 'Letztes Jahr',
       :next_year => 'Nächstes Jahr',
-      :past => 'Letzten..', 
-      :future => 'Nächsten..',
+      :past => 'Letzten', 
+      :future => 'Nächsten',
       :range => 'Spanne',
+      :seconds => 'Sekunden',
+      :minutes => 'Minuten',
+      :hours => 'Stunden',
       :days => 'Tage',
       :weeks => 'Wochen',
       :months => 'Monate',
@@ -80,7 +85,24 @@
       :optional_attributes => 'Weitere',
       :null => 'Definiert',
       :not_null => 'Undefiniert',
-
+      :date_picker_options => {
+        :weekHeader => 'Wo',
+				:firstDay => 1,
+		    :isRTL => false,
+		    :showMonthAfterYear => false
+      },
+      :datetime_picker_options => {
+        :timeText => 'Uhrzeit'
+      },
+      :errors => {
+        :template => {
+          :header => {
+            :one =>    "Konnte %{model} nicht speichern: ein Fehler.",
+            :other =>  "Konnte %{model} nicht speichern: %{count} Fehler."
+          },
+          :body => "Bitte überprüfen Sie die folgenden Felder:"
+        }
+      },
       # error_messages
       :cant_destroy_record => "%{record} kann nicht gelöscht werden",
       :internal_error => 'Fehler bei der Verarbeitung (code 500, Interner Fehler)',

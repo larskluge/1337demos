@@ -11,6 +11,7 @@ module ActiveScaffold
       include ActiveScaffold::Helpers::FormColumnHelpers
       include ActiveScaffold::Helpers::SearchColumnHelpers
       include ActiveScaffold::Helpers::CountryHelpers
+      include ActiveScaffold::Helpers::HumanConditionHelpers
 
       ##
       ## Delegates
@@ -133,7 +134,7 @@ module ActiveScaffold
         url_options[:controller] = link.controller if link.controller
         url_options.delete(:search) if link.controller and link.controller.to_s != params[:controller]
         url_options.merge! link.parameters if link.parameters
-        url_options_for_nested_link(link.column, record, link, url_options, options) unless link.column.nil?
+        url_options_for_nested_link(link.column, record, link, url_options, options) if link.nested_link?
         url_options[:_method] = link.method if link.inline? && link.method != :get
         url_options
       end
@@ -186,10 +187,14 @@ module ActiveScaffold
       end
       
       def url_options_for_nested_link(column, record, link, url_options, options = {})
-        if column.association
+        if column && column.association 
           url_options[:assoc_id] = url_options.delete(:id)
           url_options[:id] = record.send(column.association.name).id if column.singular_association? && record.send(column.association.name).present?
           link.eid = "#{controller_id.from(3)}_#{record.id}_#{column.association.name}" unless options.has_key?(:reuse_eid)
+          url_options[:eid] = link.eid
+        elsif link.parameters && link.parameters[:named_scope]
+          url_options[:assoc_id] = url_options.delete(:id)
+          link.eid = "#{controller_id.from(3)}_#{record.id}_#{link.parameters[:named_scope]}" unless options.has_key?(:reuse_eid)
           url_options[:eid] = link.eid
         end
       end
@@ -229,7 +234,7 @@ module ActiveScaffold
         conditions = controller.send(:all_conditions)
         includes = active_scaffold_config.list.count_includes
         includes ||= controller.send(:active_scaffold_includes) unless conditions.nil?
-        calculation = active_scaffold_config.model.calculate(column.calculate, column.name, :conditions => conditions,
+        calculation = beginning_of_chain.calculate(column.calculate, column.name, :conditions => conditions,
          :joins => controller.send(:joins_for_collection), :include => includes)
       end
 
@@ -246,7 +251,7 @@ module ActiveScaffold
       end
 
       def column_show_add_new(column, associated, record)
-        value = column.plural_association? or (column.singular_association? and not associated.empty?)
+        value = column.plural_association? || (column.singular_association? and not associated.empty?)
         value = false unless record.class.authorized_for?(:crud_type => :create)
         value
       end
@@ -280,28 +285,27 @@ module ActiveScaffold
           end
           options[:object_name] ||= params.first
 
-          I18n.with_options :locale => options[:locale], :scope => [:activerecord, :errors, :template] do |locale|
-            header_message = if options.include?(:header_message)
-              options[:header_message]
-            else
-              locale.t :header, :count => count, :model => options[:object_name].to_s.gsub('_', ' ')
-            end
-
-            message = options.include?(:message) ? options[:message] : locale.t(:body)
-
-            error_messages = objects.sum do |object|
-              object.errors.full_messages.map do |msg|
-                content_tag(:li, msg)
-              end
-            end.join.html_safe
-
-            contents = ''
-            contents << content_tag(options[:header_tag] || :h2, header_message) unless header_message.blank?
-            contents << content_tag(:p, message) unless message.blank?
-            contents << content_tag(:ul, error_messages)
-
-            content_tag(:div, contents.html_safe, html)
+          header_message = if options.include?(:header_message)
+            options[:header_message]
+          else
+            as_('errors.template.header', :count => count, :model => options[:object_name].to_s.gsub('_', ' '))
           end
+
+          message = options.include?(:message) ? options[:message] : as_('errors.template.body')
+
+          error_messages = objects.sum do |object|
+            object.errors.full_messages.map do |msg|
+              content_tag(:li, msg)
+            end
+          end.join.html_safe
+
+          contents = ''
+          contents << content_tag(options[:header_tag] || :h2, header_message) unless header_message.blank?
+          contents << content_tag(:p, message) unless message.blank?
+          contents << content_tag(:ul, error_messages)
+
+          content_tag(:div, contents.html_safe, html)
+
         else
           ''
         end

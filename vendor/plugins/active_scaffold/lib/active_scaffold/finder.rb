@@ -41,7 +41,7 @@ module ActiveScaffold
             unless column.search_sql.instance_of? Proc
               case search_ui
                 when :boolean, :checkbox
-                ["#{column.search_sql} = ?", column.column.type_cast(value)]
+                  ["#{column.search_sql} = ?", column.column.type_cast(value)]
                 when :integer, :decimal, :float
                   condition_for_numeric(column, value)
                 when :string, :range
@@ -69,18 +69,13 @@ module ActiveScaffold
 
       def condition_for_numeric(column, value)
         if !value.is_a?(Hash)
-          ["#{column.search_sql} = ?", column.column.nil? ? value.to_f : column.column.type_cast(value)]
+          ["#{column.search_sql} = ?", condition_value_for_numeric(column, value)]
         elsif value[:from].blank? or not ActiveScaffold::Finder::NumericComparators.include?(value[:opt])
           nil
         elsif value[:opt] == 'BETWEEN'
-          condition = "#{column.search_sql} BETWEEN ? AND ?"
-          if column.column.nil?
-            [condition, value[:from].to_f, value[:to].to_f]
-          else
-            [condition, column.column.type_cast(value[:from]), column.column.type_cast(value[:to])]
-          end
-        else
-          ["#{column.search_sql} #{value[:opt]} ?", column.column.nil? ? value[:from].to_f : column.column.type_cast(value[:from])]
+          ["#{column.search_sql} BETWEEN ? AND ?", condition_value_for_numeric(column, value[:from]), condition_value_for_numeric(column, value[:to])]
+         else
+          ["#{column.search_sql} #{value[:opt]} ?", condition_value_for_numeric(column, value[:from])]
         end
       end
 
@@ -103,21 +98,54 @@ module ActiveScaffold
           nil
         end
       end
-
-      def condition_for_datetime(column, value, like_pattern = nil)
-        conversion = value[:from][:hour].blank? && value[:to][:hour].blank? ? :to_date : :to_time
-        from_value, to_value = [:from, :to].collect do |field|
+      
+      def condition_value_for_datetime(value, conversion = :to_time)
+        if value.is_a? Hash
           Time.zone.local(*[:year, :month, :day, :hour, :minute, :second].collect {|part| value[field][part].to_i}) rescue nil
+        elsif value.respond_to?(:strftime)
+          value.send(conversion)
+        else
+          Time.zone.parse(value).in_time_zone.send(conversion) rescue nil
+        end unless value.nil? || value.blank?
+      end
+
+      def condition_value_for_numeric(column, value)
+        return value if value.nil?
+        value = i18n_number_to_native_format(value) if [:i18n_number, :currency].include?(column.options[:format])
+        case (column.search_ui || column.column.type)
+        when :integer   then value.to_i rescue value ? 1 : 0
+        when :float     then value.to_f
+        when :decimal   then ActiveRecord::ConnectionAdapters::Column.value_to_decimal(value)
+        else
+          value
         end
+      end
+
+      def i18n_number_to_native_format(value)
+        native = '.'
+        delimiter = I18n.t('number.format.delimiter')
+        separator = I18n.t('number.format.separator')
+
+        unless delimiter == native && !value.include?(separator) && value !~ /\.\d{3}$/
+          value.gsub(/[^0-9\-#{I18n.t('number.format.separator')}]/, '').gsub(I18n.t('number.format.separator'), native)
+        else
+          value
+        end
+      end
+            
+      def condition_for_datetime(column, value, like_pattern = nil)
+        conversion = column.column.type == :date ? :to_date : :to_time
+        from_value = condition_value_for_datetime(value[:from], conversion)
+        to_value = condition_value_for_datetime(value[:to], conversion)
 
         if from_value.nil? and to_value.nil?
           nil
         elsif !from_value
-          ["#{column.search_sql} <= ?", to_value.send(conversion).to_s(:db)]
+          ["#{column.search_sql} <= ?", to_value.to_s(:db)]
         elsif !to_value
-          ["#{column.search_sql} >= ?", from_value.send(conversion).to_s(:db)]
+          ["#{column.search_sql} >= ?", from_value.to_s(:db)]
         else
-          ["#{column.search_sql} BETWEEN ? AND ?", from_value.send(conversion).to_s(:db), to_value.send(conversion).to_s(:db)]
+          ["#{column.search_sql} BETWEEN ? AND ?", from_value.to_s(:db), to_value.to_s(:db)]
         end
       end
 
@@ -130,10 +158,13 @@ module ActiveScaffold
       end
       
       def condition_for_null_type(column, value, like_pattern = nil)
-        if ActiveRecord::ConnectionAdapters::Column::TRUE_VALUES.include?(value)
+        case value.to_sym
+        when :null
           ["#{column.search_sql} is null"]
-        else
+        when :not_null
           ["#{column.search_sql} is not null"]
+        else
+          nil
         end
       end
 
@@ -161,6 +192,12 @@ module ActiveScaffold
       :begins_with => '?%',
       :ends_with   => '%?'
     }
+    NullComparators = [
+      :null,
+      :not_null
+    ]
+    
+    
 
     def self.included(klass)
       klass.extend ClassMethods
@@ -221,35 +258,42 @@ module ActiveScaffold
       
       # create a general-use options array that's compatible with Rails finders
       finder_options = { :order => options[:sorting].try(:clause),
-                         :conditions => search_conditions,
+                         :where => search_conditions,
                          :joins => joins_for_finder,
-                         :include => options[:count_includes]}
+                         :includes => options[:count_includes]}
                          
       finder_options.merge! custom_finder_options
 
       # NOTE: we must use :include in the count query, because some conditions may reference other tables
-      count = klass.count(finder_options.reject{|k,v| [:select, :order].include? k}) unless options[:pagination] == :infinite
-
+      count_query = append_to_query(klass, finder_options.reject{|k, v| [:select, :order].include?(k)})
+      count = count_query.count unless options[:pagination] == :infinite
+  
       # Converts count to an integer if ActiveRecord returned an OrderedHash
       # that happens when finder_options contains a :group key
       count = count.length if count.is_a? ActiveSupport::OrderedHash
-
-      finder_options.merge! :include => full_includes
+      finder_options.merge! :includes => full_includes
 
       # we build the paginator differently for method- and sql-based sorting
       if options[:sorting] and options[:sorting].sorts_by_method?
         pager = ::Paginator.new(count, options[:per_page]) do |offset, per_page|
-          sorted_collection = sort_collection_by_column(klass.all(finder_options), *options[:sorting].first)
+          sorted_collection = sort_collection_by_column(append_to_query(klass, finder_options).all, *options[:sorting].first)
           sorted_collection = sorted_collection.slice(offset, per_page) if options[:pagination]
           sorted_collection
         end
       else
         pager = ::Paginator.new(count, options[:per_page]) do |offset, per_page|
           finder_options.merge!(:offset => offset, :limit => per_page) if options[:pagination]
-          klass.all(finder_options)
+          append_to_query(klass, finder_options).all
         end
       end
       pager.page(options[:page])
+    end
+    
+    def append_to_query(query, options)
+      options.assert_valid_keys :where, :select, :group, :order, :limit, :offset, :joins, :includes, :lock, :readonly, :from
+      options.reject{|k, v| v.blank?}.inject(query) do |query, (k, v)|
+        query.send((k.to_sym), v) 
+      end
     end
 
     def joins_for_finder

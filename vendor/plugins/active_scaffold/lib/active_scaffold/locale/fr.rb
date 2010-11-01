@@ -8,6 +8,8 @@
       :cancel => 'Annuler',
       :click_to_edit => 'Cliquer pour éditer',
       :close => 'Fermer',
+      :config_list => 'Configure',
+      :config_list_model => 'Configure Columns for %{model}',
       :create => 'Créer',
       :create_model => 'Créer %{model}',
       :create_another => 'Créer un autre',
@@ -73,6 +75,9 @@
       :past => 'Past', 
       :future => 'Future',
       :range => 'Range',
+      :seconds => 'Seconds',
+      :minutes => 'Minutes',
+      :hours => 'Hours',
       :days => 'Days',
       :weeks => 'Weeks',
       :months => 'Months',
@@ -80,7 +85,24 @@
       :optional_attributes => 'Further Options',
       :null => 'Null',
       :not_null => 'Not Null',
-
+      :date_picker_options => {
+        :weekHeader => 'Sm',
+				:firstDay => 1,
+		    :isRTL => false,
+		    :showMonthAfterYear => false,
+      },
+      :datetime_picker_options => {
+        :timeText => 'Heure'
+      },
+      :errors => {
+        :template => {
+          :header => {
+            :one =>    "1 error prohibited this %{model} from being saved.",
+            :other =>  "%{count} errors prohibited this %{model} from being saved"
+          },
+          :body => "There were problems with the following fields:"
+        }
+      },
       # error_messages
       :cant_destroy_record => "%{record} can't be destroyed",
       :internal_error => 'Erreur de la requête (code 500, Erreur interne)',

@@ -32,6 +32,10 @@ $(document).ready(function() {
       if (action_link.is_disabled()) {
         return false;
       } else {
+        // hack: rails jquery defaults to dataType script
+        // but activescaffold is returning html content
+        // which chrome does nt like
+        if (action_link.position) event.data_type = 'dummy';
         if (action_link.loading_indicator) action_link.loading_indicator.css('visibility','visible');
         action_link.disable();
       }
@@ -199,7 +203,7 @@ $(document).ready(function() {
     event.data_url = url;
     return true;
   });
-  $('input.update_form').live('change', function(event) {
+  $('input.update_form, select.update_form').live('change', function(event) {
       var element = $(this);
       var as_form = element.closest('form.as_form');
       $.ajax({
@@ -302,6 +306,65 @@ $(document).ready(function() {
     return Class;
   };
 })();
+
+/*
+ jQuery delayed observer
+ (c) 2007 - Maxime Haineault (max@centdessin.com)
+ 
+ Special thanks to Stephen Goguen & Tane Piper.
+ 
+ Slight modifications by Elliot Winkler
+*/
+
+if (typeof(jQuery.fn.delayedObserver) === 'undefined') { 
+  (function() {
+    var delayedObserverStack = [];
+    var observed;
+   
+    function delayedObserverCallback(stackPos) {
+      observed = delayedObserverStack[stackPos];
+      if (observed.timer) return;
+     
+      observed.timer = setTimeout(function(){
+        observed.timer = null;
+        observed.callback(observed.obj.val(), observed.obj);
+      }, observed.delay * 1000);
+  
+      observed.oldVal = observed.obj.val();
+    } 
+    
+    // going by
+    // <http://www.cambiaresearch.com/c4/702b8cd1-e5b0-42e6-83ac-25f0306e3e25/Javascript-Char-Codes-Key-Codes.aspx>
+    // I think these codes only work when using keyup or keydown
+    function isNonPrintableKey(event) {
+      var code = event.keyCode;
+      return (
+        event.metaKey ||
+        (code >= 9 && code <= 16) || (code >= 27 && code <= 40) || (code >= 91 && code <= 93) || (code >= 112 && code <= 145)
+      );
+    }
+   
+    jQuery.fn.extend({
+      delayedObserver:function(delay, callback){
+        $this = $(this);
+       
+        delayedObserverStack.push({
+          obj: $this, timer: null, delay: delay,
+          oldVal: $this.val(), callback: callback
+        });
+         
+        stackPos = delayedObserverStack.length-1;
+       
+        $this.keyup(function(event) {
+          if (isNonPrintableKey(event)) return;
+          observed = delayedObserverStack[stackPos];
+            if (observed.obj.val() == observed.obj.oldVal) return;
+            else delayedObserverCallback(stackPos);
+        });
+      }
+    });
+  })();
+};
 
 
 /*
@@ -441,12 +504,22 @@ var ActiveScaffold = {
     $(form_element + ":first *:input[type!=hidden]:first").focus();
   },
     
-  create_record_row: function(tbody, html) {
+  create_record_row: function(tbody, html, options) {
     if (typeof(tbody) == 'string') tbody = '#' + tbody;
     tbody = $(tbody);
-    tbody.prepend(html);
-
-    var new_row = tbody.children('tr:first-child');
+    
+    if (options.insert_at == 'top') {
+      tbody.prepend(html);
+      var new_row = tbody.children('tr.record:first-child');
+    } else if (options.insert_at == 'bottom') {
+      var rows = tbody.children('tr.record, tr.inline-adapter');
+      var new_row = null;
+      if (rows.length > 0) {
+        new_row = rows.last().after(html).next();
+      } else {
+        new_row = tbody.append(html).children().last();
+      }
+    }
     this.stripe(tbody);
     this.hide_empty_message(tbody);
     this.increment_record_count(tbody.closest('div.active-scaffold'));
@@ -482,7 +555,7 @@ var ActiveScaffold = {
   find_action_link: function(element) {
     if (typeof(element) == 'string') element = '#' + element;
     var as_adapter = $(element).closest('.as_adapter');
-    return ActiveScaffold.ActionLink.get(as_adapter);;
+    return ActiveScaffold.ActionLink.get(as_adapter);
   },
   
   scroll_to: function(element) {
@@ -549,11 +622,11 @@ var ActiveScaffold = {
     if (typeof(element) == 'string') element = '#' + element;
     var element = $(element);
     if (options.singular == false) {
-      if (!(options.id && $(options.id))) {
+      if (!(options.id && $('#' + options.id).size() > 0)) {
         element.append(content);
       }
     } else {
-      if (current = $('#' + element.attr('id') + '.association-record')[0]) {
+      if (current = $('#' + element.attr('id') + ' tr.association-record')[0]) {
         this.replace(current, content);
       } else {
         element.prepend(content);
@@ -569,6 +642,30 @@ var ActiveScaffold = {
     } else {
       this.replace_html(element, content);
     }
+  },
+  
+  sortable: function(element, controller, options, url_params) {
+    if (typeof(element) == 'string') element = '#' + element;
+    var element = $(element);
+    var sortable_options = {};
+    if (options.update === true) {
+      url_params.authenticity_token = $('meta[name=csrf-param]').attr('content');
+      sortable_options.update = function(event, ui) {
+         var url = controller + '/' + options.action + '?'
+         url += $(this).sortable('serialize',{key: encodeURIComponent($(this).attr('id') + '[]'), expression:/^[^_-](?:[A-Za-z0-9_-]*)-(.*)-row$/});
+         $.post(url.append_params(url_params));
+       }
+    }
+    element.sortable(sortable_options);
+  },
+
+  record_select_onselect: function(edit_associated_url, active_scaffold_id, id){
+    $.ajax({
+      url: edit_associated_url.split('--ID--').join(id),
+      error: function(xhr, textStatus, errorThrown){
+        ActiveScaffold.report_500_response(active_scaffold_id)
+      }
+    });
   }
 }
 
@@ -633,23 +730,27 @@ ActiveScaffold.ActionLink = {
   get: function(element) {
     if (typeof(element) == 'string') element = '#' + element;
     var element = $(element);
-    element.data(); // jquery 1.4.2 workaround
-    if (typeof(element.data('action_link')) === 'undefined' && !element.hasClass('as_adapter')) {
-      var parent = element.parent();
-      
-      if (parent && parent.is('td')) {
-        // record action
-        parent = parent.closest('tr.record');
-        var target = parent.find('a.as_action');
-        var loading_indicator = parent.find('td.actions .loading-indicator');
-        new ActiveScaffold.Actions.Record(target, parent, loading_indicator);
-      } else if (parent && parent.is('div')) {
-        //table action
-        new ActiveScaffold.Actions.Table(parent.find('a.as_action'), parent.closest('div.active-scaffold').find('tbody.before-header'), parent.find('.loading-indicator'));
+    if (element.length > 0) {
+      element.data(); // jquery 1.4.2 workaround
+      if (typeof(element.data('action_link')) === 'undefined' && !element.hasClass('as_adapter')) {
+        var parent = element.parent();
+        
+        if (parent && parent.is('td')) {
+          // record action
+          parent = parent.closest('tr.record');
+          var target = parent.find('a.as_action');
+          var loading_indicator = parent.find('td.actions .loading-indicator');
+          new ActiveScaffold.Actions.Record(target, parent, loading_indicator);
+        } else if (parent && parent.is('div')) {
+          //table action
+          new ActiveScaffold.Actions.Table(parent.find('a.as_action'), parent.closest('div.active-scaffold').find('tbody.before-header'), parent.find('.loading-indicator'));
+        }
+        element = $(element);
       }
-      element = $(element);
+      return element.data('action_link');
+    } else {
+      return null;
     }
-    return element.data('action_link');
   }
 };
 ActiveScaffold.ActionLink.Abstract = Class.extend({

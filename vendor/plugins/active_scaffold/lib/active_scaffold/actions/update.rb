@@ -20,7 +20,7 @@ module ActiveScaffold::Actions
     # for inline (inlist) editing
     def update_column
       do_update_column
-      render :action => 'update_column'
+      render :action => 'update_column', :locals => {:column_span_id => params[:editor_id] || params[:editorId]}
     end
 
     protected
@@ -63,6 +63,7 @@ module ActiveScaffold::Actions
     # A simple method to find and prepare a record for editing
     # May be overridden to customize the record (set default values, etc.)
     def do_edit
+      register_constraints_with_action_columns(nested.constrained_fields, active_scaffold_config.update.hide_nested_column ? [] : [:update]) if nested?
       @record = find_if_allowed(params[:id], :update)
     end
 

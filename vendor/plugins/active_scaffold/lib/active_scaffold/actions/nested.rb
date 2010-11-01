@@ -7,7 +7,7 @@ module ActiveScaffold::Actions
       base.module_eval do
         before_filter :register_constraints_with_action_columns
         before_filter :set_nested
-        before_filter :set_nested_list_label
+        before_filter :configure_nested
         include ActiveScaffold::Actions::Nested::ChildMethods if active_scaffold_config.model.reflect_on_all_associations.any? {|a| a.macro == :has_and_belongs_to_many}
       end
       base.before_filter :include_habtm_actions
@@ -29,21 +29,24 @@ module ActiveScaffold::Actions
     end
     
     def set_nested
-      if params[:parent_model] && params[:association] && params[:assoc_id]
+      if params[:parent_model] && ((params[:association] && params[:assoc_id]) || params[:named_scope])
         @nested = nil
-        active_scaffold_session_storage[:nested] = {:parent_model => params[:parent_model].constantize,
-                                                                  :name => params[:association].to_sym,
+        active_scaffold_session_storage[:nested] = {:parent_model => params[:parent_model].camelize.constantize,
+                                                                  :name => (params[:association] || params[:named_scope]).to_sym,
                                                                   :parent_id => params[:assoc_id]}
-        params.delete_if {|key, value| [:parent_model, :association, :assoc_id].include? key.to_sym}
+        params.delete_if {|key, value| [:parent_model, :association, :named_scope, :assoc_id].include? key.to_sym}
       end
     end
     
-    def set_nested_list_label
+    def configure_nested
       if nested?
         active_scaffold_session_storage[:list][:label] =  if nested.belongs_to?
-        as_(:nested_of_model, :nested_model => active_scaffold_config.model.model_name.human, :parent_model => nested_parent_record.to_label)
+          as_(:nested_of_model, :nested_model => active_scaffold_config.model.model_name.human, :parent_model => nested_parent_record.to_label)
         else
           as_(:nested_for_model, :nested_model => active_scaffold_config.list.label, :parent_model => nested_parent_record.to_label)
+        end
+        if nested.sorted?
+          active_scaffold_config.list.user.nested_default_sorting = {:table_name => active_scaffold_config.model.model_name, :default_sorting => nested.default_sorting}
         end
       end
     end
@@ -74,8 +77,10 @@ module ActiveScaffold::Actions
     end
     
     def beginning_of_chain
-      if nested? && nested.association.collection?
+      if nested? && nested.association && nested.association.collection?
         nested.parent_scope.send(nested.association.name)
+      elsif nested? && nested.scope
+        nested.parent_scope.send(nested.scope)
       else
         active_scaffold_config.model
       end
