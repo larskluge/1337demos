@@ -4,7 +4,7 @@ class Stuff < ActiveRecord::Base
 
   has_attached_file :stuff_file
   validates_attachment_presence :stuff_file
-  validates_attachment_size :stuff_file, :in => 1.byte..5.megabytes
+  validates_attachment_size :stuff_file, :in => 1.byte..10.megabytes
 
   has_many :comments, :as => :commentable, :dependent => :destroy, :order => 'created_at ASC'
 
