@@ -1,8 +1,8 @@
 require 'digest/sha1'
 
 class Demofile < ActiveRecord::Base
-	has_one :demo
-	attr_accessor :game, :gamemode, :version, :gamedir, :time_in_msec
+  has_one :demo
+  attr_accessor :game, :gamemode, :version, :gamedir, :time_in_msec
 
   has_attached_file :file
   validates_attachment_presence :file
@@ -47,26 +47,26 @@ class Demofile < ActiveRecord::Base
   end
 
 
-	def attachment_data
-		self.temp_data
-	end
+  def attachment_data
+    self.temp_data
+  end
 
-	def generate_sha1
-		self.sha1 = Digest::SHA1.hexdigest(file.to_file.open.gets(nil)) if file?
-	end
+  def generate_sha1
+    self.sha1 = Digest::SHA1.hexdigest(file.to_file.open.gets(nil)) if file?
+  end
 
   def find_same_demo
     self.class.find_by_sha1(sha1).demo if sha1.present?
   end
 
-	def read_demo
+  def read_demo
     @read_demo ||= begin
                      if file?
                        dr = DemoReader.parse(file.to_file.path)
                        dr if dr.valid
                      end
                    end
-	end
+  end
 
 
   protected
@@ -83,11 +83,11 @@ class Demofile < ActiveRecord::Base
     end
   end
 
-	def validate_gamemode
+  def validate_gamemode
     if errors.count.zero?
       errors.add_to_base 'Could not detect the gamemode!!' if read_demo.gamemode.nil?
     end
-	end
+  end
 
 end
 
