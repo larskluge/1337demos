@@ -70,7 +70,6 @@ Feature: Upload a demo
     Then I should see "Demo details"
     And I should see "Defrag cpm"
     And I should see /Map.*mega_wood/m
-    And show me the page
     And I should see "Kreator"
     And I should see /Time.*00:14\.752/m
 

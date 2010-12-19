@@ -8,7 +8,7 @@ gem 'rails', '3.0.0'
 # Deploy with Capistrano
 # gem 'capistrano'
 
-gem 'demo-reader', '>= 0.2.5'
+gem 'demo-reader', '>= 0.2.6'
 gem 'enumerated_attribute'
 gem 'exception_notification', :require => "exception_notifier", :git => "git://github.com/der-flo/exception_notification.git"
 gem 'gravtastic', '>= 2.1.0'

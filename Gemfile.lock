@@ -56,7 +56,7 @@ GEM
       cucumber (>= 0.8.0)
     culerity (0.2.12)
     database_cleaner (0.5.2)
-    demo-reader (0.2.5)
+    demo-reader (0.2.6)
     diff-lcs (1.1.2)
     enumerated_attribute (0.2.16)
       meta_programming (>= 0.2.1)
@@ -137,7 +137,7 @@ DEPENDENCIES
   cucumber
   cucumber-rails
   database_cleaner
-  demo-reader (>= 0.2.5)
+  demo-reader (>= 0.2.6)
   enumerated_attribute
   exception_notification!
   factory_girl
