@@ -62,7 +62,7 @@ class Demofile < ActiveRecord::Base
   def read_demo
     @read_demo ||= begin
                      if file?
-                       dr = DemoReader.parse(file.to_file.path)
+                       dr = DemoReader.parse(file.to_file.path, file.original_filename)
                        dr if dr.valid
                      end
                    end

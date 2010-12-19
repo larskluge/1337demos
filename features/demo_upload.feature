@@ -65,3 +65,12 @@ Feature: Upload a demo
     And I should see "XunderBIRD"
     And I should see /Time.*01:05\.904/m
 
+  Scenario: upload a dm68 demo with multiple finish times
+    Given I upload the demo "dm68/mega_wood[mdf.cpm]00.14.752(kreator.Germany).dm_68"
+    Then I should see "Demo details"
+    And I should see "Defrag cpm"
+    And I should see /Map.*mega_wood/m
+    And show me the page
+    And I should see "Kreator"
+    And I should see /Time.*00:14\.752/m
+
