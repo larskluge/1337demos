@@ -6,7 +6,7 @@ class Demofile < ActiveRecord::Base
 
   has_attached_file :file
   validates_attachment_presence :file
-  validates_attachment_size :file, :in => 1..2.megabytes
+  validates_attachment_size :file, :in => 1..10.megabytes
 
   before_validation :generate_sha1, :on => :create
 
