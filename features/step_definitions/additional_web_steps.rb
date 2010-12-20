@@ -19,3 +19,9 @@ Then /^(?:|I )should see \/([^\/]*)\/m(?: within "([^"]*)")?$/ do |regexp, selec
   end
 end
 
+# this is a hack coz page.check is not working for labels with text in child spans
+#
+When /^I check via input value "([^"]*)"$/ do |value|
+  page.find(:css, "input[value='#{value}']").set(true)
+end
+

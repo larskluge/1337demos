@@ -37,7 +37,10 @@ Feature: Upload a demo
     And I should see /Time.*00:16\.500/m
 
   Scenario: upload a wd11 freestyle demo
-    Given I upload the freestyle demo "wd11/freestyle.wd11" with title "laserboost + eb + airrocket = far landing ( using quad )" for players "trx:orb!tal, *korfi"
+    Given I upload the freestyle demo "wd11/freestyle.wd11" with title "laserboost + eb + airrocket = far landing ( using quad )" for players ""
+    When I check via input value "^0trx^2:^0orb!tal"
+    And  I check via input value "^7*^0k^7o^0r^7f^0i"
+    And I press "Submit"
     Then I should see "Demo details"
     And I should see /Game.*Warsow 0.5 freestyle/m
     And I should see /Map.*ganja-fs1/m
