@@ -1,7 +1,7 @@
 class DemofileWarsow < Demofile
 
   validates_format_of :game, :with => /^Warsow$/
-  validates_inclusion_of :version, :in => 9..11, :message => "must be a *.wd9, *.wd10, *.wd11 file"
+  validates_inclusion_of :version, :in => 9..12, :message => "must be a *.wd9, *.wd10, *.wd11, *.wd12 file"
   validates_inclusion_of :gamemode, :in => %w(race freestyle)
   validate :validate_gamedir
 

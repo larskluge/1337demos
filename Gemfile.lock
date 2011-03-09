@@ -1,6 +1,6 @@
 GIT
-  remote: git://github.com/der-flo/exception_notification.git
-  revision: 4026111bbb32474caca3f904c59996bba2e4113f
+  remote: https://github.com/smartinez87/exception_notification.git
+  revision: 78dafd567e9cb80fdd27652229378def16c4fe0e
   specs:
     exception_notification (1.0.0)
 
@@ -60,7 +60,7 @@ GEM
       cucumber (>= 0.8.0)
     culerity (0.2.13)
     database_cleaner (0.6.0)
-    demo-reader (0.2.6)
+    demo-reader (0.3.0)
     diff-lcs (1.1.2)
     enumerated_attribute (0.2.16)
       meta_programming (>= 0.2.1)
@@ -145,7 +145,7 @@ DEPENDENCIES
   cucumber
   cucumber-rails
   database_cleaner
-  demo-reader (>= 0.2.6)
+  demo-reader (>= 0.3.0)
   enumerated_attribute
   exception_notification!
   factory_girl
