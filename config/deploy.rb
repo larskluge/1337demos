@@ -50,6 +50,11 @@ task :after_update_code, :roles => :app do
     run "ln -nfs #{static_path}/#{dir} #{release_path}/#{dir}"
   end
 
+  # database.yml
+  #
+  run "rm '#{release_path}/config/database.yml'"
+  run "ln -s '#{deploy_to}/shared/config/database.yml' '#{release_path}/config/database.yml'"
+
   # fix active_scaffold issue
   # FIXME: remove this when issue is fixed by a newer version of active_scaffold (2010-09-08)
   #

@@ -31,8 +31,6 @@ test: &test
 production:
   <<: *common
   database: 1337demos_production
-  username: 1337prod
-  password: '!j4s7xJ?Hq4R'
 
 cucumber:
   <<: *test
