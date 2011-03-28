@@ -1,3 +1,5 @@
+require 'bundler/capistrano'
+
 set :application, '1337demos'
 
 
@@ -6,6 +8,8 @@ set :user, 'lars'
 set :repository,  "ssh://#{user}@1337demos.com/home/lars/git/1337demos.git"
 ssh_options[:forward_agent] = true
 
+# bundler
+set :bundle_cmd, "/var/lib/gems/1.9.1/bin/bundle"
 
 # git
 set :scm, 'git'
@@ -39,7 +43,7 @@ task :after_update_code, :roles => :app do
 
 
 
-  static_dirs = %w(data/maps/images public/stuffs public/demofiles public/system public/videos public/images/maps vendor/bundle)
+  static_dirs = %w(data/maps/images public/stuffs public/demofiles public/system public/videos public/images/maps)
   static_path = "#{deploy_to}/shared/static"
 
   static_dirs.each do |dir|
@@ -50,9 +54,5 @@ task :after_update_code, :roles => :app do
   # FIXME: remove this when issue is fixed by a newer version of active_scaffold (2010-09-08)
   #
   run "chmod -R a+w #{release_path}/public/javascripts/active_scaffold/default"
-
-  # use bundler to install depending gems
-  #
-  bundler.bundle_new_release
 end
 
