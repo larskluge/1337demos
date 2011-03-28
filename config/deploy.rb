@@ -58,5 +58,6 @@ task :after_update_code, :roles => :app do
   # FIXME: remove this when issue is fixed by a newer version of active_scaffold (2010-09-08)
   #
   run "chmod -R a+w #{release_path}/public/javascripts/active_scaffold/default"
+  run "chmod -R a+w #{release_path}/public/javascripts/active_scaffold/default/date_picker_bridge.js"
 end
 
