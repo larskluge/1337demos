@@ -10,16 +10,15 @@ gem 'rails', '~> 3.0.0'
 
 gem 'demo-reader', '>= 0.3.0'
 gem 'enumerated_attribute'
-gem 'exception_notification', :require => 'exception_notifier', :git => 'https://github.com/smartinez87/exception_notification.git'
+gem 'exception_notification', '>= 2.4', :require => 'exception_notifier'
 gem 'gravtastic', '>= 2.1.0'
 gem 'haml', '>= 3'
 gem 'mysql2'
 gem 'newrelic_rpm'
 gem 'paperclip'
 gem 'rack'
-gem 'will_paginate', '>= 3.0.pre2'
-
 gem 'rmagick', '>= 2', :require => 'RMagick'
+gem 'will_paginate', '>= 3.0.pre2'
 
 gem "ruby-debug#{"19" if RUBY_VERSION >= "1.9"}", :group => [:test, :cucumber]
 
