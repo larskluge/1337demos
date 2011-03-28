@@ -9,7 +9,7 @@ Factory.define :demo do |d|
 
   d.association :map
   d.association :demofile
-  d.players { |ps| [ps.association :player] }
+  d.players { |ps| [ps.association(:player)] }
 end
 
 Factory.define :map do |m|
