@@ -6,7 +6,6 @@ set :application, '1337demos'
 # ssh
 set :user, 'lars'
 set :repository,  "ssh://#{user}@1337demos.com/home/lars/git/1337demos.git"
-ssh_options[:forward_agent] = true
 
 # bundler
 set :bundle_cmd, "/var/lib/gems/1.9.1/bin/bundle"
