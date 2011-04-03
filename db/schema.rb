@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100906170840) do
+ActiveRecord::Schema.define(:version => 20110403200949) do
 
   create_table "announcements", :force => true do |t|
     t.text     "message"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20100906170840) do
     t.datetime "updated_at"
     t.string   "token",            :limit => 32
     t.string   "mail"
+    t.integer  "user_id"
   end
 
   add_index "comments", ["commentable_id"], :name => "commentable_id"
@@ -127,5 +128,16 @@ ActiveRecord::Schema.define(:version => 20100906170840) do
   end
 
   add_index "stuffs", ["sha1"], :name => "index_stuffs_on_sha1"
+
+  create_table "users", :force => true do |t|
+    t.string   "name"
+    t.string   "mail"
+    t.string   "passphrase"
+    t.boolean  "approved",   :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "users", ["name", "passphrase"], :name => "index_users_on_name_and_passphrase", :unique => true
 
 end
