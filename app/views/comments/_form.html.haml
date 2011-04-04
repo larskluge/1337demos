@@ -10,19 +10,20 @@
     , color codes:
     = render_nickname '^11^22^33^44^55^66^77^88^99^00'
 
-  %p
-    = f.label :name, "Your name*"
-    %br
-    = f.text_field :name, :class => "text"
+  = f.fields_for :user, f do |u|
+    %p
+      = u.label :name, "Your name*"
+      %br
+      = u.text_field :name, :class => "text"
 
-  %p
-    = f.label :mail_pass, "Mail for"
-    = link_to "Gravatar", "http://gravatar.com", :target => "_blank"
-    or passphrase for
-    = link_to "Identicon", "http://www.levitated.net/daily/lev9block.html", :target => "_blank"
-    * (will not be published)
-    %br
-    = f.text_field :mail_pass, :class => 'text'
+    %p
+      = u.label :mail_pass, "Mail for"
+      = link_to "Gravatar", "http://gravatar.com", :target => "_blank"
+      or passphrase for
+      = link_to "Identicon", "http://www.levitated.net/daily/lev9block.html", :target => "_blank"
+      * (will not be published)
+      %br
+      = u.text_field :mail_pass, :class => 'text'
 
   %p
     = f.label :message, "Message*"
