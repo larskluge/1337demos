@@ -3,12 +3,16 @@ class User < ActiveRecord::Base
 
   MAIL_REGEXP = /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
 
+  has_many :comments
+
   attr_accessible :name, :mail_pass
 
   validates_presence_of :name
   validates_length_of :mail, :in => 5..255, :allow_nil => true
   validates_format_of :mail, :with => MAIL_REGEXP, :allow_nil => true
   validates_length_of :passphrase, :in => 6..255, :on => :create
+
+  scope :approved, where(:approved => true)
 
   gravtastic :mail_pass
 
@@ -25,6 +29,15 @@ class User < ActiveRecord::Base
 
   def has_gravatar?
     mail_pass.present?
+  end
+
+  def approved?
+    approved
+  end
+
+  def approve!
+    self.approved = true
+    save!
   end
 
 end
