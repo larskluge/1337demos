@@ -15,6 +15,10 @@ LeetdemosPlatform::Application.routes.draw do
       as_routes
     end
 
+    resources :users do
+      as_routes
+    end
+
     resources :nicknames do
       as_routes
     end

@@ -1,9 +1,9 @@
-module Admin::StuffHelper
+module Admin::StuffsHelper
 
-  def name_column(record)
+  def stuff_name_column(record)
     c = record.comment
     if c
-      gravatar_tag(c, 20) + ' ' + mail_to(c.mail, render_nickname_plain(c.name))
+      "#{gravatar_tag(c, 20)} #{mail_to(c.mail, render_nickname_plain(c.name))}".html_safe
     else
       'anonymous'
     end

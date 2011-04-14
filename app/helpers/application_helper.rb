@@ -34,6 +34,7 @@ module ApplicationHelper
     semantic_menu :class => 'nav' do |root|
       root.add 'Home', admin_root_path
       root.add 'Announcements', admin_announcements_path
+      root.add 'Users', admin_users_path
       root.add 'Shouts', admin_shoutboxes_path
       root.add 'Demos', admin_demos_path
       root.add 'Players', admin_players_path
