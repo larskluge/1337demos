@@ -9,15 +9,18 @@
   %p
     = error_messages_for :stuff
     = error_messages_for 'Comment', :object => @stuff.comments.first
-  = fields_for 'stuff[comment_attributes]', @stuff.comment do |cf|
-    %p
-      = cf.label :name, 'Your Name*'
-      %br
-      = cf.text_field :name, :size => 30
-    %p
-      = cf.label :mail, 'Mail*'
-      %br
-      = cf.text_field :mail, :size => 30
+
+  = f.fields_for :comments, f do |cf|
+    = cf.fields_for :user, cf do |uf|
+      %p
+        = uf.label :name, 'Your Name*'
+        %br
+        = uf.text_field :name, :size => 30
+      %p
+        = uf.label :mail_pass, 'Mail*'
+        %br
+        = uf.text_field :mail_pass, :size => 30
+
     %p
       = cf.label :message, 'Please tell me why you upload that file and what is it good for...*'
       %br

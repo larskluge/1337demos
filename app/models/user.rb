@@ -17,13 +17,17 @@ class User < ActiveRecord::Base
   gravtastic :mail_pass
 
 
+  def self.find_by_name_and_unencrypted_passphrase(name, unencrypted_passphrase)
+    find_by_name_and_passphrase(name, encrypt_passphrase(unencrypted_passphrase))
+  end
+
   def mail_pass
     @mail_pass || mail || passphrase
   end
 
   def mail_pass=(val)
     self.mail = val if val =~ MAIL_REGEXP
-    self.passphrase = Digest::MD5.hexdigest(val) if val.present?
+    self.passphrase = self.class.encrypt_passphrase(val) if val.present?
     @mail_pass = val
   end
 
@@ -38,6 +42,13 @@ class User < ActiveRecord::Base
   def approve!
     self.approved = true
     save!
+  end
+
+
+  protected
+
+  def self.encrypt_passphrase(unencrypted_passphrase)
+    Digest::MD5.hexdigest(unencrypted_passphrase)
   end
 
 end

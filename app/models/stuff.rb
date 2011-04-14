@@ -7,6 +7,7 @@ class Stuff < ActiveRecord::Base
   validates_attachment_size :stuff_file, :in => 1.byte..10.megabytes
 
   has_many :comments, :as => :commentable, :dependent => :destroy, :order => 'created_at ASC'
+  accepts_nested_attributes_for :comments
 
 
 
@@ -16,15 +17,9 @@ class Stuff < ActiveRecord::Base
   validates_uniqueness_of :sha1, :message => "File was already uploaded."
 
 
-
-  def comment_attributes=(hash)
-    comments.build(hash)
-  end
-
   def comment
     comments.first
   end
-
 
 
 	def generate_sha1
