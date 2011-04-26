@@ -1,6 +1,4 @@
 class WelcomesController < ApplicationController
-  include Lib::PlayerInfo
-
 
   def index
     @title = ''
@@ -8,7 +6,7 @@ class WelcomesController < ApplicationController
     @feed_url = 'http://feeds.feedburner.com/1337demos-news'
 
     @comment ||= Comment.new
-    @comment.build_user(:name => player_info[:name], :mail_pass => player_info[:mail_pass]) unless @comment.user
+    @comment.build_user unless @comment.user
     @shoutboxes = Comment.welcome.approved.order('created_at DESC').paginate(:page => page_param, :per_page => 5)
   end
 
@@ -17,9 +15,8 @@ class WelcomesController < ApplicationController
     @comment = Comment.create(params[:comment].merge(:commentable_type => 'Welcome'))
 
     if @comment && @comment.valid?
-      persist_player_info(@comment)
-      flash[:notice] = 'Comment was successfully created.'
-      redirect_to root_path
+      redirect_to root_path,
+        :notice => @comment.user.approved? ? 'Thanks for your post.' : 'Thanks for your post, but I need to approve it manually to avoid spam.'
     else
       self.index
       render :action => 'index'

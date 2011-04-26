@@ -1,6 +1,4 @@
 class DemosController < ApplicationController
-  include Lib::PlayerInfo
-
 
   def index
     @title = "latest demos"
@@ -33,7 +31,7 @@ class DemosController < ApplicationController
   def show
     @demo = Demo.find(params[:id])
     @title = "#{@demo.players} on #{@demo.map}"
-    @comment = Comment.new(:name => player_info[:name], :mail_pass => player_info[:mail_pass])
+    @comment = Comment.new
     @video_player = (['flash', 'quicktime'].include?(session[:video_player])) ? session[:video_player] : 'flash'
     @top3 = @demo.toplist
 
@@ -110,7 +108,6 @@ class DemosController < ApplicationController
     hash.delete :token
 
     if (@comment = @demo.comments.create(hash)) && @comment.valid?
-      persist_player_info(@comment)
       flash[:notice] = 'Comment was successfully created.'
       redirect_to :action => 'show', :id => @demo
     else
@@ -141,4 +138,5 @@ class DemosController < ApplicationController
   end
 
 end
+
 
