@@ -14,7 +14,7 @@
     %p
       = u.label :name, "Your name*"
       %br
-      = u.text_field :name, :class => "text"
+      = u.text_field :name, :class => "text", :'data-player' => 'name'
 
     %p
       = u.label :mail_pass, "Mail for"
@@ -23,7 +23,7 @@
       = link_to "Identicon", "http://www.levitated.net/daily/lev9block.html", :target => "_blank"
       * (will not be published)
       %br
-      = u.text_field :mail_pass, :class => 'text'
+      = u.text_field :mail_pass, :class => 'text', :'data-player' => 'pass'
 
   %p
     = f.label :message, "Message*"

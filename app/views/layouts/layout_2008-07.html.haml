@@ -8,7 +8,7 @@
       = @title ? "#{@title}#{' - ' unless @title.empty?}1337demos.com" : default_title
     %link{:href => "/images/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}
     = stylesheet_link_tag 'lib/tipTip.css', 'layout_2008-07/layout.css', 'layout_2008-07/colorcodes.css', 'layout_2008-07/content.css', :cache => true
-    = javascript_include_tag 'lib/jquery-1.4.js', 'lib/jquery-ui-effects-1.7.2.min.js', 'lib/jquery.tipTip.minified.js', 'layout_2008-07/swfobject.js', 'layout_2008-07/json.js', 'layout_2008-07/cookie.js', 'layout_2008-07/rating.js', 'layout_2008-07/application.js', :cache => true
+    = javascript_include_tag 'lib/jquery-1.4.js', 'lib/jquery-ui-effects-1.7.2.min.js', 'lib/jquery.tipTip.minified.js', 'layout_2008-07/swfobject.js', 'layout_2008-07/json.js', 'layout_2008-07/cookie.js', 'layout_2008-07/rating.js', 'layout_2008-07/application.js', 'application.js', :cache => true
     = csrf_meta_tag
 
     - if @rss
