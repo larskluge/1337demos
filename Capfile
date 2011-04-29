@@ -63,5 +63,9 @@ task :after_update_code, :roles => :app do
   #
   run "chmod -R a+w #{release_path}/public/javascripts/active_scaffold/default"
   run "chmod -R a+w #{release_path}/public/javascripts/active_scaffold/default/date_picker_bridge.js"
+
+  # barista: compile coffeescripts
+  #
+  invoke_rake_task('barista:brew')
 end
 
