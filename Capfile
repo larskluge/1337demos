@@ -25,7 +25,7 @@ set :copy_exclude, ".git"
 set :rails_env, (ENV['RAILS_ENV'] || 'production')
 set :use_sudo, false
 set :keep_releases, 3
-set :rake, '/var/lib/gems/1.8/bin/rake'
+set :rake, '/var/lib/gems/1.9.1/bin/rake'
 set :bundle_cmd, "/var/lib/gems/1.9.1/bin/bundle"
 
 role :app, '1337demos.com'
