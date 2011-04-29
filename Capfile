@@ -38,18 +38,20 @@ task :after_update_code, :roles => :app do
   # make some paths writeable
   #
   writeable_paths = %w(config/environment.rb tmp public/javascripts public/stylesheets)
-  writeable_paths.each do |path|
-    run "chmod g+w #{release_path}/#{path}"
-    run "sudo chown www-1337demos #{release_path}/#{path}"
-  end
+  run writeable_paths.map { |path|
+    [
+      "chmod g+w #{release_path}/#{path}",
+      "sudo chown www-1337demos #{release_path}/#{path}"
+    ]
+  }.flatten.join(' && ')
 
   # symlink shared static files to new release
   #
   static_dirs = %w(data/maps/images public/stuffs public/demofiles public/system public/videos public/images/maps)
   static_path = "#{deploy_to}/shared/static"
-  static_dirs.each do |dir|
+  run static_dirs.map { |dir|
     run "ln -nfs #{static_path}/#{dir} #{release_path}/#{dir}"
-  end
+  }.join(' && ')
 
   # database.yml
   #
