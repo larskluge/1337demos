@@ -14,6 +14,7 @@ gem 'rack'
 gem 'rmagick', '2.5.2', :require => 'RMagick'
 gem 'will_paginate', '>= 3.0.pre2'
 gem 'meta_where'
+gem 'therubyracer' # to compile coffeescript on server
 gem 'barista'
 
 group :development, :test do
