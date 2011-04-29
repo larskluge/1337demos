@@ -50,7 +50,7 @@ task :after_update_code, :roles => :app do
   static_dirs = %w(data/maps/images public/stuffs public/demofiles public/system public/videos public/images/maps)
   static_path = "#{deploy_to}/shared/static"
   run static_dirs.map { |dir|
-    run "ln -nfs #{static_path}/#{dir} #{release_path}/#{dir}"
+    "ln -nfs #{static_path}/#{dir} #{release_path}/#{dir}"
   }.join(' && ')
 
   # database.yml
