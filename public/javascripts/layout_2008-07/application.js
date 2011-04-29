@@ -102,7 +102,7 @@ function common_content()
   $(".content [title]").tipTip({edgeOffset: 5});
 
 
-  var nickname = $("input#comment_name");
+  var nickname = $('[data-player=name]');
   if(nickname.length > 0) {
     var updatePreview = function() {
       $(this).next(".preview").html("Preview: " + $(this).as_html_nickname());
