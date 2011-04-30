@@ -86,7 +86,7 @@
   - for comment in @demo.comments
     - if comment.valid?
       %p
-        = gravatar_tag comment, 32
+        = gravatar_tag comment.user, 32
         = h comment.message
         %br
         = render_date comment.created_at

@@ -5,7 +5,7 @@ class DemosController < ApplicationController
     @headline = 'Latest demos.'
     @feed_url = 'http://feeds.feedburner.com/1337demos-latest-demos'
 
-    render_demos(Demo.scoped(nil))
+    render_demos(Demo.scoped)
   end
 
 
@@ -31,7 +31,8 @@ class DemosController < ApplicationController
   def show
     @demo = Demo.find(params[:id])
     @title = "#{@demo.players} on #{@demo.map}"
-    @comment = Comment.new
+    @comment ||= Comment.new
+    @comment.build_user unless @comment.user
     @video_player = (['flash', 'quicktime'].include?(session[:video_player])) ? session[:video_player] : 'flash'
     @top3 = @demo.toplist
 

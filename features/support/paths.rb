@@ -18,6 +18,8 @@ module NavigationHelpers
       '/maps?page=foo'
     when /map browser$/
       '/maps'
+    when /demos overview/
+      '/demos'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
