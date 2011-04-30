@@ -12,7 +12,7 @@
   - for shout in @shoutboxes
     .shout
       %p
-        = gravatar_tag shout, 32
+        = gravatar_tag shout.user, 32
         = h shout.message
         %br
         = render_date shout.created_at

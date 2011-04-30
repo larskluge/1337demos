@@ -181,9 +181,8 @@ module ApplicationHelper
 
   def gravatar_tag(record, size = 50)
     if record.respond_to?(:has_gravatar?) && record.has_gravatar?
-      alt = 'identified by ' + record.token_short if record.token_short
       url = record.gravatar_url(:size => size, :default => 'identicon')
-      image_tag url, :class => 'gravatar', :alt => alt, :title => alt, :size => [size,size].join('x')
+      image_tag url, :class => 'gravatar', :alt => '', :size => [size,size].join('x')
     end
   end
 
