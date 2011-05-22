@@ -6,9 +6,7 @@
   Upload demos of unsupported games, gamemodes or anything else you want to throw at me.
 
 = form_for @stuff, :url => stuffs_url, :html => { :multipart => true } do |f|
-  %p
-    = error_messages_for :stuff
-    = error_messages_for 'Comment', :object => @stuff.comments.first
+  = error_messages_for @stuff, @stuff.comments.first
 
   = f.fields_for :comments, f do |cf|
     = cf.fields_for :user, cf do |uf|

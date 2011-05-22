@@ -2,7 +2,7 @@
   Verify information.
 
 = form_tag demo_path(@demo), :method => :put do
-  = error_messages_for 'demo'
+  = error_messages_for @demo
   %table
     %tr
       %td Filename
