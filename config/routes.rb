@@ -2,50 +2,6 @@ LeetdemosPlatform::Application.routes.draw do
 
   # admin area ################################################################
 
-  namespace :admin do
-    root :to => 'welcomes#index'
-
-    resource :welcomes, :only => :index do
-      member do
-        delete :delete_cache
-      end
-    end
-
-    resources :announcements do
-      as_routes
-    end
-
-    resources :users do
-      as_routes
-    end
-
-    resources :nicknames do
-      as_routes
-    end
-
-    resources :stuffs do
-      as_routes
-    end
-
-    resources :comments
-    resources :shoutboxes, :only => :index
-
-    resources :demos do
-      member do
-        put :rerender
-      end
-    end
-
-    resources :players do
-      member do
-        get :merge
-      end
-
-      collection do
-        put :merge_players
-      end
-    end
-  end
 
 
   # normal ####################################################################
