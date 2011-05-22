@@ -16,6 +16,7 @@ gem 'will_paginate', '>= 3.0.pre2'
 gem 'meta_where'
 gem 'therubyracer' # to compile coffeescript on server
 gem 'barista'
+gem 'activeadmin'
 
 group :development, :test do
   gem "ruby-debug#{"19" if RUBY_VERSION >= "1.9"}"

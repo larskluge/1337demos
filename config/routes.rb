@@ -1,10 +1,14 @@
 LeetdemosPlatform::Application.routes.draw do
 
   # admin area ################################################################
+  #
 
+  ActiveAdmin.routes(self)
+  devise_for :admin_users, ActiveAdmin::Devise.config
 
 
   # normal ####################################################################
+  #
 
   root :to => "welcomes#index"
 

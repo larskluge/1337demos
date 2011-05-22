@@ -50,7 +50,7 @@ module ApplicationHelper
   end
 
   def render_linked_player(player)
-    link_to(render_nickname(player.main_nickname.nickname), :controller => 'players', :action => 'show', :id => player)
+    link_to render_nickname(player.main_nickname.nickname), player_path(player), class: 'nickname'
   end
 
   def render_linked_players(players)
