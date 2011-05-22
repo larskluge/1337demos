@@ -20,6 +20,8 @@ module NavigationHelpers
       '/maps'
     when /demos overview/
       '/demos'
+    when /comments overview/
+      '/comments'
 
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

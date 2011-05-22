@@ -20,5 +20,19 @@ Feature: Browse on demo lists and detail pages
     And I fill in "comment[message]" with "hello world!"
     And I press "Submit"
     Then I should see /hello world!/
+    When I go to comments overview
+    Then I should see /hello world!/
 
+  Scenario: make a spam comment on demo detail page
+    When I go to demos overview
+    Then I should see "Latest demos"
+    When I follow "Play"
+    Then I should see "Demo details"
+    And I fill in "comment[user_attributes][name]" with "spamer"
+    And I fill in "comment[user_attributes][mail_pass]" with "foobar"
+    And I fill in "comment[message]" with "some spam comment"
+    And I press "Submit"
+    Then I should not see "some spam comment"
+    When I go to comments overview
+    Then I should not see "some spam comment"
 

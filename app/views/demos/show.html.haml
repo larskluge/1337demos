@@ -83,7 +83,7 @@
       -# - form_tag :action => 'create_comment', :id => @demo do
       = render :partial => '/comments/form'
 
-  - for comment in @demo.comments
+  - for comment in @comments
     - if comment.valid?
       %p
         = gravatar_tag comment.user, 32

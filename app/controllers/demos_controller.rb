@@ -33,6 +33,7 @@ class DemosController < ApplicationController
     @title = "#{@demo.players} on #{@demo.map}"
     @comment ||= Comment.new
     @comment.build_user unless @comment.user
+    @comments = @demo.comments.approved
     @video_player = (['flash', 'quicktime'].include?(session[:video_player])) ? session[:video_player] : 'flash'
     @top3 = @demo.toplist
 
