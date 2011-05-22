@@ -10,5 +10,11 @@ ActiveAdmin.register User do
     column :created_at
     default_actions
   end
+
+  before_save do |user|
+    user.accessible = [:approved]
+    user.attributes = params[:user]
+  end
+
 end
 
