@@ -5,7 +5,7 @@ ActiveAdmin.register Comment, :as => 'Komment' do
 
   index do
     column :approved do |shout|
-      check_box_tag 'approved', '1', shout.user.approved
+      approve_check_box_tag_for shout.user
     end
     column :name do |shout|
       render_nickname_plain(shout.user.name)

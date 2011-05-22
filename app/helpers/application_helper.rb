@@ -211,5 +211,9 @@ module ApplicationHelper
     }.join.html_safe
   end
 
+  def approve_check_box_tag_for user
+    check_box_tag 'approved', '1', user.approved, :'data-toggle-approve-for-user' => user.id
+  end
+
 end
 

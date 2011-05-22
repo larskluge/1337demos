@@ -47,5 +47,22 @@ $(function(){
 
     return false;
   });
+
+  $('[data-toggle-approve-for-user]').live('click', function() {
+    var cb = $(this);
+    $.ajax({
+      type: 'PUT',
+      url: '/admin/users/' + cb.attr('data-toggle-approve-for-user') + '.json',
+      data: {
+        user: {
+          approved: this.checked
+        }
+      },
+      dataType: 'json',
+      success: function(data) {
+        cb.parent().css({backgroundColor: 'lightyellow'});
+      }
+    });
+  });
 });
 
