@@ -26,8 +26,7 @@ group :development, :test do
   gem 'cucumber-rails'
   gem 'cucumber'
   gem 'factory_girl'
-  # gem 'rspec-rails'
-  gem 'spork'
+  gem 'rspec-rails'
   gem 'launchy'    # So you can do Then show me the page
 end
 
