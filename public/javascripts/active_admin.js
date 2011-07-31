@@ -47,25 +47,5 @@ $(function(){
 
     return false;
   });
-
-  $('[data-toggle-approve-for-user]').live('click', function() {
-    var
-      cb = $(this),
-      userId = cb.attr('data-toggle-approve-for-user');
-
-    $.ajax({
-      type: 'PUT',
-      url: '/admin/users/' + userId + '.json',
-      data: {
-        user: {
-          approved: this.checked
-        }
-      },
-      dataType: 'json',
-      success: function(data) {
-        $('[data-toggle-approve-for-user=' + userId + ']').parent().css({backgroundColor: 'lightyellow'});
-      }
-    });
-  });
 });
 
