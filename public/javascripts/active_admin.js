@@ -49,10 +49,13 @@ $(function(){
   });
 
   $('[data-toggle-approve-for-user]').live('click', function() {
-    var cb = $(this);
+    var
+      cb = $(this),
+      userId = cb.attr('data-toggle-approve-for-user');
+
     $.ajax({
       type: 'PUT',
-      url: '/admin/users/' + cb.attr('data-toggle-approve-for-user') + '.json',
+      url: '/admin/users/' + userId + '.json',
       data: {
         user: {
           approved: this.checked
@@ -60,7 +63,7 @@ $(function(){
       },
       dataType: 'json',
       success: function(data) {
-        cb.parent().css({backgroundColor: 'lightyellow'});
+        $('[data-toggle-approve-for-user=' + userId + ']').parent().css({backgroundColor: 'lightyellow'});
       }
     });
   });
