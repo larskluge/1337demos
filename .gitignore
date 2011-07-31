@@ -9,6 +9,8 @@ Makefile
 mkmf.log
 public/demofiles/**/*
 public/images/maps/thumbs/**/*
+public/javascripts/admin/application.js
+public/javascripts/application.js
 public/stuffs/**/*
 public/system/**/*
 rerun.txt
