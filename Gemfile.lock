@@ -90,6 +90,8 @@ GEM
     gherkin (2.2.9)
       json (~> 1.4.6)
       term-ansicolor (~> 1.0.5)
+    gitreport (0.0.5)
+      json
     gravtastic (3.1.0)
     haml (3.0.25)
     has_scope (0.5.0)
@@ -209,6 +211,7 @@ DEPENDENCIES
   enumerated_attribute
   exception_notification (>= 2.4)
   factory_girl
+  gitreport
   gravtastic (>= 2.1.0)
   haml (>= 3)
   launchy
