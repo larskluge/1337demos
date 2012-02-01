@@ -126,7 +126,7 @@ GEM
       activesupport (~> 3.0.2)
       arel (~> 2.0.2)
     mime-types (1.16)
-    mysql2 (0.2.6)
+    mysql2 (0.3.11)
     newrelic_rpm (2.13.4)
     nokogiri (1.4.4)
     orm_adapter (0.0.5)
