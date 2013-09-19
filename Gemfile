@@ -19,7 +19,7 @@ gem 'therubyracer' # to compile coffeescript on server
 gem 'will_paginate', '>= 3.0.pre2'
 
 group :development, :test do
-  gem "ruby-debug#{"19" if RUBY_VERSION >= "1.9"}"
+  # gem "ruby-debug#{"19" if RUBY_VERSION >= "1.9"}"
   gem 'capybara'
   gem 'cucumber'
   gem 'cucumber-rails'
