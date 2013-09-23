@@ -4,7 +4,7 @@ class Demofile < ActiveRecord::Base
   has_one :demo
   attr_accessor :game, :gamemode, :version, :gamedir, :time_in_msec
 
-  has_attached_file :file
+  has_attached_file :file, url: '/system/:attachment/:id/:style/:filename'
   validates_attachment_presence :file
   validates_attachment_size :file, :in => 1..10.megabytes
 
@@ -51,8 +51,12 @@ class Demofile < ActiveRecord::Base
     self.temp_data
   end
 
+  def path
+    file.queued_for_write[:original].try(:path) || file.path
+  end
+
   def generate_sha1
-    self.sha1 = Digest::SHA1.hexdigest(file.to_file.open.gets(nil)) if file?
+    self.sha1 = Digest::SHA1.hexdigest(File.read(path)) if file?
   end
 
   def find_same_demo
@@ -62,7 +66,7 @@ class Demofile < ActiveRecord::Base
   def read_demo
     @read_demo ||= begin
                      if file?
-                       dr = DemoReader.parse(file.to_file.path, :hint_for_time => file.original_filename)
+                       dr = DemoReader.parse(path, :hint_for_time => file.original_filename)
                        dr if dr.valid
                      end
                    end
