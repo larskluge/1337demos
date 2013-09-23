@@ -1,3 +1,13 @@
+#= require lib/jquery-1.4
+#= require lib/jquery-ui-effects-1.7.2.min
+#= require lib/jquery.tipTip.minified
+#= require layout_2008-07/swfobject
+#= require layout_2008-07/json
+#= require layout_2008-07/cookie
+#= require layout_2008-07/rating
+#= require layout_2008-07/application
+
+
 localStorageSupport = ->
   try
     window.localStorage?
