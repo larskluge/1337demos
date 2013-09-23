@@ -186,7 +186,7 @@ module ApplicationHelper
   end
 
   def error_messages_for(*records)
-    messages = records.map { |rec| rec.errors.full_messages }.flatten
+    messages = records.compact.map { |rec| rec.errors.full_messages }.flatten
     content_tag :ul, messages.map { |msg|
       content_tag :li, msg, class: 'error'
     }.join.html_safe

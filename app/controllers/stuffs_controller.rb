@@ -17,7 +17,7 @@ class StuffsController < ApplicationController
 
 	def new
 		@title = 'stuff upload'
-		@stuff = Stuff.new(:comments_attributes => [:user_attributes => {}])
+		@stuff = Stuff.new
 	end
 
 	def create
