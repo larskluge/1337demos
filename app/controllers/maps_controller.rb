@@ -1,5 +1,3 @@
-#require "RMagick"
-
 class MapsController < ApplicationController
 
   def index

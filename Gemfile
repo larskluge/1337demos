@@ -14,7 +14,6 @@ gem 'meta_where'
 gem 'mysql2'
 gem 'paperclip'
 gem 'rack'
-#gem 'rmagick', '2.5.2', :require => 'RMagick'
 gem 'mini_magick'
 gem 'will_paginate', '>= 3.0.pre2'
 
