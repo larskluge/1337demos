@@ -11,7 +11,6 @@ gem 'haml', '>= 3'
 gem 'mini_magick'
 gem 'mysql2'
 gem 'paperclip'
-gem 'rack'
 gem 'simple-navigation'
 gem 'will_paginate', '>= 3.0.pre2'
 
@@ -32,6 +31,7 @@ group :development, :test do
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'factory_girl'
+  gem 'pry-byebug'
   gem 'rspec-rails'
   gem 'shoulda'
 end
