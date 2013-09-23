@@ -11,25 +11,6 @@ module ApplicationHelper
   end
 
 
-  def render_mainmenu
-    semantic_menu :class => 'nav' do |root|
-      root.add 'Home', root_path
-      root.add 'Demos', demos_path do |demos|
-        demos.add 'All demos', demos_path
-        demos.add 'Race demos', race_demos_path
-        demos.add 'Freestyle demos', freestyle_demos_path
-        demos.add 'Comments', comments_path
-        demos.add 'Map browser', maps_path
-      end
-      root.add 'Players', players_path
-      root.add 'Upload', new_demofile_path do |upload|
-        upload.add 'Demo upload', new_demofile_path
-        upload.add 'Stuff upload', new_stuff_path
-      end
-    end
-  end
-
-
   def render_admin_mainmenu
     semantic_menu :class => 'nav' do |root|
       root.add 'Home', admin_root_path
