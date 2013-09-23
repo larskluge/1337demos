@@ -84,7 +84,7 @@ module ApplicationHelper
   end
 
   def render_nickname_plain(name)
-    strip_tags(render_nickname(name))
+    strip_tags(render_nickname(name)).html_safe
   end
 
 
