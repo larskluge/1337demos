@@ -27,6 +27,8 @@ end
 
 group :development, :test do
   gem 'capybara'
+  gem 'capybara-screenshot'
+  gem 'capybara-webkit'
   gem 'cucumber'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
