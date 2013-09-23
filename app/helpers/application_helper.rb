@@ -81,15 +81,15 @@ module ApplicationHelper
 
 
 
-  def color_index(color_code)
-    color_code > '0' ? color_code.to_i : 0
+  def color_index color_code
+    if color_code > '0' then color_code.to_i else 0 end
   end
 
 
   def render_nickname(name)
     return nil if name.blank?
 
-    html = h(name).gsub(/\^([^\^])/){"</span><span class=\"c#{self.color_index($1)}\">"}
+    html = name.gsub(/\^([^\^])/){"</span><span class=\"c#{self.color_index($1)}\">"}
     html = "<span class=\"c7\">#{html}</span>"
 
     html.gsub(/\^\^/, '^').html_safe
