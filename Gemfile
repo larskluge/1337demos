@@ -12,6 +12,7 @@ gem 'mini_magick'
 gem 'mysql2'
 gem 'paperclip'
 gem 'rack'
+gem 'simple-navigation'
 gem 'will_paginate', '>= 3.0.pre2'
 
 group :assets do
