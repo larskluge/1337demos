@@ -57,12 +57,12 @@
         .left
           \&copy;
           = Date.today.year
-          = link_to '1337demos.com', :only_path => false
+          = link_to '1337demos.com', root_path
 
         .right.partner
           partner:
           %a{:href => "http://www.warsow-race.net/", :rel => "external"}
-            %img{:alt => "warsow-race.net", :height => "15", :src => "/images/banner/partner/banner_racenet_80x15.gif", :width => "80"}
+            = image_tag 'banner/partner/banner_racenet_80x15.gif', size: '80x15', alt: 'warsow-race.net'
           %a{:href => "http://www.warsow-arena.de/forum/", :rel => "external"}
-            %img{:alt => "warsow-arena.de", :height => "15", :src => "/images/banner/partner/banner_warsowarena_80x15.gif", :width => "80"}
+            = image_tag 'banner/partner/banner_warsowarena_80x15.gif', size: '80x15', alt: 'warsow-arena.de'
 
