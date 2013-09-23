@@ -42,7 +42,7 @@ img
 	z-index: 100;
 	width: 100%;
 
-	background-image: url(/images/layout_2008-07/bg_header_outer_right.gif);
+	background-image: image-url('layout_2008-07/bg_header_outer_right.gif');
 	background-position: 90% top;
 }
 
@@ -57,7 +57,7 @@ img
 {
 	width: 10%;
 	float: left;
-	background-image: url(/images/layout_2008-07/bg_header_outer_left.gif);
+	background-image: image-url('layout_2008-07/bg_header_outer_left.gif');
 	background-position: right top;
 }
 
@@ -65,20 +65,20 @@ img
 {
 	width: 80%;
 	float: left;
-	background-image: url(/images/layout_2008-07/bg_header.gif);
+	background-image: image-url('layout_2008-07/bg_header.gif');
 	background-position: left top;
 }
 
 .header .inner_left
 {
-	background-image: url(/images/layout_2008-07/bg_header_inner_left.gif);
+	background-image: image-url('layout_2008-07/bg_header_inner_left.gif');
 	background-position: left top;
 	background-repeat: no-repeat;
 }
 
 .header .inner_right
 {
-	background-image: url(/images/layout_2008-07/bg_header_inner_right.gif);
+	background-image: image-url('layout_2008-07/bg_header_inner_right.gif');
 	background-position: right top;
 	background-repeat: no-repeat;
 }
@@ -107,7 +107,7 @@ img
 	left: 0;
 	bottom: 0;
 	width: 10%;
-	background-image: url(/images/layout_2008-07/bg_left.gif);
+	background-image: image-url('layout_2008-07/bg_left.gif');
 	background-position: right top;
 }
 
@@ -118,7 +118,7 @@ img
 	right: 0;
 	bottom: 0;
 	width: 10%;
-	background-image: url(/images/layout_2008-07/bg_left.gif);
+	background-image: image-url('layout_2008-07/bg_left.gif');
 	background-position: left top;
 }
 
@@ -127,7 +127,7 @@ img
 	width: 80%;
 	margin: 0 auto;
 	padding-bottom: 23px;
-	background-image: url(/images/layout_2008-07/bg_content_top.gif);
+	background-image: image-url('layout_2008-07/bg_content_top.gif');
 	background-position: left 129px;
 	background-repeat: repeat-x;
 	background-attachment: fixed;
@@ -141,7 +141,7 @@ img
 	bottom: 0;
 	width: 48px;
 	padding-left: 9px;
-	background-image: url(/images/layout_2008-07/bg_content_shaddow_left.gif);
+	background-image: image-url('layout_2008-07/bg_content_shaddow_left.gif');
 	background-position: left top;
 	background-repeat: repeat-y;
 }
@@ -153,7 +153,7 @@ img
 	right: 10%;
 	bottom: 0;
 	width: 48px;
-	background-image: url(/images/layout_2008-07/bg_content_shaddow_right.gif);
+	background-image: image-url('layout_2008-07/bg_content_shaddow_right.gif');
 	background-position: right top;
 	background-repeat: repeat-y;
 }
@@ -162,7 +162,7 @@ img
 {
 	width: 39px;
 	height: 483px;
-	background-image: url(/images/layout_2008-07/bg_content_left.gif);
+	background-image: image-url('layout_2008-07/bg_content_left.gif');
 	background-position: left top;
 	background-repeat: no-repeat;
 }
@@ -171,7 +171,7 @@ img
 {
 	width: 39px;
 	height: 483px;
-	background-image: url(/images/layout_2008-07/bg_content_right.gif);
+	background-image: image-url('layout_2008-07/bg_content_right.gif');
 	background-position: left top;
 	background-repeat: no-repeat;
 }
@@ -184,7 +184,7 @@ img
 
 body, .content .inner
 {
-	background-image: url(/images/layout_2008-07/bg_content_freshthinking.gif);
+	background-image: image-url('layout_2008-07/bg_content_freshthinking.gif');
 	background-position: 70% 129px;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
@@ -203,7 +203,7 @@ body, .content .inner
 
 	color: #808693;
 	background-color: black;
-	background-image: url(/images/layout_2008-07/bg_footer.gif);
+	background-image: image-url('layout_2008-07/bg_footer.gif');
 	background-position: left top;
 }
 
@@ -263,7 +263,7 @@ body, .content .inner
 	font-size: 16px;
 	font-weight: bold;
 	text-decoration: none;
-	background: url(/images/layout_2008-07/bg_nav_active.png) no-repeat 0 0;
+	background: image-url('layout_2008-07/bg_nav_active.png') no-repeat 0 0;
 }
 
 .nav .active a,
@@ -305,7 +305,7 @@ body, .content .inner
 	font-size: 11px;
 	font-weight: normal;
 	text-decoration: none;
-	background: left 10px no-repeat url(/images/layout_2008-07/bg_subnav_active.gif);
+	background: left 10px no-repeat image-url('layout_2008-07/bg_subnav_active.gif');
 }
 
 .nav li.active ul li.active a,
