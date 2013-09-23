@@ -8,7 +8,7 @@ development:
   username: '1337demos'
   password: '1337demos'
 
-test:
+test: &test
   adapter: mysql2
   encoding: utf8
   reconnect: false
@@ -18,3 +18,6 @@ test:
   username: '1337demos'
   password: '1337demos'
 
+
+cucumber:
+  <<: *test

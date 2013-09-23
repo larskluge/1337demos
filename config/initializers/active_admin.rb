@@ -74,5 +74,7 @@ ActiveAdmin.setup do |config|
   #
   # To load a javascript file:
   config.register_javascript 'admin/application.js'
+
+  config.allow_comments = false
 end
 

@@ -54,6 +54,8 @@ module LeetdemosPlatform
 
     # use jquery by default
     config.action_view.javascript_expansions[:defaults] = ['lib/jquery-1.4.2', 'jquery-ujs/src/rails']
+
+    config.assets.enabled = true
   end
 end
 
