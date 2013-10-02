@@ -67,9 +67,6 @@ GEM
     capybara-screenshot (0.3.14)
       capybara (>= 1.0, < 3)
       launchy
-    capybara-webkit (1.0.0)
-      capybara (~> 2.0, >= 2.0.2)
-      json
     climate_control (0.0.3)
       activesupport (>= 3.0)
     cocaine (0.5.1)
@@ -108,6 +105,9 @@ GEM
     enumerated_attribute (0.2.16)
       meta_programming (>= 0.2.1)
     erubis (2.7.0)
+    exception_notification (4.0.1)
+      actionmailer (>= 3.0.4)
+      activesupport (>= 3.0.4)
     execjs (2.0.1)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
@@ -253,13 +253,13 @@ DEPENDENCIES
   binding_of_caller
   capybara
   capybara-screenshot
-  capybara-webkit
   coffee-rails
   cucumber
   cucumber-rails
   database_cleaner
   demo-reader (>= 0.3.0)
   enumerated_attribute
+  exception_notification
   factory_girl
   gravtastic (>= 2.1.0)
   haml (>= 3)

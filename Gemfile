@@ -13,6 +13,7 @@ gem 'mysql2'
 gem 'paperclip'
 gem 'simple-navigation'
 gem 'will_paginate', '>= 3.0.pre2'
+gem 'exception_notification'
 
 group :assets do
   gem 'coffee-rails'
