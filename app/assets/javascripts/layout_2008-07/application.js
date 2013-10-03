@@ -196,7 +196,7 @@ function demos()
     if(res.length > 1)
     {
       var no = res[1];
-      var imgurl = '/images/maps/thumbs/200x150/' + no + '.jpeg';
+      var imgurl = 'http://placehold.it/200x150';
       var div = jQuery('<div class="map_preview"><img src="'+imgurl+'" width="200" height="150" alt="" /></div>');
       div.hide();
 
