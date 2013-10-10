@@ -1,6 +1,6 @@
 class Map < ActiveRecord::Base
-
   include FlexRating
+  attr_accessible :name
 
   has_many :demos
 

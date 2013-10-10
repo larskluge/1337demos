@@ -1,4 +1,5 @@
 class Rating < ActiveRecord::Base
+  attr_accessible :key
 
 	belongs_to :rateable, :polymorphic => true
 

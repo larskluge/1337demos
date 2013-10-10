@@ -1,6 +1,7 @@
 require 'digest/sha1'
 
 class Stuff < ActiveRecord::Base
+  attr_accessible :comments_attributes, :stuff_file
 
   has_attached_file :stuff_file
   validates_attachment_presence :stuff_file

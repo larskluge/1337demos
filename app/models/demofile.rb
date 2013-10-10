@@ -3,6 +3,7 @@ require 'digest/sha1'
 class Demofile < ActiveRecord::Base
   has_one :demo
   attr_accessor :game, :gamemode, :version, :gamedir, :time_in_msec
+  attr_accessible :file, :game, :gamemode, :version, :gamedir, :time_in_msec
 
   has_attached_file :file, url: '/system/:attachment/:id/:style/:filename'
   validates_attachment_presence :file
