@@ -16,5 +16,5 @@ Feature: Upload stuff
     And I fill in "stuff[comments_attributes][0][user_attributes][mail_pass]" with "foo@bar.com"
     And I fill in "stuff[comments_attributes][0][message]" with "important message"
     And I press "Upload"
-    Then I should see "file name must be set"
+    Then I should see "Stuff file can't be blank"
 

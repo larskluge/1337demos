@@ -21,9 +21,13 @@ class Stuff < ActiveRecord::Base
     comments.first
   end
 
+  def path
+    stuff_file.queued_for_write[:original].try(:path) || stuff_file.path
+  end
 
-	def generate_sha1
-		self.sha1 = Digest::SHA1.hexdigest(stuff_file.to_file.open.gets(nil)) if stuff_file?
-	end
+  def generate_sha1
+    self.sha1 = Digest::SHA1.hexdigest(File.read(path)) if stuff_file?
+  end
+
 end
 

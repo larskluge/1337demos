@@ -18,6 +18,9 @@ class StuffsController < ApplicationController
 	def new
 		@title = 'stuff upload'
 		@stuff = Stuff.new
+    comment = Comment.new
+    comment.user = User.new
+    @stuff.comments = [comment]
 	end
 
 	def create
