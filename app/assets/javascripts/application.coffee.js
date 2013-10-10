@@ -1,4 +1,5 @@
 #= require lib/jquery-1.4
+#= require rails
 #= require lib/jquery-ui-effects-1.7.2.min
 #= require lib/jquery.tipTip.minified
 #= require layout_2008-07/swfobject
