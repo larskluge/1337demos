@@ -241,6 +241,9 @@ GEM
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.37)
+    uglifier (2.2.1)
+      execjs (>= 0.3.0)
+      multi_json (~> 1.0, >= 1.0.2)
     warden (1.2.3)
       rack (>= 1.0)
     will_paginate (3.0.5)
@@ -277,4 +280,5 @@ DEPENDENCIES
   sass-rails
   shoulda
   simple-navigation
+  uglifier
   will_paginate (>= 3.0.pre2)
