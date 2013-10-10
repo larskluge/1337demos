@@ -46,4 +46,22 @@ LeetdemosPlatform::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  config.action_mailer.delivery_method = :sendmail
+  # Allow Exception Notification to send mail
+  #Defaults to:
+  # config.action_mailer.sendmail_settings = {
+  #   :location => '/usr/sbin/sendmail',
+  #   :arguments => '-i -t'
+  # }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+
 end
+
+LeetdemosPlatform::Application.config.middleware.use ExceptionNotification::Rack,
+   :email => {
+    :email_prefix => "[Address] ",
+    :sender_address => %{"notifier" <notifier@1337demos.com>},
+    :exception_recipients => %w{l@larskluge.com, chrsln93@gmail.com}
+  }

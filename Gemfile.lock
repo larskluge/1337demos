@@ -108,6 +108,9 @@ GEM
     enumerated_attribute (0.2.16)
       meta_programming (>= 0.2.1)
     erubis (2.7.0)
+    exception_notification (4.0.1)
+      actionmailer (>= 3.0.4)
+      activesupport (>= 3.0.4)
     execjs (2.0.1)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
@@ -260,6 +263,7 @@ DEPENDENCIES
   database_cleaner
   demo-reader (>= 0.3.0)
   enumerated_attribute
+  exception_notification
   factory_girl
   gravtastic (>= 2.1.0)
   haml (>= 3)
