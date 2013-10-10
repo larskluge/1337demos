@@ -1,6 +1,6 @@
 $ ->
 
-  $('[data-toggle-approve-for-user]').live('click', ->
+  $('[data-toggle-approve-for-user]').live 'click', ->
     cb = $(this)
     userId = cb.attr('data-toggle-approve-for-user')
 
@@ -17,7 +17,6 @@ $ ->
         $('[data-toggle-approve-for-user=' + userId + ']')
           .parent()
           .css({backgroundColor: 'lightyellow'})
-      }
     })
 
 
