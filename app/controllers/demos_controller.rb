@@ -34,7 +34,6 @@ class DemosController < ApplicationController
     @comment ||= Comment.new
     @comment.build_user unless @comment.user
     @comments = @demo.comments.approved
-    @video_player = (['flash', 'quicktime'].include?(session[:video_player])) ? session[:video_player] : 'flash'
     @top3 = @demo.toplist
 
     @prev = Demo.first(:conditions => ['id < ? AND data_correct', @demo.id])
