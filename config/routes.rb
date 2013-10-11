@@ -66,18 +66,11 @@ LeetdemosPlatform::Application.routes.draw do
   match '/webservices/update_demo/:id' => 'webservices#update_demo', :as => :update_demo
 
 
-  # thumbnail generation route ################################################
-
-  match 'images/maps/thumbs/:size/:id.jpeg' => 'maps#thumb', :constraints => {:size => /[0-9]+x[0-9]+/}
-
-
-
   # admin area ################################################################
   #
 
   ActiveAdmin.routes(self)
   devise_for :admin_users, ActiveAdmin::Devise.config
-
 
 end
 
