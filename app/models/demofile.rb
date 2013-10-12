@@ -1,5 +1,3 @@
-require 'digest/sha1'
-
 class Demofile < ActiveRecord::Base
   has_one :demo
   attr_accessor :game, :gamemode, :version, :gamedir, :time_in_msec

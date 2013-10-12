@@ -1,5 +1,3 @@
-require 'tempfile'
-
 class DemofilesController < ApplicationController
 
 	def index
