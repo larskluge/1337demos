@@ -3,7 +3,7 @@ class Demofile < ActiveRecord::Base
   attr_accessor :game, :gamemode, :version, :gamedir, :time_in_msec
   attr_accessible :file, :game, :gamemode, :version, :gamedir, :time_in_msec
 
-  has_attached_file :file, url: '/system/:attachment/:id/:style/:filename'
+  has_attached_file :file, path: '/demofiles/:id/:filename'
   validates_attachment_presence :file
   validates_attachment_size :file, :in => 1..10.megabytes
 
@@ -50,22 +50,34 @@ class Demofile < ActiveRecord::Base
     self.temp_data
   end
 
-  def path
-    file.queued_for_write[:original].try(:path) || file.path
-  end
-
   def generate_sha1
-    self.sha1 = Digest::SHA1.hexdigest(File.read(path)) if file?
+    if file?
+      with_local_file do |local_path|
+        self.sha1 = Digest::SHA1.hexdigest(File.read(local_path))
+      end
+    end
   end
 
   def find_same_demo
     self.class.find_by_sha1(sha1).demo if sha1.present?
   end
 
+  def with_local_file &block
+    if path = file.queued_for_write[:original].try(:path)
+      yield path
+    else
+      tempfile = Tempfile.new('attachment')
+      file.copy_to_local_file(:original, tempfile.path)
+      res = yield tempfile.path
+      tempfile
+      res
+    end
+  end
+
   def read_demo
     @read_demo ||= begin
-                     if file?
-                       dr = DemoReader.parse(path, :hint_for_time => file.original_filename)
+                     with_local_file do |local_path|
+                       dr = DemoReader.parse(local_path, hint_for_time: file.original_filename)
                        dr if dr.valid
                      end
                    end

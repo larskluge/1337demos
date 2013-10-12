@@ -72,6 +72,15 @@ module LeetdemosPlatform
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Upload files to S3
+    config.paperclip_defaults = {
+      storage: :s3,
+      s3_credentials: {
+        access_key_id: ENV['AWS_ACCESS_KEY_ID'],
+        secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
+      }
+    }
   end
 end
 

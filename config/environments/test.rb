@@ -40,5 +40,7 @@ LeetdemosPlatform::Application.configure do
   #
   ::SYS_MAP_IMAGES.replace(File.join(Rails.root, 'test/assets/data/maps/images/'))
   ::SYS_MAP_IMAGE_THUMBS.replace(File.join(Rails.root, 'tmp/functional_tests', rand(36**8).to_s(36), 'images/maps/thumbs/'))
+
+  config.paperclip_defaults[:s3_credentials][:bucket] = '1337demos-test'
 end
 

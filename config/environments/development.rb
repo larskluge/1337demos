@@ -34,5 +34,7 @@ LeetdemosPlatform::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.paperclip_defaults[:s3_credentials][:bucket] = '1337demos-development'
 end
 

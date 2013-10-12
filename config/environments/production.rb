@@ -66,6 +66,8 @@ LeetdemosPlatform::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   ActionMailer::Base.delivery_method = :smtp
+
+  config.paperclip_defaults[:s3_credentials][:bucket] = '1337demos'
 end
 
 LeetdemosPlatform::Application.config.middleware.use ExceptionNotification::Rack,
