@@ -1,34 +1,38 @@
-Factory.define :demo do |d|
-  d.version 11
-  d.gamemode "race"
-  d.time 14300
-  d.data_correct true
-  d.status "rendered"
-  d.position 1
-  d.game "Warsow"
+FactoryGirl.define do
+  factory :demo do
+    version 11
+    gamemode "race"
+    time 14300
+    data_correct true
+    status "rendered"
+    position 1
+    game "Warsow"
 
-  d.association :map
-  d.association :demofile
-  d.players { |ps| [ps.association(:player)] }
-end
-
-Factory.define :map do |m|
-  m.sequence(:name) { |n| "wdm#{n}" }
-end
-
-Factory.define :demofile do |df|
-  df.gamemode "race"
-  df.file File.new(File.dirname(__FILE__) + "/assets/demofiles/wd11/race_killua-hykon.wd11")
-end
-
-Factory.define :player do |p|
-  p.after_create do |p|
-    nickname = Factory(:nickname, :player => p)
-    p.update_attribute(:main_nickname_id, nickname.id)
+    association :map
+    association :demofile
+    players { |ps| [ps.association(:player)] }
   end
-end
 
-Factory.define :nickname do |nick|
-  nick.sequence(:nickname) { |n| "^7soh^8#^9die^1.^9viper#{n}" }
+  factory :map do
+    sequence(:name) { |n| "wdm#{n}" }
+  end
+
+  factory :demofile do
+    gamemode "race"
+    file File.new(File.dirname(__FILE__) + "/assets/demofiles/wd11/race_killua-hykon.wd11")
+  end
+
+  factory :player do
+    after(:create) do |p|
+      nickname = create(:nickname, :player => p)
+      p.main_nickname_id = nickname.id
+      p.save!
+    end
+  end
+
+  factory :nickname do
+    sequence(:nickname) { |n| "^7soh^8#^9die^1.^9viper#{n}" }
+  end
+
 end
 

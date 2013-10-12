@@ -1,4 +1,6 @@
 class Player < ActiveRecord::Base
+  attr_accessible :main_nickname_id
+
   has_many :demos, :through => :demos_player
   has_many :demos_player, :dependent => :destroy
 

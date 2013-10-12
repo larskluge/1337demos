@@ -1,6 +1,6 @@
 class Demo < ActiveRecord::Base
   include FlexRating
-  attr_accessible :version, :game, :gamemode, :time, :players, :data_correct, :comments_attributes, :title
+  attr_accessible :version, :game, :gamemode, :time, :players, :data_correct, :comments_attributes, :title, :demofile_id, :map, :status, :main_nickname_id
 
   enum_attr :status, %w(^uploaded processing rendered)
 
