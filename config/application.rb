@@ -1,5 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
+require 'dotenv'
+Dotenv.load
+
 require 'rails/all'
 
 if defined?(Bundler)

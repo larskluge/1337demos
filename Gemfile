@@ -5,7 +5,9 @@ gem 'rails', '3.2.14'
 
 gem 'activeadmin'
 gem 'demo-reader', '>= 0.3.0'
+gem 'dotenv', require: false
 gem 'enumerated_attribute'
+gem 'exception_notification'
 gem 'gravtastic', '>= 2.1.0'
 gem 'haml', '>= 3'
 gem 'mini_magick'
@@ -13,7 +15,6 @@ gem 'mysql2'
 gem 'paperclip'
 gem 'simple-navigation'
 gem 'will_paginate', '>= 3.0.pre2'
-gem 'exception_notification'
 
 group :assets do
   gem 'coffee-rails'
