@@ -1,13 +1,18 @@
-# This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara-screenshot/rspec'
-
-# Requires supporting ruby files with custom matchers and macros, etc,
-# in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/support/fixtures/vcr_cassettes'
+  c.hook_into :webmock # or :fakeweb
+  c.ignore_localhost = true
+  c.preserve_exact_body_bytes do |http_message|
+    http_message.headers['Content-Type'].to_a.any?{|ct| ct =~ /^(image|binary)\//}
+  end
+end
 
 RSpec.configure do |config|
   # ## Mock Framework
@@ -40,5 +45,26 @@ RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
 
   Capybara.javascript_driver = :webkit
+
+  config.before :suite do
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.around :each do |example|
+    begin
+      DatabaseCleaner.start
+      example.call
+    ensure
+      DatabaseCleaner.clean
+    end
+  end
+
+  config.around :each, :vcr do |example|
+    name = example.metadata[:full_description].split(/\s+/, 2).join("/").underscore.gsub(/[^\w\/]+/, "_")
+    options = example.metadata.slice(:record, :match_requests_on).except(:example_group)
+    VCR.use_cassette(name, options) { example.call }
+  end
 end
 

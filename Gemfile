@@ -24,12 +24,17 @@ group :assets do
   gem 'uglifier'
 end
 
+group :development, :test do
+  gem 'pry-byebug'
+  gem 'pry-rails'
+end
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
 end
 
-group :development, :test do
+group :test do
   gem 'capybara'
   gem 'capybara-screenshot'
   gem 'capybara-webkit'
@@ -37,9 +42,9 @@ group :development, :test do
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'factory_girl'
-  gem 'pry-byebug'
-  gem 'pry-rails'
   gem 'rspec-rails'
   gem 'shoulda'
+  gem 'vcr'
+  gem 'webmock'
 end
 
