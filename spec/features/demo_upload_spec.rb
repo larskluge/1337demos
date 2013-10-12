@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'Demo Upload' do
 
-  it 'uploads a demo' do
+  it 'uploads a demo', :vcr do
     visit new_demofile_path
     attach_file 'demofile[file]', Rails.root.join('test/assets/demofiles/cmc02gead_16.4.wd10')
     click_button 'Upload'
