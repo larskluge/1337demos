@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131011203748) do
+ActiveRecord::Schema.define(:version => 20131012040351) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -148,21 +148,6 @@ ActiveRecord::Schema.define(:version => 20131011203748) do
 
   add_index "ratings", ["rateable_id"], :name => "rateable_id_idx"
   add_index "ratings", ["rateable_type"], :name => "rateable_type_idx"
-
-  create_table "stuffs", :force => true do |t|
-    t.integer  "size"
-    t.string   "filename"
-    t.string   "content_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "sha1",                    :limit => 40
-    t.string   "stuff_file_file_name"
-    t.string   "stuff_file_content_type"
-    t.integer  "stuff_file_file_size"
-    t.datetime "stuff_file_updated_at"
-  end
-
-  add_index "stuffs", ["sha1"], :name => "index_stuffs_on_sha1"
 
   create_table "users", :force => true do |t|
     t.string   "name"
