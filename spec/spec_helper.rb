@@ -47,18 +47,16 @@ RSpec.configure do |config|
   Capybara.javascript_driver = :webkit
 
   config.before :suite do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.clean
     DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.around :each do |example|
-    begin
-      DatabaseCleaner.start
-      example.call
-    ensure
-      DatabaseCleaner.clean
-    end
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
   end
 
   config.around :each, :vcr do |example|
