@@ -41,5 +41,11 @@ describe 'Demos', vcr: true, match_requests_on: [:body] do
     expect(page).to have_no_content(/this is spam/)
   end
 
+  it 'loads atom feed' do
+    Demo.last.update_attribute(:status, :rendered)
+    visit demos_path(format: :atom)
+    expect(page).to have_css('entry', count: 1)
+  end
+
 end
 
