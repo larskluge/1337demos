@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: put
-    uri: https://1337demos-test.s3.amazonaws.com/demofiles/1/cmc02gead_16.4.wd10
+    uri: https://1337demos-test.s3.amazonaws.com/demofiles/2/cmc02gead_16.4.wd10
     body:
       encoding: ASCII-8BIT
       string: !binary |-
@@ -1215,9 +1215,9 @@ http_interactions:
       User-Agent:
       - aws-sdk-ruby/1.11.1 ruby/2.0.0 x86_64-darwin12.5.0
       Date:
-      - Sat, 12 Oct 2013 19:06:07 GMT
+      - Sat, 12 Oct 2013 20:51:45 GMT
       Authorization:
-      - AWS AKIAIPT4PNWGNBY5W74Q:F2jsTJSLiGO9RH93owH5PQLK9go=
+      - AWS AKIAIPT4PNWGNBY5W74Q:CAsILsJe1OQjdWQKqNSqSqH5ngc=
       Accept:
       - '*/*'
   response:
@@ -1226,11 +1226,11 @@ http_interactions:
       message: OK
     headers:
       X-Amz-Id-2:
-      - Buvorg7uGhBF7Sx4fFJ745+30uHln9G0tNznlx4au2h1iswYwM11Ug4Anf7yL59D
+      - WNANuTkIiacovarnE1Ss6iDVOY2G0Ii6qAr7QIfvM84/q1L6lUkmMh4RxgzgOFot
       X-Amz-Request-Id:
-      - 7FF746A764F7CEFC
+      - 03FC63DD4CDE2D64
       Date:
-      - Sat, 12 Oct 2013 19:06:40 GMT
+      - Sat, 12 Oct 2013 20:52:21 GMT
       Etag:
       - '"6ec6ab1e59a77722ee2c2dad44cebb09"'
       Content-Length:
@@ -1241,10 +1241,10 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Sat, 12 Oct 2013 19:06:08 GMT
+  recorded_at: Sat, 12 Oct 2013 20:51:47 GMT
 - request:
     method: get
-    uri: https://1337demos-test.s3.amazonaws.com/demofiles/1/cmc02gead_16.4.wd10
+    uri: https://1337demos-test.s3.amazonaws.com/demofiles/2/cmc02gead_16.4.wd10
     body:
       encoding: US-ASCII
       string: ''
@@ -1256,9 +1256,9 @@ http_interactions:
       User-Agent:
       - aws-sdk-ruby/1.11.1 ruby/2.0.0 x86_64-darwin12.5.0
       Date:
-      - Sat, 12 Oct 2013 19:06:08 GMT
+      - Sat, 12 Oct 2013 20:51:47 GMT
       Authorization:
-      - AWS AKIAIPT4PNWGNBY5W74Q:/TvDwBxed9mArNzIBSO9ikzMZ7A=
+      - AWS AKIAIPT4PNWGNBY5W74Q:dgA8YekF2OSHOU75jxjC21j+/OA=
       Accept:
       - '*/*'
   response:
@@ -1267,13 +1267,13 @@ http_interactions:
       message: OK
     headers:
       X-Amz-Id-2:
-      - QbDhGaqv6voxybn7B6lULb3j/qaHxgUeT0i5aIoOs9JIMmJ0qGigYlgo7SU7wAos
+      - gTSlRYgia33LlGsfSnsUk2nMxsIS1yOfzFUgBAsMHTz4wycN5Abn7V6+wygc2h+U
       X-Amz-Request-Id:
-      - DA6917B62B768E89
+      - 42F38D18CAB924BB
       Date:
-      - Sat, 12 Oct 2013 19:06:40 GMT
+      - Sat, 12 Oct 2013 20:52:22 GMT
       Last-Modified:
-      - Sat, 12 Oct 2013 19:06:40 GMT
+      - Sat, 12 Oct 2013 20:52:21 GMT
       Etag:
       - '"6ec6ab1e59a77722ee2c2dad44cebb09"'
       Accept-Ranges:
@@ -2485,10 +2485,10 @@ http_interactions:
         mAEADOcEAAEACf//AgQACghfBwAAAAAAAAgAAAAzAAAAC9wIAAAQ5wQADScA
         9ONPAPCYAQDumAEAEOcEAAEACf//AgQAChgADwcAAAAAAAAIAAAA/////w==
     http_version: 
-  recorded_at: Sat, 12 Oct 2013 19:06:08 GMT
+  recorded_at: Sat, 12 Oct 2013 20:51:47 GMT
 - request:
     method: get
-    uri: https://1337demos-test.s3.amazonaws.com/demofiles/1/cmc02gead_16.4.wd10
+    uri: https://1337demos-test.s3.amazonaws.com/demofiles/2/cmc02gead_16.4.wd10
     body:
       encoding: US-ASCII
       string: ''
@@ -2500,9 +2500,9 @@ http_interactions:
       User-Agent:
       - aws-sdk-ruby/1.11.1 ruby/2.0.0 x86_64-darwin12.5.0
       Date:
-      - Sat, 12 Oct 2013 19:06:09 GMT
+      - Sat, 12 Oct 2013 20:51:48 GMT
       Authorization:
-      - AWS AKIAIPT4PNWGNBY5W74Q:c05I33PFdqQ2xakx8mqbdaR7NQc=
+      - AWS AKIAIPT4PNWGNBY5W74Q:gBi5jgDct3Regkg8u6IYYc6+12M=
       Accept:
       - '*/*'
   response:
@@ -2511,13 +2511,13 @@ http_interactions:
       message: OK
     headers:
       X-Amz-Id-2:
-      - GWB3flEOnj79xRjiz7Bgkfc8nsUVhEXeAWUMLgIfGyDWF5cuxsQ1x+koB4bdOEjU
+      - TlKb38OTdAcdU6GuTiAogWze9M/rvW5WU9VNRlDQx9KZkokSac4jrtymy0hXk+AX
       X-Amz-Request-Id:
-      - F3E2E48653ED3DC9
+      - 06CF9AFCBE8B5D72
       Date:
-      - Sat, 12 Oct 2013 19:06:41 GMT
+      - Sat, 12 Oct 2013 20:52:24 GMT
       Last-Modified:
-      - Sat, 12 Oct 2013 19:06:40 GMT
+      - Sat, 12 Oct 2013 20:52:21 GMT
       Etag:
       - '"6ec6ab1e59a77722ee2c2dad44cebb09"'
       Accept-Ranges:
@@ -3729,5 +3729,5 @@ http_interactions:
         mAEADOcEAAEACf//AgQACghfBwAAAAAAAAgAAAAzAAAAC9wIAAAQ5wQADScA
         9ONPAPCYAQDumAEAEOcEAAEACf//AgQAChgADwcAAAAAAAAIAAAA/////w==
     http_version: 
-  recorded_at: Sat, 12 Oct 2013 19:06:09 GMT
+  recorded_at: Sat, 12 Oct 2013 20:51:49 GMT
 recorded_with: VCR 2.6.0

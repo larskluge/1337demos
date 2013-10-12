@@ -43,6 +43,7 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.treat_symbols_as_metadata_keys_with_true_values = true
+  config.include Helpers
 
   Capybara.javascript_driver = :webkit
 
@@ -51,18 +52,19 @@ RSpec.configure do |config|
     DatabaseCleaner.clean_with(:truncation)
   end
 
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
+  config.around :each do |example|
+    begin
+      DatabaseCleaner.start
+      example.run
+    ensure
+      DatabaseCleaner.clean
+    end
   end
 
   config.around :each, :vcr do |example|
-    name = example.metadata[:full_description].split(/\s+/, 2).join("/").underscore.gsub(/[^\w\/]+/, "_")
+    name = example.metadata[:full_description].split(/\s+/, 2).join('/').underscore.gsub(/[^\w\/]+/, '_')
     options = example.metadata.slice(:record, :match_requests_on).except(:example_group)
-    VCR.use_cassette(name, options) { example.call }
+    VCR.use_cassette(name, options) { example.run }
   end
 end
 
