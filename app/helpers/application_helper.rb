@@ -21,7 +21,6 @@ module ApplicationHelper
       root.add 'Players', admin_players_path
       root.add 'Comments', admin_comments_path
       root.add 'Nicknames', admin_nicknames_path
-      root.add 'Stuff', admin_stuffs_path
     end
   end
 

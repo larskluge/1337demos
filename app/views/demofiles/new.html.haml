@@ -12,9 +12,6 @@
 
   - unless @valid
     %p.error
-      If you have trouble with uploading demos and you want me to check it,
-      %br
-      please upload this demo with a good error report to
-      = link_to "stuff upload.", new_stuff_path
-      Thanks.
+      If you have any trouble with uploading demos please mail the file to us and tell us what's wrong:
+      = mail_to 'l@larskluge.com'
 

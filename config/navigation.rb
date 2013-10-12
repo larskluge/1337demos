@@ -81,11 +81,7 @@ SimpleNavigation::Configuration.run do |navigation|
       sub.item :maps, 'Maps', maps_path
     end
     primary.item :players, 'Players', players_path
-    primary.item :upload, 'Upload', new_demofile_path do |sub|
-      sub.item :demo_upload, 'Demo Upload', new_demofile_path
-      sub.item :stuff_upload, 'Stuff Upload', new_stuff_path
-    end
-
+    primary.item :upload, 'Upload', new_demofile_path
   end
 
 end

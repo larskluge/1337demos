@@ -12,8 +12,6 @@ module NavigationHelpers
       '/'
     when /demo upload/
       '/demofiles/new'
-    when /stuff upload/
-      '/stuffs/new'
     when /map browser on a broken page/
       '/maps?page=foo'
     when /map browser$/

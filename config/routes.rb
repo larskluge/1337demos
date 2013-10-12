@@ -51,12 +51,6 @@ LeetdemosPlatform::Application.routes.draw do
     end
   end
 
-  resources :stuffs do
-    collection do
-      get :thanks
-    end
-  end
-
   resources :videos, :only => :show, :defaults => {:format => "mp4"}
 
 

@@ -1,7 +1,6 @@
 ActiveAdmin.register Comment, :as => 'Komment' do
   scope :shouts, default: true do |comments| comments.where(commentable_type: 'Welcome') end
   scope :demos do |comments| comments.where(commentable_type: 'Demo') end
-  scope :stuffs do |comments| comments.where(commentable_type: 'Stuff') end
 
   index do
     column :approved do |shout|
