@@ -38,6 +38,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'factory_girl'
   gem 'pry-byebug'
+  gem 'pry-rails'
   gem 'rspec-rails'
   gem 'shoulda'
 end
