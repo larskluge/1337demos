@@ -10,14 +10,14 @@ describe 'Maps', vcr: true, match_requests_on: [:body] do
 
   it 'shows all maps' do
     visit maps_path
-    expect(page).to have_content('Listing maps')
+    expect(page).to have_content('Maps')
     expect(page).to have_no_content('No maps found')
     expect(page).to have_css('.map_image_thumb', count: 3)
   end
 
   it 'shows first page when page parameter is invalid' do
     visit maps_path(page: 'foo')
-    expect(page).to have_content('Listing maps')
+    expect(page).to have_content('Maps')
     expect(page).to have_css('.map_image_thumb', count: 3)
   end
 

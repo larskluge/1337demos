@@ -8,7 +8,7 @@ describe 'Demos', vcr: true, match_requests_on: [:body] do
 
   it 'views demos overview page' do
     visit demos_path
-    expect(page).to have_content('Latest demos')
+    expect(page).to have_content('All Demos')
     click_on 'Play'
     expect(page).to have_content('Demo details')
   end
