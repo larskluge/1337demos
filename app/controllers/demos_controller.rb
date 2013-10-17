@@ -1,8 +1,8 @@
 class DemosController < ApplicationController
 
   def index
-    @title = "latest demos"
-    @headline = 'Latest demos.'
+    @title = "All Demos"
+    @headline = 'All Demos'
     @feed_url = 'http://feeds.feedburner.com/1337demos-latest-demos'
 
     render_demos(Demo.scoped)
@@ -11,16 +11,16 @@ class DemosController < ApplicationController
 
 
   def race
-    @title = 'latest race demos'
-    @headline = 'Latest race demos.'
+    @title = 'Race Demos'
+    @headline = 'Race Demos'
     @feed_url = 'http://feeds.feedburner.com/1337demos-latest-race-demos'
 
     render_demos(Demo.race)
   end
 
   def freestyle
-    @title = 'latest freestyle demos'
-    @headline = 'Latest freestyle demos.'
+    @title = 'Freestyle Demos'
+    @headline = 'Freestyle Demos'
     @feed_url = 'http://feeds.feedburner.com/1337demos-latest-freestyle-demos'
 
     render_demos(Demo.freestyle)
