@@ -8,7 +8,6 @@
       = @title ? "#{@title}#{' - ' unless @title.empty?}1337demos.com" : default_title
     %link{:href => "/images/favicon.ico", :rel => "shortcut icon", :type => "image/x-icon"}
     = stylesheet_link_tag 'application'
-    = javascript_include_tag 'application'
     = csrf_meta_tag
 
     - if @rss
@@ -53,4 +52,6 @@
             = image_tag 'banner/partner/banner_racenet_80x15.gif', size: '80x15', alt: 'warsow-race.net'
           %a{:href => "http://www.warsow-arena.de/forum/", :rel => "external"}
             = image_tag 'banner/partner/banner_warsowarena_80x15.gif', size: '80x15', alt: 'warsow-arena.de'
+
+    = javascript_include_tag 'application'
 
