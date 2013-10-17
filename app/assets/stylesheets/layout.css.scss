@@ -2,10 +2,8 @@ html, body
 {
 	color: black;
 	background-color: #ccc;
-
-	font-family: Tahoma, Arial;
+	font-family: Tahoma, Verdana, Arial;
 	font-size: 11px;
-
 	margin: 0;
 	padding: 0;
 	height: 100%; /* needed for container min-height */
@@ -254,6 +252,7 @@ body, .content .inner
 
 .nav a
 {
+  @extend .headline-font;
 	display: block;
 	color: #cccfd6;
 	height: 38px;

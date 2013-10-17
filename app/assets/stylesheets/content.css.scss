@@ -29,6 +29,7 @@ body, p, ol, ul, td
 
 h1, h2, h3
 {
+  @extend .headline-font;
 	margin: 1em 0  0.5em 0;
 	font-weight: bold;
 	clear: both;
@@ -37,12 +38,13 @@ h1, h2, h3
 
 h1
 {
-	font-size: 20px;
+	font-size: 48px;
+  margin: 0.5em 0 0.75em;
 }
 
 h2
 {
-	font-size: 16px;
+	font-size: 36px;
 	font-weight: bold;
 	clear: both;
 }
@@ -567,5 +569,11 @@ form
 	text-align: center;
 	width: 125px;
 	min-height: 1.5em;
+}
+
+
+.welcomes-index h1
+{
+  font-size: 100px
 }
 
