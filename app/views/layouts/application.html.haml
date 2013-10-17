@@ -13,18 +13,6 @@
 
     - if @rss
       %link{:href => @rss[:url], :rel => "alternate", :title => @rss[:title], :type => "application/rss+xml"}
-    - if Rails.env == 'production'
-      :javascript
-        var _gaq = _gaq || [];
-        _gaq.push(['_setAccount', 'UA-2232412-7']);
-        _gaq.push(['_trackPageview']);
-
-        (function() {
-          var ga = document.createElement('script');
-          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-          ga.setAttribute('async', 'true');
-          document.getElementsByTagName("head")[0].appendChild(ga);
-        })();
 
   %body{:class => classname_for_page}
     .main
