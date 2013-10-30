@@ -1,3 +1,6 @@
+//= require lib/jquery-1.4
+//= require active_admin_vendor
+
 /* Active Admin JS */
 
 $(function(){
