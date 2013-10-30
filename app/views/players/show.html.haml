@@ -23,5 +23,5 @@
       %td= link_to 'Play', :controller => 'demos', :action => 'show', :id => demo
   %tr
     %td{:colspan => "4", :style => "text-align: center; padding-top: 1em"}
-      = will_paginate @demos, :inner_window => 2, :outer_window => 0
+      = paginate @demos
 

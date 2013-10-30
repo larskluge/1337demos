@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
 
 	def index
-		@comments = Comment.demo.approved.paginate(:page => page_param, :per_page => 20, :order => 'created_at DESC')
+		@comments = Comment.demo.approved.order('created_at DESC').page(page_param).per(20)
 		@title = "latest comments"
 	end
 

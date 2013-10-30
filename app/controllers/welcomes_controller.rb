@@ -7,7 +7,7 @@ class WelcomesController < ApplicationController
 
     @comment ||= Comment.new
     @comment.build_user unless @comment.user
-    @shoutboxes = Comment.welcome.approved.order('created_at DESC').paginate(:page => page_param, :per_page => 5)
+    @shoutboxes = Comment.welcome.approved.order('created_at DESC').page(page_param).per(5)
   end
 
 

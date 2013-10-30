@@ -5,4 +5,4 @@
     %td{:style => "vertical-align: top; padding: 0 0 0 20px"}
       = render :partial => '/shoutboxes/compact'
       %p
-        = will_paginate @shoutboxes, :inner_window => 0, :outer_window => 0
+        = paginate @shoutboxes

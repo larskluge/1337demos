@@ -11,9 +11,9 @@
         At this place you can share the demos you are proud of
         and let everybody watch them online.
         %br/
-        I hope you enjoy this place - let me know :-)  
+        I hope you enjoy this place - let me know :-)
         %br/
-        If you need help, shoot us an email at 
+        If you need help, shoot us an email at
         = link_to 'team@1337demos.com', 'mailto:team@1337demos.com'
       %p
         = render_nickname '^7soh^8#^9die^1.^9viper'
@@ -26,5 +26,5 @@
 
     %td{:style => "vertical-align: top; padding: 0 0 0 20px; width: 240px"}
       = render :partial => '/shoutboxes/compact'
-      = will_paginate @shoutboxes, :inner_window => 0, :outer_window => 0
+      = paginate @shoutboxes
 

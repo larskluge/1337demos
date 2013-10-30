@@ -126,11 +126,7 @@ class DemosController < ApplicationController
     #
     scoped_demos = scoped_demos.rendered if params[:format] == "atom"
 
-    @demos = scoped_demos.data_correct.paginate(
-      :page => page_param,
-      :per_page => 20,
-      :include => :map
-    )
+    @demos = scoped_demos.data_correct.page(page_param)
 
     respond_to do |format|
       format.html { render :action => 'index' }

@@ -20,5 +20,5 @@
         = link_to 'Play', :controller => 'demos', :action => 'show', :id => comment.demo
 
 %div{:style => "text-align: center; padding-top: 1em"}
-  = will_paginate @comments
+  = paginate @comments
 

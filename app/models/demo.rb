@@ -8,6 +8,7 @@ class Demo < ActiveRecord::Base
   @@video_height = 288
   cattr_reader :video_width, :video_height
 
+  paginates_per 20
 
 
   has_many :players, :through => :demos_players, :autosave => true do

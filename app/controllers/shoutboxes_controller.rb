@@ -6,7 +6,7 @@ class ShoutboxesController < ApplicationController
 	end
 
 	def list
-		@shoutbox_pages, @shoutboxes = paginate :shoutboxes, :per_page => 10
+		@shoutboxes = Shoutbox.page(page_param).per(10)
 	end
 
 	def show

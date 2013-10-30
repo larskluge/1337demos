@@ -3,10 +3,7 @@ class MapsController < ApplicationController
   def index
     @mapsearch = session[:mapsearch]
     searchstr = '%%%s%%' % session[:mapsearch] || '%'
-    @maps = Map.paginate(:page => page_param,
-      :per_page => 12,
-      :conditions => ["maps.name LIKE ?", searchstr],
-      :order => 'name')
+    @maps = Map.where(["maps.name LIKE ?", searchstr]).order('name').page(page_param).per(12)
 
     @players = @maps.map do |m|
       demo = m.demos.first(:conditions => {:position => 1})
