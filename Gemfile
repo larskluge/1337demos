@@ -14,6 +14,7 @@ gem 'haml', '>= 3'
 gem 'mini_magick'
 gem 'mysql2'
 gem 'paperclip'
+gem 'rack-canonical-host'
 gem 'simple-navigation'
 gem 'will_paginate', '>= 3.0.pre2'
 

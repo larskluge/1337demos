@@ -2,11 +2,7 @@
 
 require ::File.expand_path('../config/environment',  __FILE__)
 
-# Middleware
-#
-# LeetdemosPlatform::Application.config.middleware.use ExceptionNotifier,
-#   :sender_address => %("1337demos exception notifier" <exception-notifier@1337demos.com>),
-#   :exception_recipients => %w(1337demos@freshthinking.de)
+use Rack::CanonicalHost, ENV['CANONICAL_HOST'] if ENV['CANONICAL_HOST']
 
 run LeetdemosPlatform::Application
 
