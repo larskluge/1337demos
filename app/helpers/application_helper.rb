@@ -5,25 +5,9 @@ module ApplicationHelper
     ([controller.controller_name, controller.action_name].compact * '-').downcase
   end
 
-
   def default_title
     ([controller.controller_name] << (" // " + controller.action_name if controller.action_name != 'index') << " - 1337demos.com").compact.join
   end
-
-
-  def render_admin_mainmenu
-    semantic_menu :class => 'nav' do |root|
-      root.add 'Home', admin_root_path
-      root.add 'Announcements', admin_announcements_path
-      root.add 'Users', admin_users_path
-      root.add 'Shouts', admin_shoutboxes_path
-      root.add 'Demos', admin_demos_path
-      root.add 'Players', admin_players_path
-      root.add 'Comments', admin_comments_path
-      root.add 'Nicknames', admin_nicknames_path
-    end
-  end
-
 
   def render_linked_map(map)
     link_to(map.name, map_path(map), {:class => "map_link map_link_#{map.id}"})
