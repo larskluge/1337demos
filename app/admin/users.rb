@@ -1,4 +1,14 @@
 ActiveAdmin.register User do
+
+  controller do
+
+    def update
+      resource.approved = params[:user].delete(:approved) if params[:user][:approved]
+      super
+    end
+
+  end
+
   index do
     column :approved do |user|
       approve_check_box_tag_for user
@@ -9,11 +19,6 @@ ActiveAdmin.register User do
     column :mail
     column :created_at
     default_actions
-  end
-
-  before_save do |user|
-    user.accessible = [:approved]
-    user.attributes = params[:user]
   end
 
 end

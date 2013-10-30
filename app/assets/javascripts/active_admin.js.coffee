@@ -1,6 +1,9 @@
+#= require active_admin/base
+#
+
 $ ->
 
-  $('[data-toggle-approve-for-user]').live 'click', ->
+  $('[data-toggle-approve-for-user]').click ->
     cb = $(this)
     userId = cb.attr('data-toggle-approve-for-user')
 
@@ -15,12 +18,12 @@ $ ->
       dataType: 'json',
       success: ->
         $('[data-toggle-approve-for-user=' + userId + ']')
-          .parent()
-          .css({backgroundColor: 'lightyellow'})
+          .parents('tr')
+          .css(backgroundColor: 'lightyellow')
     })
 
 
-  $('#demos .statusbox')
+  $('.admin_demos .statusbox')
     .attr('title', 'click to request rerender')
     .click ->
       el = $(this)

@@ -150,11 +150,6 @@ class Demo < ActiveRecord::Base
     end
   end
 
-  def rerender
-    status = :uploaded
-    save!
-  end
-
   def video_exists?
     status == :rendered && File.exists?(video_filename)
   end
