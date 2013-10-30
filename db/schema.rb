@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131012040351) do
+ActiveRecord::Schema.define(:version => 20131030004344) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.integer  "resource_id",   :null => false
@@ -98,7 +98,7 @@ ActiveRecord::Schema.define(:version => 20131012040351) do
     t.string   "status",                     :default => "uploaded"
     t.integer  "position"
     t.string   "game",         :limit => 20
-    t.string   "vimeo_id"
+    t.string   "youtube_id"
   end
 
   add_index "demos", ["game"], :name => "index_demos_on_game"
