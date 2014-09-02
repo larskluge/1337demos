@@ -32,14 +32,15 @@
             .border
           .outer_right
           .outer_middle
-            .inner
-              - if flash[:error]
-                #error_div_id.flash.flash_error
-                  = flash[:error]
-              - if flash[:notice]
-                #notice_div_id.flash.flash_notice
-                  = flash[:notice]
-              = yield
+            .inner_wrapper
+              .inner
+                - if flash[:error]
+                  #error_div_id.flash.flash_error
+                    = flash[:error]
+                - if flash[:notice]
+                  #notice_div_id.flash.flash_notice
+                    = flash[:notice]
+                = yield
 
       .footer
         .left
