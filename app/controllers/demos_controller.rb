@@ -88,9 +88,6 @@ class DemosController < ApplicationController
     end
 
     if @demo.update_attributes(params[:demo])
-      # notify me
-      DemoMailer.uploaded_info(@demo).deliver
-
       flash[:notice] = 'Demo was successfully uploaded.'
       redirect_to :action => 'show', :id => @demo
     else
